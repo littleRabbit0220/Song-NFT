@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure, Transition } from '@headlessui/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Fragment } from 'react';
 import TopMenu from './TopMenu';
 import Button from '../utils/elements/Button';
 
@@ -12,10 +11,6 @@ const navigation = [
   { name: 'Explore', href: '#' },
   { name: 'Login', href: '#' },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function Header() {
   return (
