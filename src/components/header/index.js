@@ -48,7 +48,9 @@ export default function Header() {
                   </ul>
 
                   <Button className='ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
-                    <img
+                    <Image
+                      height={24}
+                      width={25}
                       className='mr-2.5'
                       src='assets/img/icons/wallet-icon.svg'
                       alt=''
@@ -95,7 +97,9 @@ export default function Header() {
                   {/* Button */}
                   <div className='pt-2'>
                     <Button className='ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
-                      <img
+                      <Image
+                        height={24}
+                        width={25}
                         className='mr-2.5'
                         src='assets/img/icons/wallet-icon.svg'
                         alt=''

@@ -1,8 +1,12 @@
+import Image from 'next/image';
+
 const CallToAction = () => {
   return (
     <div className='mosh-container-normal mt-7 mb-9 '>
       <div className='bg-gradient-to-b from-[#F84E24] to-[#4F3583] rounded-md relative'>
-        <img
+        <Image
+          height={117}
+          width={131}
           src='assets/img/icons/linesPattern.svg'
           alt='lines'
           className='absolute'
@@ -30,7 +34,9 @@ const CallToAction = () => {
             </form>
           </div>
         </div>
-        <img
+        <Image
+          height={117}
+          width={131}
           src='assets/img/icons/linesPattern.svg'
           alt='lines'
           className='absolute bottom-0 right-0 md:transform md:-translate-y-1/2 md:top-1/2 '
