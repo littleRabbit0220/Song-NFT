@@ -53,6 +53,7 @@ const TracksList = () => {
       <ul className='w-full'>
         {tracks.map((track, index) => (
           <li
+            key={index}
             className={`flex items-center justify-between py-[8.5px]  pl-[260px] pr-[68px] ${
               index % 2 !== 0 && 'bg-MoshLight-1 bg-opacity-10'
             }`}

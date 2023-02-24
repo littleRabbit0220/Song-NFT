@@ -12,6 +12,7 @@ const Artists = () => {
           <div className='bg-white rounded-md pl-2.5 pt-2.5 flex pb-[18px]'>
             <div>
               <Image
+                alt='Artist Anuel AA'
                 height={104}
                 width={112}
                 src='/assets/img/artists/anuel-aa.png'
@@ -29,6 +30,7 @@ const Artists = () => {
           <div className='bg-white rounded-md pl-2.5 pt-2.5 flex pb-[18px]'>
             <div>
               <Image
+                alt='Artist Ansy Derose'
                 height={104}
                 width={112}
                 src='/assets/img/artists/ansy-derose.png'
@@ -46,6 +48,7 @@ const Artists = () => {
           <div className='bg-white rounded-md pl-2.5 pt-2.5 flex pb-[18px]'>
             <div>
               <Image
+                alt='Artist Bacanos'
                 height={104}
                 width={112}
                 src='/assets/img/artists/bacanos.png'
@@ -63,6 +66,7 @@ const Artists = () => {
           <div className='bg-white rounded-md pl-2.5 pt-2.5 flex pb-[18px]'>
             <div>
               <Image
+                alt='Artist Canserbero'
                 height={104}
                 width={112}
                 src='/assets/img/artists/canserbero.png'

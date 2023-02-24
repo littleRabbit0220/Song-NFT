@@ -14,6 +14,7 @@ const CollectorsList = () => {
           <span className='flex'>
             <span className='mr-3.5'>
               <Image
+                alt='icon'
                 src={`/assets/img/avatar/avatar${collector.id}.png`}
                 width={40}
                 height={40}
