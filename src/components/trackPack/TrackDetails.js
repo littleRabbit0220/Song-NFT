@@ -19,7 +19,7 @@ const TrackDetails = () => {
           <ShareIcon />
         </button>
       </div>
-      <div className='flex flex-col items-center sm:flex-row '>
+      <div className='flex flex-col sm:items-center sm:flex-row '>
         <span className='pr-2.5 font-bold'>Artists in this TrackPack</span>
         <span className='mt-2 sm:mt-0'>
           {'Beyonce|Nas|Elton|John'.split('|').map((tag) => (
