@@ -1,5 +1,6 @@
 import MoshMIcon from '@/icons/MoshMIcon';
 import TrackAvatar from '../trackPack/TrackAvatar';
+import Image from 'next/image';
 
 const OverviewHead = () => {
   return (
@@ -7,10 +8,11 @@ const OverviewHead = () => {
       <div className='flex flex-col pb-8 md:items-end md:flex-row'>
         <div className='flex justify-center -mt-8 overflow-hidden md:pl-6 md:justify-start'>
           <div className='relative inline-block'>
-            <img
+            <Image
+              height={127}
               width={216}
               className='w-[216px] max-w-full'
-              src='assets/img/tracks/vol2-flow-futurama.png'
+              src='/assets/img/tracks/vol2-flow-futurama.png'
               alt=''
             />
             <button className='hover:bg-MoshLight-1 absolute right-2.5 top-5 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5 px-3 text-[10px]'>

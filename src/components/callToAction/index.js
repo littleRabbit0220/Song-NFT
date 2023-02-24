@@ -15,7 +15,7 @@ const CallToAction = () => {
           <div className='w-full sm:w-auto'>
             <h2 className='text-3xl font-bold mb1.5'>Join</h2>
             <p className='text-sm font-suisse-intl leading-[160%]'>
-              Sign up to become a Mosh member - it's free.
+              Sign up to become a Mosh member - it&apos;s free.
             </p>
           </div>
           <div className='w-full mt-7 sm:w-auto md:mt-0'>
