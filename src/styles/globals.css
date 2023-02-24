@@ -25,13 +25,13 @@
   font-style: normal;
 }
 @font-face {
-  font-family: 'Suisse Intl';
+  font-family: 'Suisse Intl Bold';
   src: url('/fonts/SuisseIntl-Bold.ttf') format('ttf');
   font-weight: bold;
   font-style: normal;
 }
-.font-suisse-intl {
-  font-family: 'Suisse Intl', sans-serif;
+.font-suisse-intl.font-bold {
+  font-family: 'Suisse Intl Bold', sans-serif;
 }
 .font-bold {
   font-weight: bold;

@@ -10,7 +10,7 @@ import AmericanPayIcon from '@/icons/AmericanPayIcon';
 const TrackDetails = () => {
   return (
     <div className='py-10 md:py-16'>
-      <span className='text-[#E7E7E8] !leading-[160%] font-open-sans uppercase'>
+      <span className='text-MoshLight-1 !leading-[160%] font-open-sans uppercase'>
         SEASON #2
       </span>
       <div className='flex items-center'>
@@ -27,7 +27,7 @@ const TrackDetails = () => {
           <ArtistTag btnText={tag} key={tag} className='ml-2' />
         ))}
       </div>
-      <p className='text-[#E7E7E8] font-open-sans mt-5 mb-7 !leading-[160%] '>
+      <p className='text-MoshLight-1 font-open-sans mt-5 mb-7 !leading-[160%] '>
         The “Bad Apples” track pack features a random collection of 20 songs
         from some of your favorite Latin artists including Canserbero, Lochard
         Remy, Gilberto Santa Rosa and Orchestre Septentrional. Earn streaming

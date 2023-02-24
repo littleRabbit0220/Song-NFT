@@ -18,6 +18,11 @@ module.exports = {
       center: true,
     },
     extend: {
+      boxShadow: {
+        1: '0px 14px 35px rgba(0, 0, 0, 0.1)',
+
+        none: 'none',
+      },
       gradientColorStops: {
         'orange-transparent': 'rgba(248, 78, 36, 0.501961)',
         'purple-transparent': 'rgba(17, 11, 29, 0.0001)',
@@ -30,6 +35,10 @@ module.exports = {
         secondary: '#120C1E;',
         sweetDark: '#110B1D',
         sweetTurquoise: '#3CC9B7',
+        'MoshDark-7': '#0F0A1A',
+        'MoshLight-1': '#E7E7E8',
+        'MoshDark-6': '#262131',
+        'MoshLight-2': '#D4D3D6',
       },
     },
   },

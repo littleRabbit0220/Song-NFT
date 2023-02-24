@@ -1,4 +1,6 @@
 import Header from '@/components/header';
+import TrackData from '@/components/trackData';
+import TrackOverview from '@/components/trackOverview';
 import TrackPack from '@/components/trackPack';
 import Head from 'next/head';
 // import { Inter } from '@next/font/google';
@@ -17,6 +19,8 @@ export default function Home() {
       <main className='min-h-screen overflow-hidden'>
         <Header />
         <TrackPack />
+        <TrackData />
+        <TrackOverview />
       </main>
     </>
   );
