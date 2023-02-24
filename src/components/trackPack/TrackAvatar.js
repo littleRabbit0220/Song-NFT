@@ -2,9 +2,13 @@ import MoshMIcon from '@/icons/MoshMIcon';
 
 const TrackAvatar = () => {
   return (
-    <div className='flex justify-center pt-16 overflow-hidden md:justify-start'>
+    <div className='flex justify-center pt-16 pr-5 overflow-hidden md:justify-start '>
       <div className='relative inline-block'>
-        <img src='assets/img/tracks/vol2-flow-futurama.png' alt='' />
+        <img
+          className='md:w-96 lg:w-auto'
+          src='assets/img/tracks/vol2-flow-futurama.png'
+          alt=''
+        />
         <button className='hover:bg-MoshLight-1 absolute right-6 top-10 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5 px-3.5 '>
           <svg
             className='mr-2'
@@ -22,8 +26,8 @@ const TrackAvatar = () => {
           Play Song
         </button>
         {/* track pack */}
-        <button className='hover:bg-MoshLight-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1 sm:py-1.5 px-3.5 text-xl sm:text-[28px] w-[200px] sm:w-[270px] '>
-          <MoshMIcon className='w-10 sm:w-auto' />
+        <button className='hover:bg-MoshLight-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-2 sm:py-3.5 px-2 sm:px-3.5 text-xl sm:text-[28px] w-[200px] sm:w-[230px] '>
+          <MoshMIcon className='w-10 h-10 sm:h-aut sm:w-auto' />
           <span className='pl-2 font-bold font-suisse-intl'>Track Pack</span>
         </button>
       </div>

@@ -3,9 +3,9 @@ import TrackAvatar from '../trackPack/TrackAvatar';
 
 const OverviewHead = () => {
   return (
-    <div className='mt-20 bg-white rounded-md mb-[30px]'>
-      <div className='flex items-end pb-8'>
-        <div className='flex justify-center pl-6 -mt-8 overflow-hidden md:justify-start'>
+    <div className='mt-20 bg-white rounded-md mb-[30px] max-w-md md:max-w-full mx-auto md:mx-0'>
+      <div className='flex flex-col pb-8 md:items-end md:flex-row'>
+        <div className='flex justify-center -mt-8 overflow-hidden md:pl-6 md:justify-start'>
           <div className='relative inline-block'>
             <img
               width={216}
@@ -30,7 +30,7 @@ const OverviewHead = () => {
               Play Song
             </button>
             {/* track pack */}
-            <button className='hover:bg-MoshLight-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   px-1.5 text-lg sm:text-base w-[200px] sm:w-[175px] '>
+            <button className='hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   px-1.5 text-lg sm:text-base w-[200px] sm:w-[175px] '>
               <MoshMIcon className='w-10 h-10 ' />
               <span className='pl-2 font-bold font-suisse-intl'>
                 Track Pack
@@ -39,19 +39,19 @@ const OverviewHead = () => {
           </div>
         </div>
 
-        <div className='pb-3 pl-6 text-MoshDark-7'>
+        <div className='md:pb-3 pl-3.5 md:pl-6 text-MoshDark-7  pr-3.5 md:pr-0 mt-6 md:mt-0'>
           <p className='mb-3.5 text-sm font-bold font-aril'>
             Artist in this trackpad
           </p>
           <h2 className='text-[42px] font-bold !leading-[110%]'>Bad Apples</h2>
 
-          <div className='mt-3.5 flex space-x-2 text-sm font-open-sans'>
-            <span className='flex '>
+          <div className='flex flex-wrap space-x-2 text-sm font-open-sans'>
+            <span className='flex mt-3.5 '>
               <MoshMIcon className='w-6 h-6' />
               <span className='font-black pl-1.5'>Musica</span>
             </span>
-            <span>• 2023</span>
-            <span>• 20 songs, 57 min 11 sec</span>
+            <span className='mt-3.5'>• 2023</span>
+            <span className='mt-3.5'>• 20 songs, 57 min 11 sec</span>
           </div>
         </div>
       </div>

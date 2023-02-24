@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer utilities {
   .mosh-container-xl {
-    max-width: 1320px;
+    max-width: 100%;
     padding-left: 20px;
     padding-right: 20px;
     margin-left: auto;

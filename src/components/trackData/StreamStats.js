@@ -11,11 +11,11 @@ const StreamStats = () => {
   };
 
   return (
-    <div className='h-full overflow-hidden bg-white rounded-md shadow-1'>
-      <div className='flex items-center justify-between mb-4 px-7 pt-7'>
-        <div className='flex space-x-4 text-sm '>
+    <div className='w-full h-full overflow-hidden bg-white rounded-md shadow-1'>
+      <div className='flex items-center justify-between px-4 pt-4 mb-4 sm:px-7'>
+        <div className='flex flex-wrap space-x-2.5 text-sm sm:space-x-4 sm:flex-nowrap '>
           <button
-            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
+            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
               activeButton === '1M'
                 ? ' text-white hover:bg-opacity-95 !bg-MoshDark-7'
                 : ''
@@ -25,7 +25,7 @@ const StreamStats = () => {
             1M
           </button>
           <button
-            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
+            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
               activeButton === '2M'
                 ? ' text-white hover:bg-opacity-95 !bg-MoshDark-7'
                 : ''
@@ -35,7 +35,7 @@ const StreamStats = () => {
             2M
           </button>
           <button
-            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
+            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
               activeButton === '1Y'
                 ? ' text-white hover:bg-opacity-95 !bg-MoshDark-7'
                 : ''
@@ -45,7 +45,7 @@ const StreamStats = () => {
             1Y
           </button>
           <button
-            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
+            className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
               activeButton === 'ALL'
                 ? ' text-white hover:bg-opacity-95 !bg-MoshDark-7'
                 : ''
@@ -59,7 +59,7 @@ const StreamStats = () => {
       <h2 className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] px-7'>
         Stream
       </h2>
-      <div className='flex justify-between w-full mt-4 max-w-[262px] px-7'>
+      <div className='flex justify-between w-full mt-4 max-w-[400px] sm:max-w-[272px] px-7'>
         <div>
           <span className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] '>
             37, 427

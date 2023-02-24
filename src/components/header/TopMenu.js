@@ -1,6 +1,6 @@
 const TopMenu = () => {
   return (
-    <div className='px-4 mb-5 mosh-container-xl'>
+    <div className='px-4 pb-5 mx-auto lg:px-9 xl:px-10 mosh-container-xl'>
       <ul className='flex items-center justify-end text-sm'>
         <li className='mr-5'>
           <a

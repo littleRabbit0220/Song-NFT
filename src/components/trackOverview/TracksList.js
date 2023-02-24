@@ -54,20 +54,20 @@ const TracksList = () => {
         {tracks.map((track, index) => (
           <li
             key={index}
-            className={`flex items-center justify-between py-[8.5px]  pl-[260px] pr-[68px] ${
+            className={`flex items-center justify-between py-[8.5px] pl-4 md:pl-[260px] pr-4 md:pr-[68px] ${
               index % 2 !== 0 && 'bg-MoshLight-1 bg-opacity-10'
             }`}
           >
             <span className='flex items-center'>
-              <span className='text-MoshLight-1 mr-[35px] font-open-sans leading-[160%]'>
+              <span className='text-MoshLight-1 text-xs md:text-base mr-[35px] font-open-sans leading-[160%]'>
                 {track.title}
               </span>
-              <span className='bg-white text-MoshDark-6 px-2.5 py-[5px] text-xs leading-[160%]'>
+              <span className='bg-white text-MoshDark-6 px-1.5 md:px-2.5 py-1 sm:py-[5px]  text-[10px] md:text-xs leading-[160%] truncate '>
                 {track.artist}
               </span>
             </span>
 
-            <span className='text-sm text-MoshLight-2 font-open-sans'>
+            <span className='pl-2 text-xs sm:text-sm text-MoshLight-2 font-open-sans'>
               {track.duration}
             </span>
           </li>

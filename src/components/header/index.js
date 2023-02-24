@@ -19,12 +19,12 @@ export default function Header() {
       <Disclosure as='nav'>
         {({ open }) => (
           <>
-            <div className='px-4 mx-auto mosh-container-xl'>
+            <div className='px-4 mx-auto lg:px-9 xl:px-10 mosh-container-xl'>
               <div className='flex items-center justify-between'>
                 {/* Logo */}
                 <a href='#' className='flex items-center flex-shrink-0'>
                   <Image
-                    className='w-[150px] md:w-[190px] '
+                    className='w-[150px] lg:w-[190px] '
                     src='assets/img/logo.svg'
                     alt='Logo'
                     width={190}
@@ -35,7 +35,7 @@ export default function Header() {
                 <div className='items-center hidden md:flex'>
                   <ul className='flex'>
                     {navigation.map((item) => (
-                      <li className='mr-4' key={item.name}>
+                      <li className=' lg:mr-4' key={item.name}>
                         <a
                           key={item.name}
                           href={item.href}
@@ -58,7 +58,7 @@ export default function Header() {
                 </div>
                 {/* Button */}
                 <div className='flex items-center md:hidden'>
-                  <Disclosure.Button className='inline-flex items-center justify-center p-2 text-white rounded-md opacity-80 hover:opacity-100 hover:bg-primary/20 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary'>
+                  <Disclosure.Button className='inline-flex items-center justify-center p-2 -mr-2 text-white rounded-md opacity-80 hover:opacity-100 hover:bg-primary/20 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary'>
                     <span className='sr-only'>Open main menu</span>
                     {open ? (
                       <FaTimes className='block w-6 h-6' aria-hidden='true' />

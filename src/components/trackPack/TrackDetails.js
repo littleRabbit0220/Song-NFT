@@ -19,13 +19,15 @@ const TrackDetails = () => {
           <ShareIcon />
         </button>
       </div>
-      <div className='flex flex-wrap'>
-        <span className='pr-1'>
+      <div className='flex flex-col sm:flex-row '>
+        <span className='pr-2'>
           <strong>Artists in this TrackPack</strong>
         </span>
-        {'Beyonce|Nas|Elton|John'.split('|').map((tag) => (
-          <ArtistTag btnText={tag} key={tag} className='ml-2' />
-        ))}
+        <span className='mt-2 sm:mt-0'>
+          {'Beyonce|Nas|Elton|John'.split('|').map((tag) => (
+            <ArtistTag btnText={tag} key={tag} className='mr-2' />
+          ))}
+        </span>
       </div>
       <p className='text-MoshLight-1 font-open-sans mt-5 mb-7 !leading-[160%] '>
         The “Bad Apples” track pack features a random collection of 20 songs

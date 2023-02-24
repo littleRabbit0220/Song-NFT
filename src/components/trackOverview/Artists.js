@@ -15,6 +15,7 @@ const Artists = () => {
                 alt='Artist Anuel AA'
                 height={104}
                 width={112}
+                className='w-24 sm:w-auto'
                 src='/assets/img/artists/anuel-aa.png'
               />
             </div>
@@ -33,6 +34,7 @@ const Artists = () => {
                 alt='Artist Ansy Derose'
                 height={104}
                 width={112}
+                className='w-24 sm:w-auto'
                 src='/assets/img/artists/ansy-derose.png'
               />
             </div>
@@ -51,6 +53,7 @@ const Artists = () => {
                 alt='Artist Bacanos'
                 height={104}
                 width={112}
+                className='w-24 sm:w-auto'
                 src='/assets/img/artists/bacanos.png'
               />
             </div>
@@ -69,6 +72,7 @@ const Artists = () => {
                 alt='Artist Canserbero'
                 height={104}
                 width={112}
+                className='w-24 sm:w-auto'
                 src='/assets/img/artists/canserbero.png'
               />
             </div>
