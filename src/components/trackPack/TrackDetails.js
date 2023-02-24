@@ -10,7 +10,7 @@ import AmericanPayIcon from '@/icons/AmericanPayIcon';
 const TrackDetails = () => {
   return (
     <div className='py-10 md:py-16'>
-      <span className='text-MoshLight-1 !leading-[160%] font-open-sans uppercase'>
+      <span className='uppercase text-MoshLight-1 font-open-sans'>
         SEASON #2
       </span>
       <div className='flex items-center'>

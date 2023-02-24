@@ -30,7 +30,7 @@
   font-weight: bold;
   font-style: normal;
 }
-.font-suisse-intl.font-bold {
+.font-suisse-intl {
   font-family: 'Suisse Intl Bold', sans-serif;
 }
 .font-bold {
@@ -46,4 +46,8 @@
 body {
   font-family: 'kanit', sans-serif;
   color: #fff;
+  line-height: 1.6;
+}
+button {
+  line-height: 1.5;
 }

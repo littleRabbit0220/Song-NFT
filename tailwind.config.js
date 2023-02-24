@@ -39,6 +39,7 @@ module.exports = {
         'MoshLight-1': '#E7E7E8',
         'MoshDark-6': '#262131',
         'MoshLight-2': '#D4D3D6',
+        'MoshLight-3': '#A8A6AD',
       },
     },
   },

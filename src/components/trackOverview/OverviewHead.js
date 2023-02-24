@@ -39,7 +39,7 @@ const OverviewHead = () => {
           </div>
         </div>
 
-        <div className='md:pb-3 pl-3.5 md:pl-6 text-MoshDark-7  pr-3.5 md:pr-0 mt-6 md:mt-0'>
+        <div className='pl-4 pr-4 mt-6 md:pb-3 md:pl-6 text-MoshDark-7 md:pr-0 md:mt-0'>
           <p className='mb-3.5 text-sm font-bold font-aril'>
             Artist in this trackpad
           </p>

@@ -6,7 +6,7 @@ import React from 'react';
 
 const WhatIncluded = () => {
   return (
-    <div className='h-full px-4 overflow-hidden bg-white rounded-md sm:px-7 shadow-1'>
+    <div className='h-full px-5 overflow-hidden bg-white rounded-md sm:px-7 shadow-1'>
       <h2 className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] '>
         What’s included
       </h2>

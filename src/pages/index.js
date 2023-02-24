@@ -1,3 +1,5 @@
+import CallToAction from '@/components/callToAction';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import TrackData from '@/components/trackData';
 import TrackOverview from '@/components/trackOverview';
@@ -21,6 +23,8 @@ export default function Home() {
         <TrackPack />
         <TrackData />
         <TrackOverview />
+        <CallToAction />
+        <Footer />
       </main>
     </>
   );

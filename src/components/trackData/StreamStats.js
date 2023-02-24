@@ -12,7 +12,7 @@ const StreamStats = () => {
 
   return (
     <div className='w-full h-full overflow-hidden bg-white rounded-md shadow-1'>
-      <div className='flex items-center justify-between px-4 pt-4 mb-4 sm:px-7'>
+      <div className='flex items-center justify-between px-5 pt-4 mb-4 sm:px-7'>
         <div className='flex flex-wrap space-x-2.5 text-sm sm:space-x-4 sm:flex-nowrap '>
           <button
             className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
