@@ -53,7 +53,7 @@ const options = {
   },
 };
 
-const StreamChart = ({ chartData }) => {
+const StreamChart = ({ chartData, period }) => {
   const [chartInstance, setChartInstance] = useState(null);
 
   useEffect(() => {
@@ -74,7 +74,13 @@ const StreamChart = ({ chartData }) => {
     <canvas
       height={150}
       id='myChart'
-      className='mt-5 -ml-[27px] -mb-5 -mr-1 !h-[150] w-full'
+      className={`mt-5 -ml-[27px] -mb-5 -mr-1 !h-[150] w-full ${
+        period === 'ALL'
+          ? '!-ml-[44px]'
+          : period === '1Y'
+          ? '!-ml-[37px]'
+          : null
+      }`}
     ></canvas>
   );
 };

@@ -106,7 +106,7 @@ const StreamStats = () => {
           datasets: [
             {
               label: 'Stream',
-              data: [25, 100, 110, 120, 50],
+              data: [1125, 2100, 3210, 2520, 5550],
               fill: {
                 target: 'origin',
                 above: 'rgba(255, 90, 0, 0.2)',
@@ -171,24 +171,38 @@ const StreamStats = () => {
       <h2 className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] px-7'>
         Stream
       </h2>
-      <div className='flex justify-between w-full mt-4 max-w-[400px] sm:max-w-[272px] px-7'>
+      <div className='flex justify-between w-full mt-4 max-w-[400px] sm:max-w-[304px] px-7'>
         <div>
           <span className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] '>
-            37, 427
+            {chartData?.datasets[0]?.data
+              ?.reduce((acc, cur) => acc + cur, 0)
+              ?.toLocaleString()}
           </span>
           <span className='block text-MoshDark-7 font-open-sans'>
-            Last 30 days
+            {activeButton === '1M'
+              ? 'Last 30 days'
+              : activeButton === '6M'
+              ? 'Last 6 months'
+              : activeButton === '1Y'
+              ? 'Last 1 Year'
+              : 'All time'}
           </span>
         </div>
         <div className=' bg-[#EBEBEB] w-[1px] max-h-full h-[55px]'></div>
         <div>
           <span className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] '>
-            1 Month
+            {activeButton === '1M'
+              ? '1 Month'
+              : activeButton === '6M'
+              ? '6 Months'
+              : activeButton === '1Y'
+              ? '1 Year'
+              : 'All time'}
           </span>
           <span className='block text-MoshDark-7 font-open-sans'>Released</span>
         </div>
       </div>
-      <StreamChart chartData={chartData} />
+      <StreamChart period={activeButton} chartData={chartData} />
     </div>
   );
 };
