@@ -4,10 +4,122 @@ import StreamChart from './StreamChart';
 
 const StreamStats = () => {
   const [activeButton, setActiveButton] = useState('1M');
+  const [chartData, setChartData] = useState({
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    datasets: [
+      {
+        label: 'Stream',
+        data: [10, 20, 30, 40],
+        fill: {
+          target: 'origin',
+          above: 'rgba(255, 90, 0, 0.2)',
+        },
+        borderColor: 'rgba(255, 90, 0)',
+        tension: 0.4,
+      },
+    ],
+  });
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
     // Handle logic for fetching and displaying stream stats based on the selected time period
+    // Set chartData state variable with the appropriate data for the selected time period
+    switch (button) {
+      case '1M':
+        setChartData({
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [
+            {
+              label: 'Stream',
+              data: [10, 20, 30, 40],
+              fill: {
+                target: 'origin',
+                above: 'rgba(255, 90, 0, 0.2)',
+              },
+              borderColor: 'rgba(255, 90, 0)',
+              tension: 0.4,
+            },
+          ],
+        });
+        break;
+      case '3M':
+        setChartData({
+          labels: ['Month 1', 'Month 2', 'Month 3'],
+          datasets: [
+            {
+              label: 'Stream',
+              data: [50, 70, 90],
+              fill: {
+                target: 'origin',
+                above: 'rgba(255, 90, 0, 0.2)',
+              },
+              borderColor: 'rgba(255, 90, 0)',
+              tension: 0.4,
+            },
+          ],
+        });
+        break;
+      case '6M':
+        setChartData({
+          labels: [
+            'Month 1',
+            'Month 2',
+            'Month 3',
+            'Month 4',
+            'Month 5',
+            'Month 6',
+          ],
+          datasets: [
+            {
+              label: 'Stream',
+              data: [50, 40, 60, 80, 40, 30],
+              fill: {
+                target: 'origin',
+                above: 'rgba(255, 90, 0, 0.2)',
+              },
+              borderColor: 'rgba(255, 90, 0)',
+              tension: 0.4,
+            },
+          ],
+        });
+        break;
+      case '1Y':
+        setChartData({
+          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+          datasets: [
+            {
+              label: 'Stream',
+              data: [400, 150, 200, 250],
+              fill: {
+                target: 'origin',
+                above: 'rgba(255, 90, 0, 0.2)',
+              },
+              borderColor: 'rgba(255, 90, 0)',
+              tension: 0.4,
+            },
+          ],
+        });
+        break;
+      case 'ALL':
+        setChartData({
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [
+            {
+              label: 'Stream',
+              data: [25, 100, 110, 120, 50],
+              fill: {
+                target: 'origin',
+                above: 'rgba(255, 90, 0, 0.2)',
+              },
+              borderColor: 'rgba(255, 90, 0)',
+              tension: 0.4,
+            },
+          ],
+        });
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -26,13 +138,13 @@ const StreamStats = () => {
           </button>
           <button
             className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
-              activeButton === '2M'
+              activeButton === '6M'
                 ? ' text-white hover:bg-opacity-95 !bg-MoshDark-7'
                 : ''
             }`}
-            onClick={() => handleButtonClick('2M')}
+            onClick={() => handleButtonClick('6M')}
           >
-            2M
+            6M
           </button>
           <button
             className={`bg-MoshDark-7 text-MoshDark-7 bg-opacity-5 mt-3  py-1 px-4 hover:bg-opacity-20 focus:ring-primary font-semibold font-open-sans ${
@@ -76,7 +188,7 @@ const StreamStats = () => {
           <span className='block text-MoshDark-7 font-open-sans'>Released</span>
         </div>
       </div>
-      <StreamChart />
+      <StreamChart chartData={chartData} />
     </div>
   );
 };

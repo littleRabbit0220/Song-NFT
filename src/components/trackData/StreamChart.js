@@ -53,7 +53,7 @@ const options = {
   },
 };
 
-const StreamChart = () => {
+const StreamChart = ({ chartData }) => {
   const [chartInstance, setChartInstance] = useState(null);
 
   useEffect(() => {
@@ -62,13 +62,13 @@ const StreamChart = () => {
     }
     const chart = new Chart('myChart', {
       type: 'line',
-      data: data,
+      data: chartData,
       options: options,
     });
     setChartInstance(chart);
 
     return () => chart.destroy();
-  }, []);
+  }, [chartData]);
 
   return (
     <canvas
