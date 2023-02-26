@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Disclosure } from '@headlessui/react';
 import StreamChart from './StreamChart';
 
 const StreamStats = () => {
