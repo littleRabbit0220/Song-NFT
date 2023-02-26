@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const TrackAvatar = () => {
   return (
-    <div className='flex justify-center pt-16 pr-5 overflow-hidden md:justify-start '>
+    <div className='flex justify-center mt-16 overflow-hidden md:pr-5 md:mt-0 md:justify-start '>
       <div className='relative inline-block'>
         <Image
           height={415}
