@@ -36,7 +36,7 @@ const TrackDetails = () => {
             <ArtistTag btnText={tag} key={index} className='mt-2 mr-2' />
           ))}
       </div>
-      <p className='text-MoshLight-1 font-open-sans mt-5 mb-7 text-3xl sm:!leading-relaxed sm:text-[42px] '>
+      <p className='text-MoshLight-1 font-open-sans mt-5 mb-7 !leading-[160%] '>
         The Genesis Mixtape features a collection of 10 songs from some of your
         favorite Latin artists including Canserbero, Lochard Remy, Gilberto
         Santa Rosa and Orchestre Septentrional. Earn streaming revenue from
