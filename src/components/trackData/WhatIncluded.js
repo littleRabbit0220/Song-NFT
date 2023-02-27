@@ -11,10 +11,10 @@ const WhatIncluded = () => {
         What’s included
       </h2>
 
-      {/* <span className='text-sm opacity-50 font-open-sans text-MoshDark-7'>
+      <span className='text-sm opacity-50 font-open-sans text-MoshDark-7'>
         March 1, 2023
-      </span> */}
-      {/* <h3 className='font-semibold uppercase text-MoshDark-7'>Drop Date</h3> */}
+      </span>
+      <h3 className='font-semibold uppercase text-MoshDark-7'>Drop Date</h3>
       <ul className='mt-5'>
         <li className='flex items-center justify-between mb-7'>
           <span className='flex items-center'>
@@ -36,7 +36,7 @@ const WhatIncluded = () => {
             </span>
           </span>
           <span className='text-sm font-medium text-primary sm:text-base'>
-            40%
+            10%
           </span>
         </li>
 
@@ -46,7 +46,7 @@ const WhatIncluded = () => {
               <DiscordIcon />
             </span>
             <span className='text-[15px] sm:text-base  font-medium text-MoshDark-7 pl-2.5'>
-              Fan-only group chats
+              Discord Access
             </span>
           </span>
           <span className='text-sm opacity-50 text-MoshDark-7 sm:text-base'>
@@ -60,7 +60,7 @@ const WhatIncluded = () => {
               <HeadSetIcon />
             </span>
             <span className='text-[15px] sm:text-base font-medium text-MoshDark-7 pl-2.5'>
-              Exclusive artist merch
+              Listening Party
             </span>
           </span>
           <span className='text-sm opacity-50 text-MoshDark-7 sm:text-base'>
@@ -68,7 +68,7 @@ const WhatIncluded = () => {
           </span>
         </li>
 
-        <li className='flex items-center justify-between mb-7'>
+        {/* <li className='flex items-center justify-between mb-7'>
           <span className='flex items-center'>
             <span className='bg-MoshLight-1  h-[27px] w-[30px] flex justify-center items-center'>
               <HeadSetIcon />
@@ -80,7 +80,7 @@ const WhatIncluded = () => {
           <span className='text-sm opacity-50 text-MoshDark-7 sm:text-base'>
             Coming Soon
           </span>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

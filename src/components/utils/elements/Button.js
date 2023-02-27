@@ -5,7 +5,7 @@ const Button = ({ className, as, icon, children, onClick, href }) => {
     <a
       onClick={onClick}
       href={href}
-      className={`flex items-center px-5 py-3 rounded-md hover:bg-opacity-80 ease-in-out transition duration-200 ${className}`}
+      className={`flex items-center rounded-md hover:bg-opacity-80 ease-in-out transition duration-200 ${className}`}
     >
       {icon && <span className='mr-2.5'>{icon}</span>}
 
@@ -14,7 +14,7 @@ const Button = ({ className, as, icon, children, onClick, href }) => {
   ) : (
     <button
       onClick={onClick}
-      className={`flex items-center px-5 py-3 rounded-md hover:bg-opacity-80 ease-in-out transition duration-200 ${className}`}
+      className={`flex items-center rounded-md hover:bg-opacity-80 ease-in-out transition duration-200 ${className}`}
     >
       {icon && <span className='mr-2.5'>{icon}</span>}
       {children}

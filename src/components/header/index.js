@@ -47,7 +47,7 @@ export default function Header() {
                     ))}
                   </ul>
 
-                  <Button className='ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
+                  <Button className='px-5 py-2 ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
                     <Image
                       height={24}
                       width={25}
@@ -96,7 +96,7 @@ export default function Header() {
                   ))}
                   {/* Button */}
                   <div className='pt-2'>
-                    <Button className='ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
+                    <Button className='px-5 py-2 ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
                       <Image
                         height={24}
                         width={25}

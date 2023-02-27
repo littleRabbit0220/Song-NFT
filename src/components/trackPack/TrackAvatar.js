@@ -31,7 +31,7 @@ const TrackAvatar = () => {
         {/* track pack */}
         <button className='hover:bg-MoshLight-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-2 sm:py-3.5 px-2 sm:px-3.5 text-xl sm:text-[28px] w-[200px] sm:w-[230px] '>
           <MoshMIcon className='w-10 h-10 sm:h-aut sm:w-auto' />
-          <span className='pl-2 font-bold font-suisse-intl'>Track Pack</span>
+          <span className='pl-2 font-bold font-suisse-intl'>Mix Tapes</span>
         </button>
       </div>
     </div>

@@ -34,19 +34,17 @@ const OverviewHead = () => {
             {/* track pack */}
             <button className='hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   px-1.5 text-lg sm:text-base w-[200px] sm:w-[175px] '>
               <MoshMIcon className='w-10 h-10 ' />
-              <span className='pl-2 font-bold font-suisse-intl'>
-                Track Pack
-              </span>
+              <span className='pl-2 font-bold font-suisse-intl'>Mix Tapes</span>
             </button>
           </div>
         </div>
 
         <div className='pl-4 pr-4 mt-6 md:pb-3 md:pl-6 text-MoshDark-7 md:pr-0 md:mt-0'>
           <p className='mb-3.5 text-sm font-bold font-aril flex items-center'>
-            Artist in this MixTape
+            Season #3
           </p>
           <h2 className='text-3xl sm:text-[42px] font-bold  !leading-[110%] flex items-center'>
-            Genesis Mixtape
+            Bad Apples
           </h2>
 
           <div className='flex flex-wrap space-x-2 text-sm font-open-sans'>
@@ -54,9 +52,9 @@ const OverviewHead = () => {
               <MoshMIcon className='w-6 h-6' />
               <span className='font-black pl-1.5 flex items-center'>Mosh</span>
             </span>
-            <span className='mt-3.5 flex items-center'>• March 2023</span>
+            <span className='mt-3.5 flex items-center'>2023</span>
             <span className='mt-3.5 flex items-center'>
-              • 10 songs, 57 min 11 sec
+              • 20 songs, 57 min 11 sec
             </span>
           </div>
         </div>
