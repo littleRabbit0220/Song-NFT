@@ -23,7 +23,7 @@ const LoginForm = () => {
             .
           </p>
           <p className='text-center !leading-relaxed text-sm'>
-            Don't have an account?{' '}
+            Don&rsquo;t have an account?{' '}
             <Link href='/signup' className='text-primary'>
               Sign up
             </Link>
