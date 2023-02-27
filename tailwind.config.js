@@ -20,7 +20,7 @@ module.exports = {
     extend: {
       boxShadow: {
         1: '0px 14px 35px rgba(0, 0, 0, 0.1)',
-
+        login: '12px 16px 24px rgba(0, 0, 0, 0.24)',
         none: 'none',
       },
       gradientColorStops: {

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const Footer = () => {
@@ -157,14 +158,12 @@ const Footer = () => {
               </a>
             </li>
             <li className='mb-2.5'>
-              <a
-                href='#'
-                target='_blank'
-                rel='noopener noreferrer'
+              <Link
+                href='/login'
                 className='transition-colors duration-200 font-suisse-intl text-MoshLight-1 hover:text-primary'
               >
                 Login
-              </a>
+              </Link>
             </li>
             <li className='mb-2.5'>
               <a

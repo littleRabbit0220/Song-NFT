@@ -3,13 +3,14 @@ import { Disclosure, Transition } from '@headlessui/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import TopMenu from './TopMenu';
 import Button from '../utils/elements/Button';
+import Link from 'next/link';
 
 const navigation = [
   { name: 'Current Drop', href: '#' },
   { name: 'Drop Schedule', href: '#' },
   { name: 'Leader Board', href: '#' },
   { name: 'Explore', href: '#' },
-  { name: 'Login', href: '#' },
+  { name: 'Login', href: '/login' },
 ];
 
 export default function Header() {
@@ -22,7 +23,7 @@ export default function Header() {
             <div className='px-4 mx-auto lg:px-9 xl:px-10 mosh-container-xl'>
               <div className='flex items-center justify-between'>
                 {/* Logo */}
-                <a href='#' className='flex items-center flex-shrink-0'>
+                <Link href='/' className='flex items-center flex-shrink-0'>
                   <Image
                     className='w-[150px] lg:w-[190px] '
                     src='assets/img/logo.svg'
@@ -30,19 +31,19 @@ export default function Header() {
                     width={190}
                     height={50}
                   />
-                </a>
+                </Link>
                 {/* Menu */}
                 <div className='items-center hidden md:flex'>
                   <ul className='flex'>
                     {navigation.map((item) => (
                       <li className=' lg:mr-4' key={item.name}>
-                        <a
+                        <Link
                           key={item.name}
                           href={item.href}
                           className='py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold'
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -86,13 +87,13 @@ export default function Header() {
               <Disclosure.Panel className='md:hidden max-w-[640px] mx-auto pb-3'>
                 <div className='px-2 pt-2 pb-3 space-y-1'>
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       className='py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold block '
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                   {/* Button */}
                   <div className='pt-2'>
