@@ -5,7 +5,7 @@ import Form from './Form';
 const LoginForm = () => {
   return (
     <div className='overflow-hidden relative min-h-[calc(100vh_-_100px)] md:min-h-[calc(100vh_-_110px)] login-form'>
-      <div className='mosh-container-normal pt-14 md:pt-[73px] pb-14 '>
+      <div className='mosh-container-normal pt-14 md:pt-[73px] pb-14 relative z-[1]'>
         <div className='login bg-sweetDark border rounded-xl font-open-sans border-MoshDark-6 shadow-login w-full max-w-[490px] mx-auto  p-6 sm:p-[30px] lg:p-[35px]'>
           <div className='text-center'>
             <Logo className='mx-auto' width={250} />
@@ -33,7 +33,7 @@ const LoginForm = () => {
       {/* for design */}
       <div
         aria-hidden='true'
-        className='absolute transform -translate-x-1/2 rounded-full opacity-50 left-1/2 blur-lg -bottom-1/3'
+        className='absolute z-0 transform -translate-x-1/2 rounded-full opacity-50 left-1/2 blur-lg -bottom-1/3'
         style={{
           width: '738px',
           height: '419px',
@@ -44,7 +44,7 @@ const LoginForm = () => {
 
       <div
         aria-hidden='true'
-        className='absolute transform -translate-y-1/2 opacity-50   -left-[600px] top-1/2 blur-lg rounded-full'
+        className='absolute transform -translate-y-1/2 opacity-50   -left-[600px] top-1/2 blur-lg rounded-full z-0'
         style={{
           width: '917px',
           height: '917px',
@@ -55,7 +55,7 @@ const LoginForm = () => {
 
       <div
         aria-hidden='true'
-        className='absolute transform -translate-y-1/2 opacity-50  -right-[350px] top-[60%] blur-lg rounded-full '
+        className='absolute transform -translate-y-1/2 opacity-50  -right-[350px] top-[60%] blur-lg rounded-full z-0 '
         style={{
           width: '543px',
           height: '686px',
