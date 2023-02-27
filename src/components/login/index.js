@@ -15,8 +15,8 @@ const LoginForm = () => {
           </p>
           <Form />
           <p className='py-5 mt-4 text-sm text-center text-MoshLight-1'>
-            By connecting a wallet, you agree to Mosh{'’'}s Terms of Service and
-            consent to its{' '}
+            By connecting a wallet, you agree to Mosh&rsquo;s Terms of Service
+            and consent to its{' '}
             <Link href='/' className='!leading-relaxed text-primary'>
               Privacy Policy
             </Link>
