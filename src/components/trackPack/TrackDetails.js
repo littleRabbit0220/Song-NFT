@@ -30,7 +30,7 @@ const TrackDetails = () => {
         <span className='pr-2.5 font-bold text-sm mt-2 w-full sm:w-auto'>
           Artists in this TrackPack
         </span>
-        {'Beyonce|Nas|Elton|John|John|John|John|John|John|John|Jhon'
+        {'Beyonce|Nas|Elton|John|John|John|John|John|John|John'
           .split('|')
           .map((tag, index) => (
             <ArtistTag btnText={tag} key={index} className='mt-2 mr-2' />
