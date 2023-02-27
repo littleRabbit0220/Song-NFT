@@ -60,7 +60,7 @@ const StreamChart = ({ chartData, period }) => {
     if (chartInstance) {
       chartInstance.destroy();
     }
-    const chart = new Chart('myChart', {
+    const chart = new Chart('chart1', {
       type: 'line',
       data: chartData,
       options: options,
@@ -73,7 +73,7 @@ const StreamChart = ({ chartData, period }) => {
   return (
     <canvas
       height={150}
-      id='myChart'
+      id='chart1'
       className={`mt-5 -ml-[27px] -mb-5 -mr-1 !h-[150] w-full ${
         period === 'ALL'
           ? '!-ml-[44px]'
