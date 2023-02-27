@@ -19,6 +19,8 @@ const songs = [
     title: 'Cielos Abiertos',
     artist: 'New Wine',
     category: 'Single',
+    date: '2020',
+
     image: 'new-wine.png',
   },
   {
@@ -53,6 +55,8 @@ const songs = [
     title: 'Boomerang',
     artist: 'Vilma Palma e Vampiros',
     category: 'Single',
+    date: '2020',
+
     image: 'vilma-palma-e-vampiros.png',
   },
   {
@@ -89,7 +93,7 @@ const Artists = () => {
                   alt={song.artist}
                   height={140}
                   width={166}
-                  className='w-[70px] h-[83px] object-cover'
+                  className='w-[70px] h-[83px] object-cover rounded'
                   src={`/assets/img/artists/${song.image}`}
                 />
               </div>
