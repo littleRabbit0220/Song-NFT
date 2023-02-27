@@ -167,9 +167,14 @@ const StreamStats = () => {
           </button>
         </div>
       </div>
-      <h2 className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] px-7'>
-        Stream
-      </h2>
+      <div className='flex items-center justify-between px-7 mt-[22px]'>
+        <h2 className='text-xl font-semibold  text-MoshDark-7'>
+          Aggregate Streams
+        </h2>
+        <span className='text-sm opacity-50 text-MoshDark-7'>
+          Across all songs
+        </span>
+      </div>
       <div className='flex justify-between w-full mt-4 max-w-[400px] sm:max-w-[304px] px-7'>
         <div>
           <span className=' font-semibold mt-[22px] text-MoshDark-7 text-[22px] '>
