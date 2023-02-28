@@ -1,6 +1,9 @@
-import React from 'react';
+import { LoginContext } from '@/context/LoginContext';
+import React, { useContext } from 'react';
 
 const Form = () => {
+  const login = useContext(LoginContext);
+  console.log(login);
   return (
     <form className='mt-4'>
       <div>
