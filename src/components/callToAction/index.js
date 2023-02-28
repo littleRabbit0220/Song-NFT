@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const CallToAction = () => {
   return (
@@ -25,12 +26,12 @@ const CallToAction = () => {
                 className='text-white bg-MoshLight-1 bg-opacity-20 h-[44px] px-4 font-suisse-intl placeholder:text-white focus:outline-none rounded w-full sm:max-w-[251px] focus:shadow-1'
                 placeholder='Email address'
               />
-              <button
-                type='submit'
-                className='font-bold bg-white text-MoshDark-7 h-[44px] rounded mt-3 sm:mt-0 sm:ml-2.5 sm:w-auto w-full min-w-[90px] hover:bg-MoshLight-2'
+              <Link
+                href='/signup'
+                className='font-bold flex items-center justify-center bg-white text-MoshDark-7 h-[44px] rounded mt-3 sm:mt-0 sm:ml-2.5 sm:w-auto w-full min-w-[90px] hover:bg-MoshLight-2'
               >
                 Sign up
-              </button>
+              </Link>
             </form>
           </div>
         </div>
