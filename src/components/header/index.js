@@ -4,7 +4,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import TopMenu from './TopMenu';
 import Button from '../utils/elements/Button';
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useState, useLayoutEffect, useMemo } from 'react';
 import { LoginContext } from '@/context/LoginContext';
 
 const navigation = [
@@ -16,6 +16,41 @@ const navigation = [
 
 export default function Header() {
   const { state, logout } = useContext(LoginContext);
+
+  const [load, setLoad] = useState(false);
+  useLayoutEffect(() => {
+    setLoad(true);
+  }, []);
+  const loginButton = useMemo(() => {
+    if (!state?.user?.idToken && load) {
+      return (
+        <li className='lg:mr-2'>
+          <Link
+            href='/login'
+            className={` ${
+              !state?.user?.idToken && load ? 'block' : 'hidden'
+            } py-1.5 px-2 rounded-md text-sm text-white hover:bg-white hover:bg-opacity-10 transition duration-200 font-bold`}
+          >
+            Login
+          </Link>
+        </li>
+      );
+    } else {
+      return (
+        <li>
+          <button
+            onClick={() => logout()}
+            className={`${
+              state?.user ? 'flex' : 'hidden'
+            } py-1.5 px-5 font-bold rounded-md items-center capitalize h-11 bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200`}
+          >
+            <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
+            <span className='flex items-center pl-2'>logout</span>
+          </button>
+        </li>
+      );
+    }
+  }, [state.user, load]);
   return (
     <header className='mt-5'>
       <TopMenu />
@@ -48,26 +83,7 @@ export default function Header() {
                         </Link>
                       </li>
                     ))}
-                    {state?.user?.idToken ? (
-                      <li>
-                        <button
-                          onClick={() => logout()}
-                          className='py-1.5 px-5 font-bold rounded-md flex items-center capitalize h-11 bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200 '
-                        >
-                          <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
-                          <span className='flex items-center pl-2'>logout</span>
-                        </button>
-                      </li>
-                    ) : (
-                      <li className=' lg:mr-2'>
-                        <Link
-                          href='/login'
-                          className='py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold'
-                        >
-                          Login
-                        </Link>
-                      </li>
-                    )}
+                    {loginButton}
                   </ul>
 
                   <Button className='px-5 py-2 ml-2.5 font-bold rounded-md md:w-auto text-secondary h-11 bg-sweetTurquoise'>
@@ -117,10 +133,12 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
-                  {state?.user?.idToken ? (
+                  {state?.user?.idToken && load ? (
                     <button
                       onClick={() => logout()}
-                      className='w-[200px] max-w-full h-12 ml-2 py-1.5 px-5 font-bold rounded-md flex items-center capitalize h-11 bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200 '
+                      className={`${
+                        state?.user ? 'flex' : 'hidden'
+                      }  w-[200px] max-w-full h-12 ml-2 py-1.5 px-5 font-bold rounded-md items-center capitalize  bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200`}
                     >
                       <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
                       <span className='flex items-center pl-2'>logout</span>
@@ -128,7 +146,9 @@ export default function Header() {
                   ) : (
                     <Link
                       href='/login'
-                      className='py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold'
+                      className={`${
+                        state?.user ? 'block' : 'hidden'
+                      } py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold`}
                     >
                       Login
                     </Link>

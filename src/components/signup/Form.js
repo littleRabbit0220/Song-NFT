@@ -68,12 +68,12 @@ const Form = () => {
       </div>
       <button
         type='submit'
-        className='block w-full h-12 px-4 font-semibold capitalize rounded-md bg-sweetTurquoise hover:bg-opacity-90 text-MoshDark-7'
+        className='block w-full h-12 px-4 font-semibold rounded-md bg-sweetTurquoise hover:bg-opacity-90 text-MoshDark-7'
       >
         {state.loading ? (
           <span className='loader block !text-[5px] mx-auto'></span>
         ) : (
-          'login'
+          'Sign up'
         )}
       </button>
       {showErr && !state.loading && (

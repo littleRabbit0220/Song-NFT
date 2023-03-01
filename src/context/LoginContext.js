@@ -7,7 +7,7 @@ export function LoginProvider({ children }) {
   const router = useRouter();
   const [state, setState] = useState({
     status: false,
-    loading: false,
+    loading: true,
     user: null,
   });
   useEffect(() => {
@@ -21,7 +21,7 @@ export function LoginProvider({ children }) {
     }
 
     setState({
-      status: false,
+      status: true,
       loading: false,
       user: _userData,
     });
