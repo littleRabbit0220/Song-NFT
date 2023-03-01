@@ -40,7 +40,7 @@ const CallToAction = () => {
           width={131}
           src='assets/img/icons/linesPattern.svg'
           alt='lines'
-          className='absolute bottom-0 right-0 md:transform md:-translate-y-1/2 md:top-1/2 '
+          className='absolute bottom-0 right-0 hidden  sm:block md:transform md:-translate-y-1/2 md:top-1/2'
         />
       </div>
     </div>

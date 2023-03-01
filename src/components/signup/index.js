@@ -2,8 +2,18 @@ import Logo from '@/icons/Logo';
 import Link from 'next/link';
 import Form from './Form';
 import SignupSideInfo from './SignupSideInfo';
-
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { LoginContext } from '@/context/LoginContext';
 const SignupForm = () => {
+  const router = useRouter();
+  const { state } = useContext(LoginContext);
+  useEffect(() => {
+    if (state?.user?.idToken) {
+      router.push('/');
+    }
+  }, [state]);
+
   return (
     <div className='overflow-hidden relative min-h-[calc(100vh_-_100px)] md:min-h-[calc(100vh_-_110px)] login-form'>
       <div className='max-w-[1058px] px-5 w-full mx-auto pt-14 md:pt-[73px] pb-14 md:pb-[150px] relative z-[1]'>

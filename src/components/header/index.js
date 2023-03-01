@@ -4,16 +4,18 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import TopMenu from './TopMenu';
 import Button from '../utils/elements/Button';
 import Link from 'next/link';
+import { useContext } from 'react';
+import { LoginContext } from '@/context/LoginContext';
 
 const navigation = [
   { name: 'Current Drop', href: '#' },
   { name: 'Drop Schedule', href: '#' },
   { name: 'Leader Board', href: '#' },
   { name: 'Explore', href: '#' },
-  { name: 'Login', href: '/login' },
 ];
 
 export default function Header() {
+  const { state, logout } = useContext(LoginContext);
   return (
     <header className='mt-5'>
       <TopMenu />
@@ -34,7 +36,7 @@ export default function Header() {
                 </Link>
                 {/* Menu */}
                 <div className='items-center hidden md:flex'>
-                  <ul className='flex'>
+                  <ul className='flex md:items-center'>
                     {navigation.map((item) => (
                       <li className=' lg:mr-4' key={item.name}>
                         <Link
@@ -46,9 +48,29 @@ export default function Header() {
                         </Link>
                       </li>
                     ))}
+                    {state?.user?.idToken ? (
+                      <li>
+                        <button
+                          onClick={() => logout()}
+                          className='py-1.5 px-5 font-bold rounded-md flex items-center capitalize h-11 bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200 '
+                        >
+                          <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
+                          <span className='flex items-center pl-2'>logout</span>
+                        </button>
+                      </li>
+                    ) : (
+                      <li className=' lg:mr-2'>
+                        <Link
+                          href='/login'
+                          className='py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold'
+                        >
+                          Login
+                        </Link>
+                      </li>
+                    )}
                   </ul>
 
-                  <Button className='px-5 py-2 ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
+                  <Button className='px-5 py-2 ml-2.5 font-bold rounded-md md:w-auto text-secondary h-11 bg-sweetTurquoise'>
                     <Image
                       height={24}
                       width={25}
@@ -56,7 +78,7 @@ export default function Header() {
                       src='assets/img/icons/wallet-icon.svg'
                       alt=''
                     />
-                    Connect
+                    <span className='flex items-center'>Connect</span>
                   </Button>
                 </div>
                 {/* Button */}
@@ -95,9 +117,25 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
+                  {state?.user?.idToken ? (
+                    <button
+                      onClick={() => logout()}
+                      className='w-[200px] max-w-full h-12 ml-2 py-1.5 px-5 font-bold rounded-md flex items-center capitalize h-11 bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200 '
+                    >
+                      <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
+                      <span className='flex items-center pl-2'>logout</span>
+                    </button>
+                  ) : (
+                    <Link
+                      href='/login'
+                      className='py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold'
+                    >
+                      Login
+                    </Link>
+                  )}
                   {/* Button */}
                   <div className='pt-2'>
-                    <Button className='px-5 py-2 ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
+                    <Button className='px-5 w-[200px] max-w-full h-12 py-2 ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>
                       <Image
                         height={24}
                         width={25}

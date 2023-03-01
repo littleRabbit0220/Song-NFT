@@ -1,8 +1,18 @@
 import Logo from '@/icons/Logo';
 import Link from 'next/link';
 import Form from './Form';
-
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { LoginContext } from '@/context/LoginContext';
 const LoginForm = () => {
+  const router = useRouter();
+  const { state } = useContext(LoginContext);
+  useEffect(() => {
+    if (state?.user?.idToken) {
+      router.push('/');
+    }
+  }, [state]);
+
   return (
     <div className='overflow-hidden relative min-h-[calc(100vh_-_100px)] md:min-h-[calc(100vh_-_110px)] login-form'>
       <div className='mosh-container-normal pt-14 md:pt-[73px] pb-14 relative z-[1]'>

@@ -77,7 +77,7 @@ const songs = [
 
 const Artists = () => {
   return (
-    <div>
+    <div className='hidden md:block'>
       <h2 className='text-[22px] font-semibold mb-3.5'>
         Songs in This Mix Tape
       </h2>

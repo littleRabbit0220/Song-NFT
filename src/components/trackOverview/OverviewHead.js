@@ -4,9 +4,9 @@ import Image from 'next/image';
 
 const OverviewHead = () => {
   return (
-    <div className='mt-20 bg-white rounded-md mb-[30px] max-w-md md:max-w-full mx-auto md:mx-0'>
+    <div className='mt-20 bg-white rounded-md mb-[30px] max-w-md md:max-w-full'>
       <div className='flex flex-col pb-8 md:items-end md:flex-row'>
-        <div className='flex justify-center -mt-8 overflow-hidden md:pl-6 md:justify-start'>
+        <div className='flex pl-4 -mt-8 overflow-hidden md:pl-6 '>
           <div className='relative inline-block'>
             <Image
               height={127}

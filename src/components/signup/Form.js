@@ -1,7 +1,9 @@
 import { SignupContext } from '@/context/SignupContext';
+import { useRouter } from 'next/router';
 import React, { useContext, useState, useEffect } from 'react';
 
 const Form = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -11,8 +13,10 @@ const Form = () => {
   const { state, signupUser } = useContext(SignupContext);
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowErr(true);
-    signupUser({ email, password });
+    if (email && password) {
+      setShowErr(true);
+      signupUser({ email, password });
+    }
   };
   useEffect(() => {
     state?.user?.kind
@@ -22,6 +26,7 @@ const Form = () => {
     // Set showErr to false after 3 seconds
     const timeoutId = setTimeout(() => {
       setShowErr(false);
+      state?.user?.kind ? router.push('/login') : null;
     }, 3000);
 
     // Clear the timeout when the component is unmounted
@@ -66,7 +71,7 @@ const Form = () => {
         className='block w-full h-12 px-4 font-semibold capitalize rounded-md bg-sweetTurquoise hover:bg-opacity-90 text-MoshDark-7'
       >
         {state.loading ? (
-          <span class='loader block !text-[5px] mx-auto'></span>
+          <span className='loader block !text-[5px] mx-auto'></span>
         ) : (
           'login'
         )}

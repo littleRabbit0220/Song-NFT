@@ -46,8 +46,11 @@ export function SignupProvider({ children }) {
       });
     }
   };
+  const clearSignupState = () => {
+    setState({ status: false, loading: false, user: null });
+  };
   return (
-    <SignupContext.Provider value={{ state, signupUser }}>
+    <SignupContext.Provider value={{ state, signupUser, clearSignupState }}>
       {children}
     </SignupContext.Provider>
   );
