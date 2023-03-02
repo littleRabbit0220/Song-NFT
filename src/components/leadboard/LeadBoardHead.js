@@ -45,15 +45,15 @@ const LeadBoardHead = () => {
         </div>
       </div>
 
-      <div className='py-2 pl-3 select-none md:py-3'>
+      <div className='py-2 pl-3 select-none basis-1/2 sm:basis-auto md:py-3'>
         <div
           onClick={viewByLabelClick}
-          className={`cursor-pointer flex font-open-sans border rounded-[10px] h-[50px] lg:h-[54px] px-[15px] border-white ${
+          className={`cursor-pointer flex justify-between font-open-sans border rounded-[10px] h-[50px] lg:h-[54px] px-[15px] border-white ${
             viewByLabel ? 'border-opacity-25' : 'border-opacity-10'
           } items-center`}
         >
           <span
-            className={`text-white ${
+            className={`text-white text-xs sm:text-base ${
               viewByLabel ? ' text-opacity-100' : ' text-opacity-25'
             } pr-2.5`}
           >
@@ -75,15 +75,15 @@ const LeadBoardHead = () => {
           </Switch>
         </div>
       </div>
-      <div className='py-2 pl-3 select-none md:py-3'>
+      <div className='py-2 pl-3 select-none basis-1/2 sm:basis-auto md:py-3'>
         <div
           onClick={viewByUserClick}
-          className={`cursor-pointer flex font-open-sans border rounded-[10px] h-[50px] lg:h-[54px] px-[15px] border-white ${
+          className={`cursor-pointer flex justify-between font-open-sans border rounded-[10px] h-[50px] lg:h-[54px] px-[15px] border-white ${
             viewByUser ? 'border-opacity-25' : 'border-opacity-10'
           } items-center`}
         >
           <span
-            className={`text-white ${
+            className={`text-white text-xs sm:text-base ${
               viewByUser ? ' text-opacity-100' : ' text-opacity-25'
             } pr-2.5`}
           >
