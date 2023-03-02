@@ -9,7 +9,7 @@ import { LoginContext } from '@/context/LoginContext';
 
 const navigation = [
   { name: 'Current Drop', href: '#' },
-  { name: 'Drop Schedule', href: '#' },
+  { name: 'Drop Schedule', href: '/drop-schedule' },
   { name: 'Leader Board', href: '/leadboard' },
   { name: 'Explore', href: '#' },
 ];
@@ -48,6 +48,33 @@ export default function Header() {
             <span className='flex items-center pl-2'>logout</span>
           </button>
         </li>
+      );
+    }
+  }, [state.user, load]);
+
+  const loginButtonMobile = useMemo(() => {
+    if (!state?.user?.idToken && load) {
+      return (
+        <Link
+          href='/login'
+          className={`${
+            !state?.user ? 'block' : 'hidden'
+          } py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold`}
+        >
+          Login
+        </Link>
+      );
+    } else {
+      return (
+        <button
+          onClick={() => logout()}
+          className={`${
+            state?.user ? 'flex' : 'hidden'
+          }  w-[200px] max-w-full h-12 ml-2 py-1.5 px-5 font-bold rounded-md items-center capitalize  bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200`}
+        >
+          <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
+          <span className='flex items-center pl-2'>logout</span>
+        </button>
       );
     }
   }, [state.user, load]);
@@ -133,26 +160,7 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
-                  {state?.user?.idToken && load ? (
-                    <button
-                      onClick={() => logout()}
-                      className={`${
-                        state?.user ? 'flex' : 'hidden'
-                      }  w-[200px] max-w-full h-12 ml-2 py-1.5 px-5 font-bold rounded-md items-center capitalize  bg-sweetTurquoise text-MoshDark-7 hover:bg-opacity-90 transition duration-200`}
-                    >
-                      <span className='block w-6 h-6 border-2 rounded-full bg-secondary border-white/25'></span>
-                      <span className='flex items-center pl-2'>logout</span>
-                    </button>
-                  ) : (
-                    <Link
-                      href='/login'
-                      className={`${
-                        state?.user ? 'block' : 'hidden'
-                      } py-1.5 px-2 rounded-md text-sm text-white hover:bg-white  hover:bg-opacity-10 transition duration-200 font-bold`}
-                    >
-                      Login
-                    </Link>
-                  )}
+                  {loginButtonMobile}
                   {/* Button */}
                   <div className='pt-2'>
                     <Button className='px-5 w-[200px] max-w-full h-12 py-2 ml-2 font-bold rounded-md md:w-auto text-secondary bg-sweetTurquoise'>

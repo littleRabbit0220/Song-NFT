@@ -12,7 +12,7 @@ export function LoginProvider({ children }) {
   });
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(userInfo);
+
     let _userData = null;
     if (userInfo?.idToken) {
       if (!VerifyJWTExpire(userInfo?.idToken)) {
