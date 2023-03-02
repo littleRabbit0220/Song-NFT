@@ -36,7 +36,7 @@ const NeverMissCTA = () => {
                 href='/signup'
                 className='font-bold flex items-center justify-center bg-white text-MoshDark-7 h-[44px] rounded mt-3 sm:mt-0 sm:ml-2.5 sm:w-auto w-full min-w-[90px] hover:bg-MoshLight-2'
               >
-                Sign up
+                Subscribe
               </Link>
             </form>
           </div>
