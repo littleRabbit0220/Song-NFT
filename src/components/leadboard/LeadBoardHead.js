@@ -30,7 +30,7 @@ const LeadBoardHead = () => {
   };
   return (
     <div className='flex flex-wrap -ml-3 '>
-      <div className='pl-3 py-2 md:py-3 select-none basis-full md:basis-[30%] xl:basis-[20%]'>
+      <div className='pl-3 py-2 md:py-3 select-none basis-full md:basis-[30%] lg:basis-auto xl:basis-[30%]'>
         <div className='flex font-open-sans border rounded-[10px] h-[50px] lg:h-[54px] px-[15px] border-white border-opacity-25 items-center '>
           <button type='submit'>
             <SearchIcon />
@@ -167,7 +167,7 @@ const LeadBoardHead = () => {
           </RadioGroup>
         </div>
       </div>
-      <div className='py-2 pl-3 select-none md:py-3 xl:flex-1'>
+      <div className='flex-grow max-w-xs py-2 pl-3 select-none md:py-3'>
         <div className='relative w-full flex font-open-sans border rounded-[10px] h-[50px] lg:h-[54px] border-white border-opacity-25 items-center'>
           <Listbox value={selectedOrder} onChange={setSelectedOrder}>
             <div className='relative min-w-[200px] w-full h-full'>

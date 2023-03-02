@@ -1,11 +1,12 @@
 import React from 'react';
 import LeadBoardHead from './LeadBoardHead';
 import LeadBoardList from './LeadBoardList';
+import NeverMissCTA from '../NeverMissCTA';
 
 export default function LeadBoard() {
   return (
     <div className='lead-board'>
-      <div className='mosh-container-normal pt-10 lg:pt-[91px]'>
+      <div className='max-w-[1400px] px-5 mx-auto  pt-10 lg:pt-[91px] mb-20 min-h-screen'>
         <h2 className='text-4xl font-bold text-center lg:text-6xl'>
           Leaderboard
         </h2>
@@ -14,6 +15,7 @@ export default function LeadBoard() {
           <LeadBoardList />
         </div>
       </div>
+      <NeverMissCTA />
     </div>
   );
 }
