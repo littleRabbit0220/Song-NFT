@@ -10,7 +10,7 @@ import { LoginContext } from '@/context/LoginContext';
 const navigation = [
   { name: 'Current Drop', href: '#' },
   { name: 'Drop Schedule', href: '#' },
-  { name: 'Leader Board', href: '#' },
+  { name: 'Leader Board', href: '/leadboard' },
   { name: 'Explore', href: '#' },
 ];
 
