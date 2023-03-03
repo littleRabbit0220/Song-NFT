@@ -4,21 +4,21 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import TopMenu from './TopMenu';
 import Button from '../utils/elements/Button';
 import Link from 'next/link';
-import { useContext, useState, useLayoutEffect, useMemo } from 'react';
+import { useContext, useState, useEffect, useMemo } from 'react';
 import { LoginContext } from '@/context/LoginContext';
 
 const navigation = [
   { name: 'Current Drop', href: '#' },
   { name: 'Drop Schedule', href: '/drop-schedule' },
   { name: 'Leader Board', href: '/leadboard' },
-  { name: 'Explore', href: '#' },
+  { name: 'Explore', href: '/explore' },
 ];
 
 export default function Header() {
   const { state, logout } = useContext(LoginContext);
 
   const [load, setLoad] = useState(false);
-  useLayoutEffect(() => {
+  useEffect(() => {
     setLoad(true);
   }, []);
   const loginButton = useMemo(() => {
