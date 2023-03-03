@@ -1,6 +1,7 @@
 import MoshMIcon from '@/icons/MoshMIcon';
 import Image from 'next/image';
 import { FaEllipsisH } from 'react-icons/fa';
+import { truncateText } from '../utils/functions/helpers';
 
 const ExploreSong = ({ i }) => {
   return (
@@ -25,8 +26,8 @@ const ExploreSong = ({ i }) => {
         </button>
       </div>
       <div className='px-1 sm:px-3.5 pt-2.5 sm:pt-5'>
-        <h3 className='mb-1 text-base font-bold truncate sm:mb-2 sm:text-xl font-aril'>
-          Teddy Bear
+        <h3 className='mb-1 text-base font-bold sm:mb-2 sm:text-xl font-aril'>
+          {truncateText('Teddy Bear', 25)}
         </h3>
         <p className='text-[10px] sm:text-sm font-open-sans '>
           <span className='uppercase'>STAYC </span>• Teddy Bear - Single
