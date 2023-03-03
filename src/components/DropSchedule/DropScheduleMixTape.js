@@ -198,7 +198,7 @@ const DropScheduleMixTape = () => {
             <h3 className='font-bold text-[42px] !leading-none mb-6 text-MoshDark-7'>
               March 3rd
             </h3>
-            <button className='bg-white text-MoshDark-7 w-[149px] h-12 rounded font-bold hover:bg-opacity-90 transition duration-200 capitalize'>
+            <button className='bg-MoshDark-7 text-white w-[149px] h-12 rounded font-bold hover:bg-opacity-90 transition duration-200 capitalize'>
               Notify me
             </button>
           </div>
@@ -299,7 +299,7 @@ const DropScheduleMixTape = () => {
             <h3 className='font-bold text-[42px] !leading-none mb-6 text-MoshDark-7'>
               March 17th
             </h3>
-            <button className='bg-white text-MoshDark-7 w-[149px] h-12 rounded font-bold hover:bg-opacity-90 transition duration-200 capitalize'>
+            <button className='bg-MoshDark-7 text-white w-[149px] h-12 rounded font-bold hover:bg-opacity-90 transition duration-200 capitalize'>
               Notify me
             </button>
           </div>
@@ -400,7 +400,7 @@ const DropScheduleMixTape = () => {
             <h3 className='font-bold text-[42px] !leading-none mb-6 text-MoshDark-7'>
               March 28th
             </h3>
-            <button className='bg-white text-MoshDark-7 w-[149px] h-12 rounded font-bold hover:bg-opacity-90 transition duration-200 capitalize'>
+            <button className='bg-MoshDark-7 text-white w-[149px] h-12 rounded font-bold hover:bg-opacity-90 transition duration-200 capitalize'>
               Notify me
             </button>
           </div>

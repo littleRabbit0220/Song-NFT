@@ -26,7 +26,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>20</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='genre1'
                   id='genre1'
@@ -42,7 +42,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>5</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='genre2'
                   id='genre2'
@@ -58,7 +58,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>14</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='genre3'
                   id='genre3'
@@ -90,7 +90,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>20</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='season1'
                   id='season1'
@@ -106,7 +106,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>5</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='season2'
                   id='season2'
@@ -122,7 +122,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>14</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='season3'
                   id='season3'
@@ -172,7 +172,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>20</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='royalty1'
                   id='royalty1'
@@ -188,7 +188,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>5</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='royalty2'
                   id='royalty2'
@@ -204,7 +204,7 @@ const ExploreSidebar = () => {
                   <span className='pl-1.5 opacity-50'>14</span>
                 </span>
                 <input
-                  class='custom-checkbox'
+                  className='custom-checkbox'
                   type='checkbox'
                   name='royalty3'
                   id='royalty3'
