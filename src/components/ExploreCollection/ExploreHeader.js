@@ -40,11 +40,11 @@ const ExploreHeader = () => {
         </div>
 
         <Popover className='relative block ml-auto md:hidden'>
-          <Popover.Button className='p-2 border rounded border-white/25 text-MoshLight-1'>
+          <Popover.Button className='p-2 border rounded border-white/25 text-MoshLight-1 '>
             <IoMdOptions />
           </Popover.Button>
 
-          <Popover.Panel className='absolute z-10 top-9 right-[calc(100%_-_35px)] min-w-[200px] border-white/10 border rounded'>
+          <Popover.Panel className=' absolute z-10 top-9 right-[calc(100%_-_35px)] min-w-[200px] border-white/10 border rounded'>
             <ExploreSidebar />
           </Popover.Panel>
         </Popover>
@@ -146,7 +146,7 @@ const ExploreHeader = () => {
                     leaveFrom='opacity-100'
                     leaveTo='opacity-0'
                   >
-                    <Listbox.Options className='absolute w-full py-1 mt-1 overflow-auto text-base text-white border rounded-md shadow-lg border-white/25 bg-MoshDark-7 max-h-60'>
+                    <Listbox.Options className='absolute z-10 w-full py-1 mt-1 overflow-auto text-base text-white border rounded-md shadow-lg border-white/25 bg-MoshDark-7 max-h-60'>
                       {orderList.map((person, personIdx) => (
                         <Listbox.Option
                           key={personIdx}
@@ -200,7 +200,7 @@ const ExploreHeader = () => {
                     leaveFrom='opacity-100'
                     leaveTo='opacity-0'
                   >
-                    <Listbox.Options className='absolute w-full py-1 mt-1 overflow-auto text-base text-white border rounded-md shadow-lg border-white/25 bg-MoshDark-7 max-h-60'>
+                    <Listbox.Options className='absolute z-10 w-full py-1 mt-1 overflow-auto text-base text-white border rounded-md shadow-lg border-white/25 bg-MoshDark-7 max-h-60'>
                       {timePeriod.map((person, personIdx) => (
                         <Listbox.Option
                           key={personIdx}
