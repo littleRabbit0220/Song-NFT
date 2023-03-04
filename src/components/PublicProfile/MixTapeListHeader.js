@@ -23,7 +23,7 @@ const MixTapeListHeader = () => {
     setViewByUser(!viewByUser);
   };
   return (
-    <div className='mt-4 mosh-container-normal z-[1] relative'>
+    <div className='mt-4 mosh-container-normal z-[5] relative'>
       <div className='flex mb-2 md:mb-0'>
         <h2 className='text-[22px]'>Mix Tapes Owned</h2>
       </div>

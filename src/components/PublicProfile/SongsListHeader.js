@@ -23,7 +23,7 @@ const SongsListHeader = () => {
     setViewByUser(!viewByUser);
   };
   return (
-    <div className='mosh-container-normal z-[1] relative'>
+    <div className='mosh-container-normal z-[5] relative'>
       <div className='flex mb-2 md:mb-0'>
         <h2 className='text-[22px]'>Songs</h2>
       </div>
