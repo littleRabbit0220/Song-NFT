@@ -6,7 +6,7 @@ import SongsListHeader from './SongsListHeader';
 
 const PublicProfile = () => {
   return (
-    <div className='relative z-[1]'>
+    <div className='relative z-[1] overflow-x-hidden'>
       <PublicProfileCard />
       <SongsListHeader />
       <OwnedSongsList />
