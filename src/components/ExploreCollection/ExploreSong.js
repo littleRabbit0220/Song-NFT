@@ -35,7 +35,7 @@ const ExploreSong = ({ song }) => {
           <span className='uppercase'>
             {song?.type === 'Tape' ? song.date : 'STAYC'}{' '}
           </span>{' '}
-          • {song?.type === 'Tape' ? song.count + ' songs' : 'STAYC'}
+          •{' '}
           {song?.type === 'Tape' ? ' ' + song.duration : 'Teddy Bear - Single'}
         </p>
       </div>

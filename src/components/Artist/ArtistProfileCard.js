@@ -1,7 +1,9 @@
 import BellIcon from '@/icons/BellIcon';
+import MusicTuneIcon from '@/icons/MusicTuneIcon';
+import SpotifyIcon from '@/icons/SpotifyIcon';
 import Image from 'next/image';
 
-const PublicProfileCard = () => {
+const ArtistProfileCard = () => {
   return (
     <div className='mosh-container-normal relative z-[1] my-10 '>
       <div className='bg-MoshDark-7 px-[20px] py-[25px] md:px-[30px] md:py-[35px] rounded-xl flex lg:flex-row flex-col'>
@@ -37,12 +39,19 @@ const PublicProfileCard = () => {
               gritty vocals and soaring guitar solos, delivering honest and
               powerful songs that leave a lasting impression.
             </p>
-            <div className='flex mt-5'>
-              <button className='flex items-center justify-center w-10 h-10 bg-white rounded-[5px]'>
-                <BellIcon />
+            <div className='flex mt-5 '>
+              <button className='bg-gradient-to-b from-[#FD355A] to-[#FD5163] flex items-center justify-center w-9 h-10 sm:w-10 sm:h-10 rounded-[5px] group'>
+                <MusicTuneIcon className='w-6 transition duration-200 ease-in-out transform sm:w-auto group-hover:scale-90' />
               </button>
-              <button className='rounded-[5px] h-10 min-w-[121px] border-white border ml-3 hover:bg-primary/10 transition ease-in-out duration-200'>
+              <button className='flex items-center justify-center w-9 h-10 sm:w-10 sm:h-10 bg-[#2EBD59] rounded-[5px] ml-2.5 group'>
+                <SpotifyIcon className='w-6 transition duration-200 ease-in-out transform sm:w-auto group-hover:scale-90' />
+              </button>
+
+              <button className='rounded-[5px] h-10 min-w-[100px] sm:min-w-[121px] border-white border ml-2.5 hover:bg-primary/10 transition ease-in-out duration-200'>
                 Follow
+              </button>
+              <button className='flex items-center justify-center w-9 h-10 sm:w-10 sm:h-10 bg-white rounded-[5px] ml-2.5 group'>
+                <BellIcon className='w-6 transition duration-200 ease-in-out transform sm:w-auto group-hover:scale-90' />
               </button>
             </div>
           </div>
@@ -83,5 +92,5 @@ const PublicProfileCard = () => {
   );
 };
 
-export default PublicProfileCard;
+export default ArtistProfileCard;
 0;
