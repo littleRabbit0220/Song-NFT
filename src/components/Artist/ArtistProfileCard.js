@@ -40,17 +40,17 @@ const ArtistProfileCard = () => {
               powerful songs that leave a lasting impression.
             </p>
             <div className='flex mt-5 '>
-              <button className='bg-gradient-to-b from-[#FD355A] to-[#FD5163] flex items-center justify-center w-9 h-10 sm:w-10 sm:h-10 rounded-[5px] group'>
+              <button className='bg-gradient-to-b from-[#FD355A] to-[#FD5163] flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 rounded-[5px] group'>
                 <MusicTuneIcon className='w-6 transition duration-200 ease-in-out transform sm:w-auto group-hover:scale-90' />
               </button>
-              <button className='flex items-center justify-center w-9 h-10 sm:w-10 sm:h-10 bg-[#2EBD59] rounded-[5px] ml-2.5 group'>
+              <button className='flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 bg-[#2EBD59] rounded-[5px] ml-2.5 group'>
                 <SpotifyIcon className='w-6 transition duration-200 ease-in-out transform sm:w-auto group-hover:scale-90' />
               </button>
 
               <button className='rounded-[5px] h-10 min-w-[100px] sm:min-w-[121px] border-white border ml-2.5 hover:bg-primary/10 transition ease-in-out duration-200'>
                 Follow
               </button>
-              <button className='flex items-center justify-center w-9 h-10 sm:w-10 sm:h-10 bg-white rounded-[5px] ml-2.5 group'>
+              <button className='flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 bg-white rounded-[5px] ml-2.5 group'>
                 <BellIcon className='w-6 transition duration-200 ease-in-out transform sm:w-auto group-hover:scale-90' />
               </button>
             </div>
