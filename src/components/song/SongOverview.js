@@ -1,9 +1,9 @@
 import MoshMIcon from '@/icons/MoshMIcon';
 import Image from 'next/image';
 
-const OverviewHead = () => {
+const SongOverview = () => {
   return (
-    <div className='mt-20 bg-white rounded-md mb-[30px] max-w-md md:max-w-full'>
+    <div className='mt-24 bg-white rounded-md mb-[30px] max-w-md md:max-w-full  '>
       <div className='flex flex-col pb-8 md:items-end md:flex-row'>
         <div className='flex pl-4 -mt-8 overflow-hidden md:pl-6 '>
           <div className='relative inline-block'>
@@ -31,30 +31,30 @@ const OverviewHead = () => {
               Play Song
             </button>
             {/* track pack */}
-            <button className='hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   px-1.5 text-lg sm:text-base w-[200px] sm:w-[175px] '>
+            <button className='hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   px-1.5 text-lg sm:text-base pr-5 '>
               <MoshMIcon className='w-10 h-10 ' />
-              <span className='pl-2 font-bold font-suisse-intl'>Mix Tapes</span>
+              <span className='pl-2 font-bold font-suisse-intl'>Single</span>
             </button>
           </div>
         </div>
 
         <div className='pl-4 pr-4 mt-6 md:pb-3 md:pl-6 text-MoshDark-7 md:pr-0 md:mt-0'>
-          <p className='mb-3.5 text-sm font-bold font-aril flex items-center'>
+          <p className='flex items-center mb-3 text-sm font-bold font-aril'>
             Season #3
           </p>
           <h2 className='text-3xl sm:text-[42px] font-bold  !leading-[110%] flex items-center'>
-            Bad Apples
+            Song Name
           </h2>
 
           <div className='flex flex-wrap space-x-2 text-sm font-open-sans'>
-            <span className='flex mt-3.5 '>
+            <span className='flex mt-3'>
               <MoshMIcon className='w-6 h-6' />
-              <span className='font-black pl-1.5 flex items-center'>Mosh</span>
+              <span className='font-black pl-1.5 flex items-center'>
+                Artist Name
+              </span>
             </span>
-            <span className='mt-3.5 flex items-center'>2023</span>
-            <span className='mt-3.5 flex items-center'>
-              • 20 songs, 57 min 11 sec
-            </span>
+            <span className='flex items-center mt-3'> • 2023</span>
+            <span className='flex items-center mt-3'>Album Name</span>
           </div>
         </div>
       </div>
@@ -62,4 +62,4 @@ const OverviewHead = () => {
   );
 };
 
-export default OverviewHead;
+export default SongOverview;
