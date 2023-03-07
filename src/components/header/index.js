@@ -79,7 +79,7 @@ export default function Header() {
     }
   }, [state.user, load]);
   return (
-    <header className='mt-5'>
+    <header className='relative z-10 mt-5'>
       <TopMenu />
       <Disclosure as='nav'>
         {({ open }) => (

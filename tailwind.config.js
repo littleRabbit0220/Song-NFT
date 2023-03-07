@@ -12,6 +12,7 @@ module.exports = {
       'open-sans': ['"Open Sans"', 'sans-serif'],
       aril: ['Aril', 'Helvetica', 'Arial', 'sans-serif'],
       kint: 'kint',
+      orbitron: ['"Orbitron"', 'sans-serif'],
     },
 
     container: {
