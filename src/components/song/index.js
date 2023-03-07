@@ -6,7 +6,7 @@ import SongOverview from './SongOverview';
 
 export const Song = () => {
   return (
-    <div className=' relative z-[1]'>
+    <div className=' relative z-[1] overflow-x-hidden'>
       <div
         aria-hidden='true'
         className='absolute z-0 transform rounded-full opacity-50 -left-[400px] blur-lg -top-20'
