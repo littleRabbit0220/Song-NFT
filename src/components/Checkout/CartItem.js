@@ -6,13 +6,13 @@ import { FaPlay } from 'react-icons/fa';
 const CartItem = () => {
   return (
     <div>
-      <div className='relative inline-block'>
+      <div className='relative inline-block mb-6'>
         <Image
-          height={127}
-          width={216}
-          className='w-[216px] max-w-full'
+          height={260}
+          width={260}
+          className='w-[260px] max-w-full'
           src='/assets/img/tracks/vol2-flow-futurama.png'
-          alt=''
+          alt='vol2'
         />
 
         {/* track pack */}
@@ -22,12 +22,16 @@ const CartItem = () => {
         </button>
       </div>
       <h2 className='text-2xl font-bold '>Bad Apples</h2>
-      <div>
+      <div className='my-3.5'>
         <span className='bg-white text-[#6E232E] uppercase font-open-sans text-xs rounded font-medium px-2.5 py-1 tracking-widest'>
           Price
         </span>
         <span className='ml-2 text-sm font-aril'> • $100 USD</span>
       </div>
+      <p className='text-sm font-open-sans '>
+        Track Available
+        <strong className='pl-2'>20</strong>
+      </p>
     </div>
   );
 };

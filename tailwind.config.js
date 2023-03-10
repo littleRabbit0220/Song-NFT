@@ -22,6 +22,8 @@ module.exports = {
       boxShadow: {
         1: '0px 14px 35px rgba(0, 0, 0, 0.1)',
         login: '12px 16px 24px rgba(0, 0, 0, 0.24)',
+        borderInactive: '0 0 0 1px #D4D3D6',
+        borderActive: '0 0 0 2px #F05E25',
         none: 'none',
       },
       gradientColorStops: {
