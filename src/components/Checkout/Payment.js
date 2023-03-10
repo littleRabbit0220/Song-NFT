@@ -109,7 +109,7 @@ const Payment = () => {
                 />
                 <div className='pl-5 font-open-sans'>
                   <p className='text-sm sm:text-lg'>Revolut Master Card</p>
-                  <p className='text-sm font-bold opacity-60 sm:text-base'>
+                  <p className='mt-1 text-sm font-bold opacity-60 sm:text-base'>
                     Debit ••89
                   </p>
                 </div>
@@ -140,7 +140,7 @@ const Payment = () => {
                 />
                 <div className='pl-5 font-open-sans'>
                   <p className='text-sm sm:text-lg'>Discover it</p>
-                  <p className='text-sm font-bold opacity-60 sm:text-base'>
+                  <p className='mt-1 text-sm font-bold opacity-60 sm:text-base'>
                     Debit ••89
                   </p>
                 </div>
@@ -165,7 +165,7 @@ const Payment = () => {
                 />
                 <div className='pl-5 font-open-sans'>
                   <p className='text-sm sm:text-lg'>Citibank Debit</p>
-                  <p className='text-sm font-bold opacity-60 sm:text-base'>
+                  <p className='mt-1 text-sm font-bold opacity-60 sm:text-base'>
                     Debit ••89
                   </p>
                 </div>
