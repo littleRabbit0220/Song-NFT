@@ -6,7 +6,6 @@ import VisaCardIcon from '@/icons/VisaCardIcon';
 import GooglePlayIcon from '@/icons/GooglePlayIcon';
 import ApplePayIcon from '@/icons/ApplePayIcon';
 import AmericanPayIcon from '@/icons/AmericanPayIcon';
-// import ProductQty from './ProductQty';
 import VerifiedIcon from '@/icons/VerifiedIcon';
 import USDCIcon from '@/icons/USDCIcon';
 import MaticIcon from '@/icons/MaticIcon';
@@ -17,44 +16,6 @@ const TrackDetails = () => {
     if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      //this is for only allow on Binance testnet
-      // const chainId = await provider.send('eth_chainId');
-      // if (chainId !== '0x61') {
-
-      //   // Switch to the desired chain ID
-      //   try {
-      //     await window.ethereum.request({
-      //       method: 'wallet_switchEthereumChain',
-      //       params: [{ chainId: '0x61' }],
-      //     });
-      //     window.ethereum.on('chainChanged', (chainId) => {
-      //       // reload the page
-      //       window.location.reload();
-      //     });
-      //   } catch (switchError) {
-      //     if (switchError.code === 4902) {
-      //       try {
-      //         await window.ethereum.request({
-      //           method: 'wallet_switchEthereumChain',
-      //           params: [{
-      //             chainId: '0x61',
-      //             rpcUrls: [' https://data-seed-prebsc-1-s1.binance.org:8545/'],
-      //             chainName: ' Smart Chain - Testnet',
-      //             nativeCurrency: {
-      //               name: 'BNB',
-      //               symbol: 'BNB',
-      //               decimals: 18
-      //             },
-      //           }],
-      //         });
-      //       } catch (addError) {
-      //         console.log(addError);
-      //       }
-      //     } else {
-      //       console.log(switchError);
-      //     }
-      //   }
-      // }
       const signer = provider.getSigner();
       try {
         const TrackPackNFTContract = new ethers.Contract(data.address, data.abi, signer)
@@ -65,7 +26,6 @@ const TrackDetails = () => {
       } catch (error) {
         alert(error)
       }
-
     } else {
       alert("install wallet")
     }
@@ -123,7 +83,6 @@ const TrackDetails = () => {
           <strong>200 out of 2,500 remaining</strong>
         </p>
       </div>
-      {/* <ProductQty /> */}
       <div className='flex flex-col flex-wrap my-6 sm:flex-row'>
         <Button className='justify-center px-4 py-3 bg-primary font-suisse-intl sm:justify-start' onClick={handleBuyWithCypto} >
           <span className='flex items-center'>
