@@ -16,6 +16,7 @@ const TrackDetails = () => {
   async function handleBuyWithCypto() {
     if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       //this is for only allow on Binance testnet
       // const chainId = await provider.send('eth_chainId');
       // if (chainId !== '0x61') {
@@ -54,7 +55,6 @@ const TrackDetails = () => {
       //     }
       //   }
       // }
-
       const signer = provider.getSigner();
       try {
         const TrackPackNFTContract = new ethers.Contract(data.address, data.abi, signer)
