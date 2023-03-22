@@ -9,6 +9,8 @@ export function LoginProvider({ children }) {
     status: false,
     loading: true,
     user: null,
+    error:null,
+    message:null
   });
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -26,7 +28,6 @@ export function LoginProvider({ children }) {
       user: _userData,
     });
   }, []);
-  console.log(state);
   const loginUser = async ({ email, password }) => {
     setState({ status: false, loading: true, user: null, error: null });
 
@@ -38,7 +39,6 @@ export function LoginProvider({ children }) {
         },
         body: JSON.stringify({ email, password }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         setState({
@@ -66,6 +66,51 @@ export function LoginProvider({ children }) {
       });
     }
   };
+
+  // forgot password
+  const forgotPassword = async ({ email }) => {
+    setState({ status: false, loading: true, user: null, error: null });
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/reset-password/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        setState({
+          status: false,
+          loading: false,
+          user: null,
+          error: responseData.error,
+        });
+      } else {
+        if (typeof responseData === 'string' || responseData instanceof String){
+          setState({
+            status: false,
+            loading: false,
+            error: responseData.split("_").join(" ").toUpperCase(),
+          });
+        }else{
+          setState({
+            status: true,
+            loading: false,
+            message:"RESET PASSWORD LINK SENT TO YOUR MAIL"
+          });
+        }
+      }
+    } catch (error) {
+      setState({
+        status: false,
+        loading: false,
+        user: null,
+        error: error.message,
+      });
+    }
+  };
+
   // logout user
   const logout = () => {
     localStorage.removeItem('userInfo');
@@ -79,7 +124,7 @@ export function LoginProvider({ children }) {
   };
 
   return (
-    <LoginContext.Provider value={{ state, loginUser, logout }}>
+    <LoginContext.Provider value={{ state, loginUser,forgotPassword, logout }}>
       {children}
     </LoginContext.Provider>
   );
