@@ -1,6 +1,7 @@
 import { SignupContext } from '@/context/SignupContext';
 import { useRouter } from 'next/router';
 import React, { useContext, useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const Form = () => {
   const router = useRouter();
@@ -78,16 +79,17 @@ const Form = () => {
       </button>
       {showErr && !state.loading && (
         <span
-          className={`block p-3 mt-4 text-xs ${
-            state?.user?.kind ? 'bg-green-500' : ' bg-red-500'
-          } rounded text-MoshLight-2 bg-opacity-40 font-open-sans`}
+          className={`block p-3 mt-4 text-xs ${state?.user?.kind ? 'bg-green-500' : ' bg-red-500'
+            } rounded text-MoshLight-2 bg-opacity-40 font-open-sans`}
         >
           {errMsg}
         </span>
       )}
-      <p className='my-4 text-sm text-center text-MoshLight-1 '>
-        Forgot your password?
-      </p>
+      <Link href='/forget-password' className='text-primary'>
+        <p className='my-4 text-sm text-center text-MoshLight-1 '>
+          Forgot your password?
+        </p>
+      </Link>
       <div className='mb-4 text-center'>
         <span className='px-5 bg-sweetDark'>or</span>
         <div className='bg-MoshLight-1 h-[1px] mt-[-15px]'></div>

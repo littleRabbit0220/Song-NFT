@@ -1,7 +1,9 @@
-import VerifyJWTExpire from '@/components/utils/functions/VerifyJWTExpire';
-import { useRouter } from 'next/router';
-import { createContext, useState } from 'react';
-import React, { useEffect } from 'react';
+import VerifyJWTExpire from "@/components/utils/functions/VerifyJWTExpire";
+import { useRouter } from "next/router";
+import { createContext, useState } from "react";
+import React, { useEffect } from "react";
+import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
+
 export const LoginContext = createContext();
 export function LoginProvider({ children }) {
   const router = useRouter();
@@ -9,9 +11,11 @@ export function LoginProvider({ children }) {
     status: false,
     loading: true,
     user: null,
+    error: null,
+    message: null,
   });
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     let _userData = null;
     if (userInfo?.idToken) {
@@ -26,19 +30,18 @@ export function LoginProvider({ children }) {
       user: _userData,
     });
   }, []);
-  console.log(state);
+
   const loginUser = async ({ email, password }) => {
     setState({ status: false, loading: true, user: null, error: null });
 
     try {
       const response = await fetch(`${process.env.HOST_URL}/login/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         setState({
@@ -55,31 +58,108 @@ export function LoginProvider({ children }) {
           user: userData,
           error: null,
         });
-        localStorage.setItem('userInfo', JSON.stringify(userData));
+        localStorage.setItem("userInfo", JSON.stringify(userData));
       }
     } catch (error) {
       setState({
         status: false,
         loading: false,
         user: null,
-        error: 'An error occurred while signing up. Please try again later.',
+        error: "An error occurred while signing up. Please try again later.",
       });
     }
   };
+
+  // forgot password
+  const forgotPassword = async ({ email }) => {
+    setState({ status: false, loading: true, user: null, error: null });
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/reset-password/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const responseData = await response.json();
+      console.log(responseData, "response");
+      if (!response.ok) {
+        setState({
+          status: false,
+          loading: false,
+          user: null,
+          error: responseData.error,
+        });
+      } else {
+        if (
+          typeof responseData === "string" ||
+          responseData instanceof String
+        ) {
+          setState({
+            status: false,
+            loading: false,
+            error: responseData.split("_").join(" ").toUpperCase(),
+          });
+        } else {
+          setState({
+            status: true,
+            loading: false,
+            message: "RESET PASSWORD LINK SENT TO YOUR MAIL",
+          });
+        }
+      }
+    } catch (error) {
+      setState({
+        status: false,
+        loading: false,
+        user: null,
+        error: error.message,
+      });
+    }
+  };
+
+  // reset password
+  const resetPassword = async (data) => {
+    setState({ status: false, loading: true, user: null, error: null });
+    try {
+      const { auth, actionCode, newPassword } = data;
+      setState({ status: false, loading: true, user: null, error: null });
+      const email = await verifyPasswordResetCode(auth, actionCode);
+      const response =  await confirmPasswordReset(auth, actionCode, newPassword);
+      if(email){
+        setState({
+          status: true,
+          loading: false,
+          message: "password changed successfully",
+        });
+      }
+    } catch (error) {
+      setState({
+        status: false,
+        loading: false,
+        user: null,
+        error: error.message,
+      });
+      console.log("error message >", error.message);
+    }
+  };
+
   // logout user
   const logout = () => {
-    localStorage.removeItem('userInfo');
+    localStorage.removeItem("userInfo");
     setState({
       state: false,
       loading: false,
       user: null,
       error: null,
     });
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
-    <LoginContext.Provider value={{ state, loginUser, logout }}>
+    <LoginContext.Provider
+      value={{ state, loginUser, forgotPassword, logout, resetPassword }}
+    >
       {children}
     </LoginContext.Provider>
   );
