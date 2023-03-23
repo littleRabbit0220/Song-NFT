@@ -7,19 +7,11 @@ const Form = () => {
   const { state, forgotPassword } = useContext(LoginContext);
   const [email, setEmail] = useState('');
 
-  const validateEmail = (email) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return (true)
-    }
-    alert("You have entered an invalid email address!")
-    return (false)
-  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    // console.log("validateEmail", validateEmail(email))
     if (email) {
-      forgotPassword({ email });
+     const data=await forgotPassword({ email });
     }
   };
 
