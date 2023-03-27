@@ -4,16 +4,22 @@ import React, { useContext, useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const Form = () => {
-  const { state, forgotPassword } = useContext(LoginContext);
+  const { state,setState, forgotPassword } = useContext(LoginContext);
   const [email, setEmail] = useState('');
 
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-    if (email) {
-     const data=await forgotPassword({ email });
-    }
+     if(!email){
+        setState({ status: false, loading: false, user: null, error: "plese enter email address" });
+      }else{
+        const data=await forgotPassword({ email });
+      }
   };
+
+  useEffect(()=>{
+    return (setState({ status: false, loading: false, user: null, error: null }))
+  },[])
 
   return (
     <form onSubmit={handleSubmit} className='mt-4'>
@@ -21,9 +27,8 @@ const Form = () => {
         <input  
           className='w-full h-12 px-4 rounded-md bg-MoshLight-1 focus:bg-MoshLight-2 focus:outline-none text-sweetDark placeholder:text-sweetDark'
           type='text'
-          name='username'
-          id='username'
-          placeholder='Email address or username'
+          name='email'
+          placeholder='Email address'
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -35,7 +40,7 @@ const Form = () => {
         {state.loading ? (
           <span className='loader block !text-[5px] mx-auto'></span>
         ) : (
-          'Verify Email'
+          'Send Link'
         )}
       </button>
       {!state.loading && state.error && (
@@ -61,7 +66,7 @@ const Form = () => {
       <div className='pt-4'>
         <Link href='/login' className='text-primary'>
           <button className='block w-full h-12 px-4 text-center border rounded-md bg-MoshDark-6 border-MoshDark-6 focus:outline-none '>
-            Back
+            Back to login
           </button>
         </Link>
       </div>

@@ -8,13 +8,12 @@ import { getAuth } from "firebase/auth";
 const Form = () => {
   const router = useRouter();
 
-  const { state, resetPassword } = useContext(LoginContext);
+  const { state, setState, resetPassword } = useContext(LoginContext);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [obCode, setObCode] = useState("");
   const [matchError, setMatchError] = useState("");
 
-  console.log(process.env.FIREBASE_API_KEY)
   const getAuthConfigs = () => {
     const config = {
       apiKey: process.env.FIREBASE_API_KEY,
@@ -29,13 +28,14 @@ const Form = () => {
     if (validatePassword()) {
       const auth = getAuthConfigs();
       if (password && obCode && auth) {
-        const data = { actionCode: obCode, newPassword: password, auth: auth };
-        await resetPassword(data);
-        if (state.status && !state.error) {
+        await resetPassword(obCode,password,auth );
+        if (state.status && state.error==null ) {
           setTimeout(() => {
             router.push("/login");
           }, [2000]);
         }
+      }else{
+        setMatchError("actionCode ! is not found")
       }
     }
   };
@@ -72,6 +72,10 @@ const Form = () => {
     }
   };
 
+  useEffect(() => {
+    return setState({ status: false, loading: false, user: null, error: null });
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className="mt-4">
       <div>
@@ -79,8 +83,7 @@ const Form = () => {
           className="w-full h-12 px-4 rounded-md bg-MoshLight-1 focus:bg-MoshLight-2 focus:outline-none text-sweetDark placeholder:text-sweetDark"
           type="password"
           name="Password"
-          id="Password"
-          placeholder="new password"
+          placeholder="New password"
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
@@ -89,8 +92,7 @@ const Form = () => {
           className="w-full h-12 px-4 rounded-md bg-MoshLight-1 focus:bg-MoshLight-2 focus:outline-none text-sweetDark placeholder:text-sweetDark"
           type="password"
           name="cofirmPassword"
-          id="cofirmPassword"
-          placeholder="confirm password"
+          placeholder="Confirm password"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </div>
@@ -135,7 +137,7 @@ const Form = () => {
       <div className="pt-4">
         <Link href="/forget-password" className="text-primary">
           <button className="block w-full h-12 px-4 text-center border rounded-md bg-MoshDark-6 border-MoshDark-6 focus:outline-none ">
-            Back
+            Back to verify E-mail
           </button>
         </Link>
       </div>

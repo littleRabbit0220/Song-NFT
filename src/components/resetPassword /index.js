@@ -21,8 +21,8 @@ const ResetPwdForm = () => {
           <div className="text-center">
             <Logo className="mx-auto" width={250} />
           </div>
-          <p className="mt-4 text-sm text-center  px-3 max-w-[340px] mx-auto !leading-relaxed">
-            Enter new password here .
+          <p className="mt-4 text-lg text-center  px-3 max-w-[340px] mx-auto !leading-relaxed">
+           Create New Password
           </p>
           <Form />
           <p className="py-5 mt-4 text-sm text-center text-MoshLight-1">
@@ -30,13 +30,6 @@ const ResetPwdForm = () => {
             and consent to its{" "}
             <Link href="/" className="!leading-relaxed text-primary">
               Privacy Policy
-            </Link>
-            .
-          </p>
-          <p className="text-center !leading-relaxed text-sm">
-            Don&rsquo;t have an account?{" "}
-            <Link href="/signup" className="text-primary">
-              Sign up
             </Link>
           </p>
         </div>
