@@ -4,9 +4,12 @@ import Form from './Form';
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { LoginContext } from '@/context/LoginContext';
+
 const ForgetPwdForm = () => {
   const router = useRouter();
+
   const { state } = useContext(LoginContext);
+  
   useEffect(() => {
     if (state?.user?.idToken) {
       router.push('/');
@@ -21,7 +24,7 @@ const ForgetPwdForm = () => {
             <Logo className='mx-auto' width={250} />
           </div>
           <p className='mt-4 text-sm text-center  px-3 max-w-[340px] mx-auto !leading-relaxed'>
-             Enter email address for password .
+            Enter your email that you used to register your account , so we can send you a link to reset password
           </p>
           <Form />
           <p className='py-5 mt-4 text-sm text-center text-MoshLight-1'>
@@ -31,12 +34,6 @@ const ForgetPwdForm = () => {
               Privacy Policy
             </Link>
             .
-          </p>
-          <p className='text-center !leading-relaxed text-sm'>
-            Don&rsquo;t have an account?{' '}
-            <Link href='/signup' className='text-primary'>
-              Sign up
-            </Link>
           </p>
         </div>
       </div>

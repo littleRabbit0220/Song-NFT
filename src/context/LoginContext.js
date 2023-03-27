@@ -105,6 +105,7 @@ export function LoginProvider({ children }) {
             status: true,
             loading: false,
             message: "RESET PASSWORD LINK SENT TO YOUR MAIL",
+            error: null
           });
         }
       }
@@ -119,18 +120,21 @@ export function LoginProvider({ children }) {
   };
 
   // reset password
-  const resetPassword = async (data) => {
+  const resetPassword = async (actionCode,newPassword,auth) => {
     setState({ status: false, loading: true, user: null, error: null });
     try {
-      const { auth, actionCode, newPassword } = data;
-      setState({ status: false, loading: true, user: null, error: null });
       const email = await verifyPasswordResetCode(auth, actionCode);
-      const response =  await confirmPasswordReset(auth, actionCode, newPassword);
-      if(email){
+      if (email) {
+      const response = await confirmPasswordReset(
+        auth,
+        actionCode,
+        newPassword
+      );
         setState({
           status: true,
           loading: false,
-          message: "password changed successfully",
+          message: "Password changed successfully",
+          error: null
         });
       }
     } catch (error) {
@@ -140,7 +144,6 @@ export function LoginProvider({ children }) {
         user: null,
         error: error.message,
       });
-      console.log("error message >", error.message);
     }
   };
 
@@ -158,7 +161,14 @@ export function LoginProvider({ children }) {
 
   return (
     <LoginContext.Provider
-      value={{ state, loginUser, forgotPassword, logout, resetPassword }}
+      value={{
+        state,
+        setState,
+        loginUser,
+        forgotPassword,
+        logout,
+        resetPassword,
+      }}
     >
       {children}
     </LoginContext.Provider>
