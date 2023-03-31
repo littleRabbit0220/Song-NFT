@@ -66,7 +66,7 @@ const PublicProfile = () => {
   }, [state]);
 
   return (
-    <div className="relative z-[1] overflow-x-hidden">
+    <div className="relative z-[1]">
       {/* <div>
         {state.error && (
           <span
