@@ -1,16 +1,30 @@
 import BellIcon from "@/icons/BellIcon";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PublicProfileCard = ({ profile }) => {
   const [track, setTrack] = useState(null);
 
-  useState(() => {
+  useEffect(() => {
     if (profile?.attributes) {
-      const attributesData = JSON.parse(profile.attributes);
+      const attributesData = JSON.parse(profile.attributes).map((val)=> {return val});
       setTrack(attributesData);
     }
   }, [profile]);
+
+  const trackDetails=()=>{
+   const trackData=track?.map((val,index)=>{
+      return(
+           <ul key={index}>
+             <li className="flex items-center justify-between mb-5">
+              <span className="tracking-widest uppercase">{val.trait_type}</span>
+              <span>{val.value}</span>
+            </li>
+           </ul>  
+      )
+    })
+    return trackData
+  }
 
   return (
     <div className="mosh-container-normal relative z-[1] my-10 ">
@@ -56,35 +70,9 @@ const PublicProfileCard = ({ profile }) => {
           </div>
         </div>
         <div className="basis-full mt-6 lg:mt-0 w-full lg:w-[30%] lg:basis-[30%] ml-auto text-sm">
-          <ul>
-            <li className="flex items-center justify-between mb-5">
-              <span className="tracking-widest uppercase">songs owned</span>
-              <span>13</span>
-            </li>
-            <li className="flex items-center justify-between mb-5">
-              <span className="tracking-widest uppercase">Mix taped owned</span>
-              <span className="opacity-50">Coming soon</span>
-            </li>
-
-            <li className="flex items-center justify-between mb-5">
-              <span className="tracking-widest uppercase">
-                Royalties earned
-              </span>
-              <span>$1.203</span>
-            </li>
-
-            <li className="flex items-center justify-between mb-5">
-              <span className="tracking-widest uppercase">
-                Best performing song
-              </span>
-              <span>1</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="tracking-widest uppercase">Labels</span>
-              <span className="opacity-50">Coming soon</span>
-            </li>
-          </ul>
+         {track && trackDetails()}
         </div>
+        
       </div>
     </div>
   );

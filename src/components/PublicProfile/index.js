@@ -5,67 +5,130 @@ import OwnedSongsList from "./OwnedSongsList";
 import OwnedTapesList from "./OwnedTapesList";
 import PublicProfileCard from "./PublicProfileCard";
 import SongsListHeader from "./SongsListHeader";
-import { FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/router";
+import ClipLoader from "react-spinners/SyncLoader";
+import VerifyJWTExpire from "@/components/utils/functions/VerifyJWTExpire";
 
 const PublicProfile = () => {
   const router = useRouter();
   const { state, getNftData, getSingleNftData } = useContext(UserContext);
-  const [songs, setSongs] = useState(null);
-  const [tapeSongs, setTapeSongs] = useState(null);
-  const [singleProfile, setSingleProfile] = useState(null);
+  const [songs, setSongs] = useState([]);
+  const [tapeSongs, setTapeSongs] = useState([]);
+  const [singleProfile, setSingleProfile] = useState([]);
+  const [checkAuth, setCheckAuth] = useState(true);
 
   useEffect(() => {
-    getNftData("1");
-    getSingleNftData({ docID: "Mosh Song Token" });
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const data = VerifyJWTExpire(userInfo?.idToken);
+    if (data) {
+      router.push("/login");
+      setCheckAuth(false);
+    } else {
+      router.push(router?.pathname);
+      setCheckAuth(true);
+    }
   }, []);
 
   useEffect(() => {
-    if (state?.nftMetaData?.length > 0 && state?.user) {
-      const allTapes = state?.nftMetaData?.filter((val, index) => {
-        if (val.type == "Tape") {
-          return val;
-        }
-      });
-      if (allTapes.length > 0) {
-        setTapeSongs(allTapes);
-      }
-      const allSongs = state?.nftMetaData?.filter((val, index) => {
-        if (val.type !== "Tape") {
-          return val;
-        }
-      });
-      if (allSongs.length > 0) {
-        setSongs(allSongs);
-      }
+    if (checkAuth) {
+      getSingleNftData({ docID: "gang_of_four_damaged_goods" });
+      getNftData("1");
     }
-    if (songs) {
-      const data = songs?.map((val) => {
-        return val;
-      });
-      setSingleProfile(data[0]);
+  }, [checkAuth]);
+
+  useEffect(() => {
+    if (checkAuth) {
+      if (state?.nftMetaData?.length > 0) {
+        const allTapes = state?.nftMetaData?.filter((val) => {
+          if (val.type == "Tape") {
+            return val;
+          }
+        });
+        if (allTapes.length > 0) {
+          setTapeSongs(allTapes);
+        }
+        const allSongs = state?.nftMetaData?.filter((val, index) => {
+          if (val.type !== "Tape") {
+            return val;
+          }
+        });
+        if (allSongs.length > 0) {
+          setSongs(allSongs);
+        }
+      }
+      if (state?.singleNftData?.length > 0) {
+        const data = state?.singleNftData?.map((val) => {
+          return val;
+        });
+        setSingleProfile(data[0]);
+      }
     }
   }, [state]);
 
-  useEffect(() => {
-    if (!state.user) {
-      router.push("/login");
-    }
-  }, [state.user]);
-
   return (
     <div className="relative z-[1] overflow-x-hidden">
-      {/* <PublicProfileCard /> */}
-      {songs ? <PublicProfileCard profile={singleProfile} /> : <FaSpinner />}
+      {/* <div>
+        {state.error && (
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              color: "red",
+              marginTop: 30,
+            }}
+          >
+            {state.error}
+          </span>
+        )}
+      </div> */}
+      <div>
+        {state.loading || !singleProfile.length==0 ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+          >
+            <ClipLoader color="white" />
+          </div>
+        ) : (
+          <PublicProfileCard profile={singleProfile} />
+        )}
+      </div>
+
       <SongsListHeader />
-      {songs ? <OwnedSongsList songs={songs} /> : <FaSpinner />}
+      <div>
+        {state.loading ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+          >
+            <ClipLoader color="white" />
+          </div>
+        ) : songs.length == 0 ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+          >
+            <h2>Songs Not Found</h2>
+          </div>
+        ) : (
+          <OwnedSongsList songs={songs} />
+        )}
+      </div>
       <MixTapeListHeader />
-      <OwnedTapesList />
-      {/* {tapeSongs ? (
-        <OwnedTapesList tapeSongs={tapeSongs} />
-      ) : (
-        <h1>Data Not Found</h1>
-      )} */}
+      <div>
+        {state.loading ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+          >
+            <ClipLoader color="white" />
+          </div>
+        ) : tapeSongs.length == 0 ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+          >
+            <h2>MixTape Not Found</h2>
+          </div>
+        ) : (
+          <OwnedTapesList />
+        )}
+      </div>
 
       <div
         aria-hidden="true"

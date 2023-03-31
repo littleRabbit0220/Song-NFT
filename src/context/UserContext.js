@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import VerifyJWTExpire from "@/components/utils/functions/VerifyJWTExpire";
 
 export const UserContext = createContext();
 
@@ -7,23 +6,12 @@ export function UserProvider({ children }) {
   const [state, setState] = useState({
     status: false,
     loading: false,
-    nftMetaData: null,
+    nftMetaData: [],
     error: null,
     message: null,
-    singleNftData: null,
+    singleNftData: [],
     user: true,
   });
-
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-    const data = VerifyJWTExpire(userInfo?.idToken);
-    if (data) {
-      setState({ ...state, user: false });
-    } else {
-      setState({ ...state, user: true });
-    }
-  }, []);
 
   // get all NftMeta data
   const getNftData = async (pageNo) => {
@@ -41,10 +29,10 @@ export function UserProvider({ children }) {
         }
       );
       const responseData = await response.json();
-      if (!response.ok) {
-        setState({ ...state, loading: false, error: responseData.error });
-      } else {
-        setState({ ...state, loading: false, nftMetaData: responseData });
+      if (typeof(responseData)=="object") {
+        setState({ ...state, loading: false,nftMetaData: responseData });
+      }else {
+        setState({ ...state, loading: false,error: responseData});
       }
     } catch (error) {
       setState({ ...state, loading: false, error: error });
@@ -68,10 +56,10 @@ export function UserProvider({ children }) {
         }
       );
       const responseData = await response.json();
-      if (!response.ok) {
-        setState({ ...state, loading: false, error: responseData.error });
-      } else {
+      if (typeof(responseData)=="object") {
         setState({ ...state, loading: false, singleNftData: responseData });
+      }else {
+        setState({ ...state, loading: false,error: responseData});
       }
     } catch (error) {
       setState({ ...state, loading: false, error: error });

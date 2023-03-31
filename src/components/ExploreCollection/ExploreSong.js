@@ -1,17 +1,56 @@
 import MoshMIcon from "@/icons/MoshMIcon";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEllipsisH } from "react-icons/fa";
 import { truncateText } from "../utils/functions/helpers";
 
 const ExploreSong = ({ song }) => {
-  const [track, setTrack] = useState(null);
-  useState(() => {
-    if (song.attributes) {
-      const attributesData = JSON.parse(song.attributes);
+  const [track, setTrack] = useState([]);
+
+  useEffect(() => {
+    if (song?.attributes) {
+      const attributesData = JSON.parse(song.attributes).map((val) => {
+        return val;
+      });
       setTrack(attributesData);
     }
-  }, []);
+  }, [song]);
+
+  const songTitle = () => {
+    const title = track.map((val) => {
+      if (val?.trait_type === "Track Title") {
+        return truncateText(val.value, 12);
+      }
+    });
+    return title;
+  };
+
+  const songSubTitle = () => {
+    const title = track.map((val) => {
+      if (val?.trait_type === "Year") {
+        return val.value;
+      }
+    });
+    return title;
+  };
+
+  const songType = () => {
+    const title = track.map((val) => {
+      if (val?.trait_type === "Category") {
+        return val.value;
+      }
+    });
+    return title;
+  };
+
+  const songArtist = () => {
+    const title = track.map((val) => {
+      if (val?.trait_type === "Artist") {
+        return val.value;
+      }
+    });
+    return title;
+  };
 
   return (
     <div className="pt-1 song">
@@ -42,14 +81,11 @@ const ExploreSong = ({ song }) => {
       </div>
       <div className="px-1 sm:px-2 pt-2.5 sm:pt-5">
         <h3 className="mb-1 text-base font-bold sm:mb-2 sm:text-xl font-aril">
-          {truncateText(song.type === "Tape" ? song.title : "Teddy Bear", 25)}
+          {songTitle()}
         </h3>
         <p className="text-[10px] sm:text-sm font-open-sans ">
-          <span className="uppercase">
-            {song?.type === "Tape" ? song.date : "STAYC"}{" "}
-          </span>{" "}
-          •{" "}
-          {song?.type === "Tape" ? " " + song.duration : "Teddy Bear - Single"}
+          <span className="uppercase">{songArtist()} ,</span>
+          {songSubTitle()} • {songType()}
         </p>
       </div>
     </div>
