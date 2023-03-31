@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FaEllipsisH } from "react-icons/fa";
 import { truncateText } from "../utils/functions/helpers";
 
-const ExploreSong = ({ song }) => {
+const ExploreSong = ({ song ,type}) => {
   const [track, setTrack] = useState([]);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const ExploreSong = ({ song }) => {
         <button className="hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   pl-1.5 text-lg sm:text-base min-w-max ">
           <MoshMIcon className="w-[30px] sm:w-[30px] h-[30px] sm:h-[30px] " />
           <span className="pl-1.5 pr-3 text-sm font-bold font-suisse-intl">
-            {song?.type === "Tape" ? "Mix Tapes" : " Song"}
+            {type === "tape" ? "Mix Tapes" : " Song"}
           </span>
         </button>
       </div>

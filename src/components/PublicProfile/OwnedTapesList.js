@@ -12,7 +12,7 @@ const OwnedTapesList = ({ songs }) => {
                 key={index}
                 className="p-2 sm:p-4 basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
-                <ExploreSong song={val} />
+                <ExploreSong song={val} type={"tape"} />
               </div>
             );
           })}
