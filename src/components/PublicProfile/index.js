@@ -11,11 +11,19 @@ import VerifyJWTExpire from "@/components/utils/functions/VerifyJWTExpire";
 
 const PublicProfile = () => {
   const router = useRouter();
-  const { state, getNftData, getSingleNftData } = useContext(UserContext);
+  const {
+    state,
+    getNftData,
+    getSingleNftData,
+    getOwnershipNft,
+    getMaxtapeNftData,
+  } = useContext(UserContext);
   const [songs, setSongs] = useState([]);
   const [tapeSongs, setTapeSongs] = useState([]);
   const [singleProfile, setSingleProfile] = useState([]);
   const [checkAuth, setCheckAuth] = useState(true);
+
+  const docId = "new_wine_necesito_un_encuentro gang_of_four_damaged_goods";
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -33,20 +41,14 @@ const PublicProfile = () => {
     if (checkAuth) {
       getSingleNftData({ docID: "gang_of_four_damaged_goods" });
       getNftData("1");
+      getOwnershipNft("s7UbyoxZ2AehhsOIRhZED7JY4aC3");
+      getMaxtapeNftData({ docID: docId });
     }
   }, [checkAuth]);
 
   useEffect(() => {
     if (checkAuth) {
       if (state?.nftMetaData?.length > 0) {
-        const allTapes = state?.nftMetaData?.filter((val) => {
-          if (val.type == "Tape") {
-            return val;
-          }
-        });
-        if (allTapes.length > 0) {
-          setTapeSongs(allTapes);
-        }
         const allSongs = state?.nftMetaData?.filter((val, index) => {
           if (val.type !== "Tape") {
             return val;
@@ -61,6 +63,12 @@ const PublicProfile = () => {
           return val;
         });
         setSingleProfile(data[0]);
+      }
+      if (state?.mixtapeOwnData?.length > 0) {
+        const data = state?.mixtapeOwnData?.map((val) => {
+          return val;
+        });
+        setTapeSongs(data);
       }
     }
   }, [state]);
@@ -82,7 +90,7 @@ const PublicProfile = () => {
         )}
       </div> */}
       <div>
-        {state.loading || !singleProfile.length==0 ? (
+        {state.loading || !singleProfile.length == 0 ? (
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
           >
@@ -126,7 +134,7 @@ const PublicProfile = () => {
             <h2>MixTape Not Found</h2>
           </div>
         ) : (
-          <OwnedTapesList />
+          <OwnedTapesList songs={tapeSongs} />
         )}
       </div>
 
