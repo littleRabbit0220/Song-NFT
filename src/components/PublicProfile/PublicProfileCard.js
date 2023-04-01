@@ -1,6 +1,7 @@
 import BellIcon from "@/icons/BellIcon";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { truncateText } from "../utils/functions/helpers";
 
 const PublicProfileCard = ({ profile }) => {
   const [track, setTrack] = useState(null);
@@ -18,7 +19,7 @@ const PublicProfileCard = ({ profile }) => {
            <ul key={index}>
              <li className="flex items-center justify-between mb-5">
               <span className="tracking-widest uppercase">{val.trait_type}</span>
-              <span>{val.value}</span>
+              <span>{truncateText(val.value,16)}</span>
             </li>
            </ul>  
       )

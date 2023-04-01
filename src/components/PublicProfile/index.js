@@ -23,8 +23,6 @@ const PublicProfile = () => {
   const [singleProfile, setSingleProfile] = useState([]);
   const [checkAuth, setCheckAuth] = useState(true);
 
-  const docId = "new_wine_necesito_un_encuentro gang_of_four_damaged_goods";
-
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const data = VerifyJWTExpire(userInfo?.idToken);
@@ -39,12 +37,20 @@ const PublicProfile = () => {
 
   useEffect(() => {
     if (checkAuth) {
-      getSingleNftData({ docID: "gang_of_four_damaged_goods" });
       getNftData("1");
-      getOwnershipNft("s7UbyoxZ2AehhsOIRhZED7JY4aC3");
-      getMaxtapeNftData({ docID: docId });
+      getOwnershipNft();
     }
   }, [checkAuth]);
+
+  // console.log(tapeSongs, "stattetee");
+  useEffect(() => {
+    if (state?.nftKeyData) {
+      const docId = Object.keys(state?.nftKeyData).join(" ");
+      // const docId2 = 
+      getSingleNftData({ docID: "new_wine_necesito_un_encuentro" });
+      getMaxtapeNftData({ docID: docId });
+    }
+  }, [state?.nftKeyData]);
 
   useEffect(() => {
     if (checkAuth) {
@@ -90,11 +96,17 @@ const PublicProfile = () => {
         )}
       </div> */}
       <div>
-        {state.loading || !singleProfile.length == 0 ? (
+        {state.publicLoading ? (
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
           >
             <ClipLoader color="white" />
+          </div>
+        ) : singleProfile == null ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+          >
+            <h2>Profile Not Found</h2>
           </div>
         ) : (
           <PublicProfileCard profile={singleProfile} />
@@ -103,7 +115,7 @@ const PublicProfile = () => {
 
       <SongsListHeader />
       <div>
-        {state.loading ? (
+        {state.songLoading ? (
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
           >
@@ -121,7 +133,7 @@ const PublicProfile = () => {
       </div>
       <MixTapeListHeader />
       <div>
-        {state.loading ? (
+        {state.tapeLoading ? (
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
           >

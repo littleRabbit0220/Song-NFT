@@ -1,11 +1,16 @@
+import { UserContext } from "@/context/UserContext";
 import MoshMIcon from "@/icons/MoshMIcon";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaEllipsisH } from "react-icons/fa";
 import { truncateText } from "../utils/functions/helpers";
 
 const ExploreSong = ({ song ,type}) => {
   const [track, setTrack] = useState([]);
+  const {
+    state,
+    updateSingleNftData
+  } = useContext(UserContext);
 
   useEffect(() => {
     if (song?.attributes) {
@@ -52,6 +57,13 @@ const ExploreSong = ({ song ,type}) => {
     return title;
   };
 
+  const handlePlay=()=>{
+    if(song){
+      const songsArray=[song]
+      updateSingleNftData(songsArray)
+    }
+  }
+
   return (
     <div className="pt-1 song">
       <div className="relative">
@@ -72,7 +84,7 @@ const ExploreSong = ({ song ,type}) => {
         <button className="px-1.5 py-0 text-black bg-white rounded-full absolute top-5 right-3 focus:text-primary hover:bg-opacity-90">
           <FaEllipsisH />
         </button>
-        <button className="hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   pl-1.5 text-lg sm:text-base min-w-max ">
+        <button onClick={handlePlay} className="hover:bg-MoshLight-1 md:mt-0 mt-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5   pl-1.5 text-lg sm:text-base min-w-max ">
           <MoshMIcon className="w-[30px] sm:w-[30px] h-[30px] sm:h-[30px] " />
           <span className="pl-1.5 pr-3 text-sm font-bold font-suisse-intl">
             {type === "tape" ? "Mix Tapes" : " Song"}
