@@ -96,17 +96,16 @@ const PublicProfile = () => {
         )}
       </div> */}
       <div>
-        {state.publicLoading ? (
+        {state.profileLoading || state.loading  ? (
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
           >
             <ClipLoader color="white" />
           </div>
-        ) : singleProfile == null ? (
+        ) : singleProfile == 0 ? (
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
           >
-            <h2>Profile Not Found</h2>
           </div>
         ) : (
           <PublicProfileCard profile={singleProfile} />

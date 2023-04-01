@@ -5,6 +5,7 @@ export const UserContext = createContext();
 export function UserProvider({ children }) {
   const [state, setState] = useState({
     status: false,
+    loading: false,
     songLoading: false,
     tapeLoading: false,
     profileLoading: false,
@@ -146,7 +147,7 @@ export function UserProvider({ children }) {
   
   // user nft ownership data
   const getOwnershipNft = async () => {
-    setState((state) => ({ ...state, tapeLoading: true }));
+    setState((state) => ({ ...state, loading: true }));
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
       const response = await fetch(
@@ -163,18 +164,18 @@ export function UserProvider({ children }) {
       if (typeof responseData == "object") {
         setState((state) => ({
           ...state,
-          tapeLoading: false,
+          loading: false,
           nftKeyData: responseData,
         }));
       } else {
         setState((state) => ({
           ...state,
-          tapeLoading: false,
+          loading: false,
           error: responseData,
         }));
       }
     } catch (error) {
-      setState((state) => ({ ...state, tapeLoading: false, error: error }));
+      setState((state) => ({ ...state, loading: false, error: error }));
     }
   };
 
