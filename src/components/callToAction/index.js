@@ -8,7 +8,7 @@ const CallToAction = () => {
         <Image
           height={117}
           width={131}
-          src='assets/img/icons/linesPattern.svg'
+          src='/assets/img/icons/linesPattern.svg'
           alt='lines'
           className='absolute'
         />
@@ -38,7 +38,7 @@ const CallToAction = () => {
         <Image
           height={117}
           width={131}
-          src='assets/img/icons/linesPattern.svg'
+          src='/assets/img/icons/linesPattern.svg'
           alt='lines'
           className='absolute bottom-0 right-0 hidden  sm:block md:transform md:-translate-y-1/2 md:top-1/2'
         />

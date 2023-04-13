@@ -10,7 +10,7 @@ const Footer = () => {
           <a href='#' className='flex items-center flex-shrink-0'>
             <Image
               className='w-[150px] lg:w-[190px] '
-              src='assets/img/logo.svg'
+              src='/assets/img/logo.svg'
               alt='Logo'
               width={190}
               height={50}
