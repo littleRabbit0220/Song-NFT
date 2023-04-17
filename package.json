@@ -27,6 +27,7 @@
     "react-icons": "^4.7.1",
     "react-slider": "^2.0.4",
     "react-spinners": "^0.13.8",
+    "styled-components": "^5.3.9",
     "typeface-kanit": "^1.1.13",
     "typeface-open-sans": "^1.1.13",
     "web3modal": "^1.9.12"

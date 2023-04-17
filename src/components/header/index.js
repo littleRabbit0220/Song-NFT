@@ -90,7 +90,7 @@ export default function Header() {
                 <Link href='/' className='flex items-center flex-shrink-0'>
                   <Image
                     className='w-[150px] lg:w-[190px] '
-                    src='assets/img/logo.svg'
+                    src='/assets/img/logo.svg'
                     alt='Logo'
                     width={190}
                     height={50}
@@ -118,7 +118,7 @@ export default function Header() {
                       height={24}
                       width={25}
                       className='mr-2.5'
-                      src='assets/img/icons/wallet-icon.svg'
+                      src='/assets/img/icons/wallet-icon.svg'
                       alt=''
                     />
                     <span className='flex items-center'>Connect</span>
@@ -168,7 +168,7 @@ export default function Header() {
                         height={24}
                         width={25}
                         className='mr-2.5'
-                        src='assets/img/icons/wallet-icon.svg'
+                        src='/assets/img/icons/wallet-icon.svg'
                         alt=''
                       />
                       Connect

@@ -35,6 +35,7 @@ export function UserProvider({ children }) {
         }
       );
       const responseData = await response.json();
+      console.log(JSON.parse(responseData[0].attributes))
       if (typeof responseData == "object") {
         setState((state) => ({
           ...state,
@@ -179,6 +180,26 @@ export function UserProvider({ children }) {
     }
   };
 
+  const buyWithCreditCard = async () => {
+    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
+    try {
+      const response = await fetch(
+        `${process.env.HOST_URL}/buy-with-credit-card/`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${userAuth?.idToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const responseData = await response.json();
+      
+    } catch (error) {
+      throw error;
+      // setState((state) => ({...state, error: error }));
+    }
+  }
   return (
     <UserContext.Provider
       value={{
@@ -187,7 +208,8 @@ export function UserProvider({ children }) {
         getSingleNftData,
         getMaxtapeNftData,
         getOwnershipNft,
-        updateSingleNftData
+        updateSingleNftData,
+        buyWithCreditCard
       }}
     >
       {children}

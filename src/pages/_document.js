@@ -7,6 +7,7 @@ export default function Document() {
       <body className='overflow-x-hidden bg-body'>
         <Main />
         <NextScript />
+        <div id="modal-root"></div>
       </body>
     </Html>
   );
