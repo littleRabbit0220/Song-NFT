@@ -13,10 +13,13 @@ import { ethers } from "ethers";
 import data from "./data.json";
 import { useCallback, useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
-import Modal from "../utils/elements/Modal";
+import Modal from "../../components/utils/elements/Modal";
+
 const TrackDetails = () => {
-  const { buyWithCreditCard } = useContext(UserContext);
-  const [showModal, setShowModal] = useState(false);
+  const { buyWithCreditCard, getUserEthAddress } = useContext(UserContext);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [numOfNfts, setNumOfNfts] = useState(0);
+  const [errors, setErrors] = useState({count: null})
   async function handleBuyWithCypto() {
     if (typeof window.ethereum !== "undefined") {
       const accounts = await window.ethereum.request({
@@ -44,12 +47,13 @@ const TrackDetails = () => {
 
   const buyWithVisaCreditCard = useCallback(async () => {
     try {
-      await buyWithCreditCard();
+      await getUserEthAddress();
+      await buyWithCreditCard(numOfNfts);
       alert("NFT buy successfully");
     } catch (error) {
       alert(error);
     }
-  }, []);
+  }, [numOfNfts]);
   return (
     <div className="py-10 md:py-16">
       <span className="flex items-center uppercase text-MoshLight-1 font-open-sans">
@@ -104,7 +108,7 @@ const TrackDetails = () => {
       <div className="flex flex-col flex-wrap my-6 sm:flex-row">
         <Button
           className="justify-center px-4 py-3 bg-primary font-suisse-intl sm:justify-start"
-          onClick={() => setShowModal(true)}
+          onClick={() => handleBuyWithCypto()}
         >
           <span className="flex items-center">
             <MaticIcon className="mr-3" /> <USDCIcon className="mr-3" />
@@ -113,7 +117,7 @@ const TrackDetails = () => {
         </Button>
         <Button
           className="bg-white text-sweetDark py-3 px-4 sm:ml-2.5 mt-3 sm:mt-0  sm:justify-start justify-center"
-          onClick={() => setShowModal(true)}
+          onClick={() => setModalOpen(!modalOpen)}
         >
           <span className="flex items-center">
             <MasterCardIcon className="mr-[7px]" />
@@ -123,24 +127,45 @@ const TrackDetails = () => {
           <span className="pl-2.5">Buy with Credit Card</span>
         </Button>
       </div>
-      <Modal onClose={() => setShowModal(false)} show={showModal}>
-        <p>Do you really buy this NFT with credit card?</p>
-        <div className="flex justify-center mt-10">
-          <Button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5"
-            onClick={() => setShowModal(false)}
+      <Modal
+        isOpen={modalOpen}
+        title={"Input the number of NFTs"}
+        setModalOpen={(value) => setModalOpen(value)}
+        onOk={() => {
+          console.log(numOfNfts)
+          if(numOfNfts === 0) {
+            setErrors({count:"Input the number of NFTs!"});
+          } else {
+            buyWithVisaCreditCard();
+            setModalOpen(false);
+          }
+        }}
+      >
+        <div className="m-6">
+          <label
+            className="block mb-2 text-sm font-medium text-green-700 dark:text-green-500"
           >
-            Cancel
-          </Button>
-          <Button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => {
-              setShowModal(false);
-              buyWithVisaCreditCard();
-            }}
-          >
-            Ok
-          </Button>
+            Count:
+          </label>
+          <input
+            type="number"
+            className="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400"
+            onChange={(e) =>  {
+              if(e.target.value===""){
+                setNumOfNfts(parseInt(0));
+              } else {
+                setNumOfNfts(parseInt(e.target.value));
+              }
+              setErrors({count:null});
+            }
+            }
+            value={numOfNfts===0?'':numOfNfts}
+          />
+          {errors && errors.count? (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            <span className="font-medium">Confirm!</span> {errors && errors.count}
+          </p>
+          ):(<></>)}
         </div>
       </Modal>
     </div>

@@ -180,13 +180,13 @@ export function UserProvider({ children }) {
     }
   };
 
-  const buyWithCreditCard = async () => {
+  const buyWithCreditCard = async (count) => {
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
       const response = await fetch(
-        `${process.env.HOST_URL}/buy-with-credit-card/`,
+        `${process.env.HOST_URL}/buy-with-credit-card/?number_of_nfts=${count}&token_url='ifps://'`,
         {
-          method: "POST",
+          method: "post",
           headers: {
             Authorization: `Bearer ${userAuth?.idToken}`,
             "Content-Type": "application/json",
@@ -194,6 +194,26 @@ export function UserProvider({ children }) {
         }
       );
       const responseData = await response.json();
+      
+    } catch (error) {
+      throw error;
+      // setState((state) => ({...state, error: error }));
+    }
+  }
+  const getUserEthAddress = async () => {
+    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
+    try {
+      const response = await fetch(
+        `${process.env.HOST_URL}/userEthAddr/`,
+        {
+          method: "get",
+          headers: {
+            Authorization: `Bearer ${userAuth?.idToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response)
       
     } catch (error) {
       throw error;
@@ -209,7 +229,8 @@ export function UserProvider({ children }) {
         getMaxtapeNftData,
         getOwnershipNft,
         updateSingleNftData,
-        buyWithCreditCard
+        buyWithCreditCard,
+        getUserEthAddress
       }}
     >
       {children}
