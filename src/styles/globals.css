@@ -184,3 +184,6 @@ input.appear-none[type='number'] {
 .bnt-bg- {
   background-image: url('../../public/assets/img/button-bg.svg');
 }
+.modal-body {
+  color:dark !important;
+}

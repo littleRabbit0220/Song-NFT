@@ -12,6 +12,7 @@
     "@fontsource/orbitron": "^4.5.11",
     "@headlessui/react": "^1.7.11",
     "@next/font": "13.1.6",
+    "@stripe/stripe-js": "^1.52.1",
     "@tailwindcss/typography": "^0.5.9",
     "chart.js": "^4.2.1",
     "eslint": "8.34.0",

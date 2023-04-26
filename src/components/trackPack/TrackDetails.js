@@ -13,10 +13,15 @@ import { ethers } from "ethers";
 import data from "./data.json";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContext";
+import { loadStripe } from "@stripe/stripe-js";
+import Modal from "../utils/elements/Modal";
 
 const TrackDetails = () => {
-
-  const { getStripeCustomerId, postStripeCustomerId, state} = useContext(UserContext);
+  const { getStripeCustomerId, postStripeCustomerId, state } =
+    useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
+  const [errors, setErrors] = useState(null);
+  const [num, setNumber] = useState(1);
   async function handleBuyWithCypto() {
     if (typeof window.ethereum !== "undefined") {
       const accounts = await window.ethereum.request({
@@ -42,27 +47,49 @@ const TrackDetails = () => {
     }
   }
 
-  const buyWithVisaCreditCard = useCallback( async() => {
-
+  const buyWithVisaCreditCard = useCallback(async () => {
     try {
       await getStripeCustomerId();
-
-    } catch(error) {
-      console.log(error, "sss");
+    } catch (error) {
       try {
         await postStripeCustomerId(customer_id);
         getStripeCustomerId();
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     }
   }, []);
 
-  useEffect(() => {
-    if(state.customer_id !== null) {
-      console.log(state.customer_id, 'customer_id')
+  const buyWithCreditCard = useCallback(() => {
+    if (num <= 0) {
+      setErrors("exist");
+    } else {
+      buyWithVisaCreditCard();
     }
-  },[state.customer_id]);
+  }, [num, errors]);
+  const handleCheckout = useCallback(async () => {
+    const { sessionId } = await fetch("/api/next_stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount: 10000 , count: num}),
+    }).then((res) => res.json());
+    const stripe = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+    console.log(stripe);
+    const { error } = await stripe.redirectToCheckout({
+      sessionId,
+    });
+
+    if (error) {
+      console.error(error);
+    }
+  }, [num]);
+  useEffect(() => {
+    if (state.customer_id !== null) {
+      handleCheckout();
+    }
+  }, [state.customer_id]);
 
   return (
     <div className="py-10 md:py-16">
@@ -127,7 +154,7 @@ const TrackDetails = () => {
         </Button>
         <Button
           className="bg-white text-sweetDark py-3 px-4 sm:ml-2.5 mt-3 sm:mt-0  sm:justify-start justify-center"
-          onClick={() => buyWithVisaCreditCard()}
+          onClick={() => setShowModal(true)}
         >
           <span className="flex items-center">
             <MasterCardIcon className="mr-[7px]" />
@@ -137,6 +164,40 @@ const TrackDetails = () => {
           <span className="pl-2.5">Buy with Credit Card</span>
         </Button>
       </div>
+      <Modal
+        setModalOpen={() => setShowModal(false)}
+        isOpen={showModal}
+        title={"Input the number of NFTs"}
+        onOk={() => buyWithCreditCard()}
+        setNum={(v) => setNumber(v)}
+      >
+        <div className="p-5 text-white modal-body">
+          <label>QUANTITY:</label>
+          <input
+            type="text"
+            className="border-solid border-gray-500 border-2 ml-5 bg-black"
+            value={num}
+            onChange={(e) => {
+              if (e.target.value==='') setNumber(0);
+              else {
+                if(num === 0) {
+                  const str = e.target.value.substring(1, e.target.value.length);
+                  let x = parseInt(str);
+                  setNumber(x)
+                } else setNumber(parseInt(e.target.value));
+                setErrors(null);
+              }
+            }}
+          />
+          {errors ? (
+            <div className="text-red-500">
+              The number of NFts must be not empty.
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </Modal>
     </div>
   );
 };
