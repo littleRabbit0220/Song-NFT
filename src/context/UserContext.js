@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import initialStripe from "stripe";
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
@@ -16,6 +16,7 @@ export function UserProvider({ children }) {
     mixtapeOwnData: [],
     nftKeyData: {},
     user: true,
+    customer_id: null,
   });
 
   // get all NftMeta data
@@ -23,33 +24,32 @@ export function UserProvider({ children }) {
     setState((state) => ({ ...state, songLoading: true }));
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
-      if(pageNo){
-      const response = await fetch(
-        `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/?page=${pageNo}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${userAuth?.idToken}`,
-            "Content-Type": "application/json",
-          },
+      if (pageNo) {
+        const response = await fetch(
+          `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/?page=${pageNo}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${userAuth?.idToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const responseData = await response.json();
+        if (typeof responseData == "object") {
+          setState((state) => ({
+            ...state,
+            songLoading: false,
+            nftMetaData: responseData,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            songLoading: false,
+            error: responseData,
+          }));
         }
-      );
-      const responseData = await response.json();
-      console.log(JSON.parse(responseData[0].attributes))
-      if (typeof responseData == "object") {
-        setState((state) => ({
-          ...state,
-          songLoading: false,
-          nftMetaData: responseData,
-        }));
-      } else {
-        setState((state) => ({
-          ...state,
-          songLoading: false,
-          error: responseData,
-        }));
       }
-    }
     } catch (error) {
       setState((state) => ({ ...state, songLoading: false, error: error }));
     }
@@ -60,35 +60,34 @@ export function UserProvider({ children }) {
     setState((state) => ({ ...state, profileLoading: true }));
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
-      if(docId){
-      const response = await fetch(
-        `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${userAuth?.idToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(docId),
-        }
-      );
-      const responseData = await response.json();
-      console.log(responseData,"docid")
+      if (docId) {
+        const response = await fetch(
+          `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${userAuth?.idToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(docId),
+          }
+        );
+        const responseData = await response.json();
 
-      if (typeof responseData == "object") {
-        setState((state) => ({
-          ...state,
-          profileLoading: false,
-          singleNftData: responseData,
-        }));
-      } else {
-        setState((state) => ({
-          ...state,
-          profileLoading: false,
-          error: responseData,
-        }));
+        if (typeof responseData == "object") {
+          setState((state) => ({
+            ...state,
+            profileLoading: false,
+            singleNftData: responseData,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            profileLoading: false,
+            error: responseData,
+          }));
+        }
       }
-    }
     } catch (error) {
       setState((state) => ({ ...state, profileLoading: false, error: error }));
     }
@@ -97,8 +96,8 @@ export function UserProvider({ children }) {
   const updateSingleNftData = async (data) => {
     setState((state) => ({ ...state, profileLoading: true }));
     try {
-      if(data){
-          setState((state) => ({
+      if (data) {
+        setState((state) => ({
           ...state,
           profileLoading: false,
           singleNftData: data,
@@ -114,38 +113,38 @@ export function UserProvider({ children }) {
     setState((state) => ({ ...state, tapeLoading: true }));
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
-      if(docID){
-      const response = await fetch(
-        `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${userAuth?.idToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(docID),
+      if (docID) {
+        const response = await fetch(
+          `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${userAuth?.idToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(docID),
+          }
+        );
+        const responseData = await response.json();
+        if (typeof responseData == "object") {
+          setState((state) => ({
+            ...state,
+            tapeLoading: false,
+            mixtapeOwnData: responseData,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            tapeLoading: false,
+            error: responseData,
+          }));
         }
-      );
-      const responseData = await response.json();
-      if (typeof responseData == "object") {
-        setState((state) => ({
-          ...state,
-          tapeLoading: false,
-          mixtapeOwnData: responseData,
-        }));
-      } else {
-        setState((state) => ({
-          ...state,
-          tapeLoading: false,
-          error: responseData,
-        }));
       }
-    }
     } catch (error) {
       setState((state) => ({ ...state, tapeLoading: false, error: error }));
     }
   };
-  
+
   // user nft ownership data
   const getOwnershipNft = async () => {
     setState((state) => ({ ...state, loading: true }));
@@ -180,31 +179,11 @@ export function UserProvider({ children }) {
     }
   };
 
-  const buyWithCreditCard = async (count) => {
+  const getStripeCustomerId = async () => {
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
       const response = await fetch(
-        `${process.env.HOST_URL}/buy-with-credit-card/?number_of_nfts=${count}&token_url='ifps://'`,
-        {
-          method: "post",
-          headers: {
-            Authorization: `Bearer ${userAuth?.idToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const responseData = await response.json();
-      
-    } catch (error) {
-      throw error;
-      // setState((state) => ({...state, error: error }));
-    }
-  }
-  const getUserEthAddress = async () => {
-    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
-    try {
-      const response = await fetch(
-        `${process.env.HOST_URL}/userEthAddr/`,
+        `${process.env.HOST_URL}/pid-to-stripe-customer-id/`,
         {
           method: "get",
           headers: {
@@ -213,13 +192,74 @@ export function UserProvider({ children }) {
           },
         }
       );
-      console.log(response)
-      
+      if (response.ok === true) {
+        const responseData = await response.json();
+        setState((state) => ({
+          ...state,
+          customer_id:responseData.customer_id
+        }));
+      } else {
+        throw('can not fine customer');
+      }
+    } catch (error) {
+      console.log(JSON.stringify(error), "userContent");
+      throw error;
+      // setState((state) => ({...state, error: error }));
+    }
+  };
+
+  const postStripeCustomerId = async () => {
+    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
+    try {
+      const stripe = initialStripe(process.env.STRIPE_SECRET_KEY);
+      const customer = await stripe.customers.create({
+        name: "Charles Brown",
+        email: userAuth.email,
+        phone: "+1234567890",
+        address: {
+          line1: "123 Main St",
+          city: "San Francisco",
+          state: "CA",
+          postal_code: "94111",
+          country: "US",
+        },
+      });
+      console.log(customer);
+      const response = await fetch(
+        `${process.env.HOST_URL}/pid-to-stripe-customer-id/`,
+        {
+          method: "post",
+          headers: {
+            Authorization: `Bearer ${userAuth?.idToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            customer_id: customer.id,
+          }),
+        }
+      );
+      if (response.ok === false) throw ('error')
+    } catch (err) {
+      throw err;
+      // setState((state) => ({...state, error: error }));
+    }
+  };
+  const getUserEthAddress = async () => {
+    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/userEthAddr/`, {
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
     } catch (error) {
       throw error;
       // setState((state) => ({...state, error: error }));
     }
-  }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -229,8 +269,9 @@ export function UserProvider({ children }) {
         getMaxtapeNftData,
         getOwnershipNft,
         updateSingleNftData,
-        buyWithCreditCard,
-        getUserEthAddress
+        getStripeCustomerId,
+        postStripeCustomerId,
+        getUserEthAddress,
       }}
     >
       {children}

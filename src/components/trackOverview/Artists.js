@@ -115,7 +115,7 @@ const Artists = () => {
                   height={140}
                   width={166}
                   className='w-[70px] h-[83px] object-cover rounded'
-                  src={`/assets/img/artists/anuel-aa.png`}
+                  src={`/assets/img/artists/malucci.jpeg`}
                 />
               </div>
               <div className='flex-1 w-full pl-2.5 pr-3 text-MoshDark-7'>

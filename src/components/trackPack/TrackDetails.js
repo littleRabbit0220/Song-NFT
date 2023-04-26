@@ -11,15 +11,12 @@ import USDCIcon from "@/icons/USDCIcon";
 import MaticIcon from "@/icons/MaticIcon";
 import { ethers } from "ethers";
 import data from "./data.json";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContext";
-import Modal from "../../components/utils/elements/Modal";
 
 const TrackDetails = () => {
-  const { buyWithCreditCard, getUserEthAddress } = useContext(UserContext);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [numOfNfts, setNumOfNfts] = useState(0);
-  const [errors, setErrors] = useState({count: null})
+
+  const { getStripeCustomerId, postStripeCustomerId, state} = useContext(UserContext);
   async function handleBuyWithCypto() {
     if (typeof window.ethereum !== "undefined") {
       const accounts = await window.ethereum.request({
@@ -45,15 +42,28 @@ const TrackDetails = () => {
     }
   }
 
-  const buyWithVisaCreditCard = useCallback(async () => {
+  const buyWithVisaCreditCard = useCallback( async() => {
+
     try {
-      await getUserEthAddress();
-      await buyWithCreditCard(numOfNfts);
-      alert("NFT buy successfully");
-    } catch (error) {
-      alert(error);
+      await getStripeCustomerId();
+
+    } catch(error) {
+      console.log(error, "sss");
+      try {
+        await postStripeCustomerId(customer_id);
+        getStripeCustomerId();
+      } catch(err) {
+        console.log(err);
+      }
     }
-  }, [numOfNfts]);
+  }, []);
+
+  useEffect(() => {
+    if(state.customer_id !== null) {
+      console.log(state.customer_id, 'customer_id')
+    }
+  },[state.customer_id]);
+
   return (
     <div className="py-10 md:py-16">
       <span className="flex items-center uppercase text-MoshLight-1 font-open-sans">
@@ -117,7 +127,7 @@ const TrackDetails = () => {
         </Button>
         <Button
           className="bg-white text-sweetDark py-3 px-4 sm:ml-2.5 mt-3 sm:mt-0  sm:justify-start justify-center"
-          onClick={() => setModalOpen(!modalOpen)}
+          onClick={() => buyWithVisaCreditCard()}
         >
           <span className="flex items-center">
             <MasterCardIcon className="mr-[7px]" />
@@ -127,47 +137,6 @@ const TrackDetails = () => {
           <span className="pl-2.5">Buy with Credit Card</span>
         </Button>
       </div>
-      <Modal
-        isOpen={modalOpen}
-        title={"Input the number of NFTs"}
-        setModalOpen={(value) => setModalOpen(value)}
-        onOk={() => {
-          console.log(numOfNfts)
-          if(numOfNfts === 0) {
-            setErrors({count:"Input the number of NFTs!"});
-          } else {
-            buyWithVisaCreditCard();
-            setModalOpen(false);
-          }
-        }}
-      >
-        <div className="m-6">
-          <label
-            className="block mb-2 text-sm font-medium text-green-700 dark:text-green-500"
-          >
-            Count:
-          </label>
-          <input
-            type="number"
-            className="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400"
-            onChange={(e) =>  {
-              if(e.target.value===""){
-                setNumOfNfts(parseInt(0));
-              } else {
-                setNumOfNfts(parseInt(e.target.value));
-              }
-              setErrors({count:null});
-            }
-            }
-            value={numOfNfts===0?'':numOfNfts}
-          />
-          {errors && errors.count? (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-            <span className="font-medium">Confirm!</span> {errors && errors.count}
-          </p>
-          ):(<></>)}
-        </div>
-      </Modal>
     </div>
   );
 };

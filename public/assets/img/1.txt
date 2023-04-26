@@ -1,0 +1,5 @@
+I have reviewed the scenario and am now at the pid-to-stripe-coustomer-id endpoint.
+I have a few questions.
+First I need the stripe private key and public key.
+Second, I need a way to get user information from a token stored in local storage. Because I have to create stripe customer based on this user information.
+Let me explain those problems kindly.
