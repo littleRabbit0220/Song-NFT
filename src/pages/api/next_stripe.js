@@ -21,8 +21,8 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'payment',
-      success_url: `${req.headers.origin}/success`,
-      cancel_url: `${req.headers.origin}/checkout`,
+      success_url: `${req.headers.origin}/`,
+      cancel_url: `${req.headers.origin}/`,
     });
 
     // Return the session ID to the client

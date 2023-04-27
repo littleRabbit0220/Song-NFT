@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import initialStripe from "stripe";
 export const UserContext = createContext();
 
@@ -179,54 +179,16 @@ export function UserProvider({ children }) {
     }
   };
 
-  const getStripeCustomerId = async () => {
-    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
-    try {
-      const response = await fetch(
-        `${process.env.HOST_URL}/pid-to-stripe-customer-id/`,
-        {
-          method: "get",
-          headers: {
-            Authorization: `Bearer ${userAuth?.idToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok === true) {
-        const responseData = await response.json();
-        setState((state) => ({
-          ...state,
-          customer_id:responseData.customer_id
-        }));
-      } else {
-        throw('can not fine customer');
-      }
-    } catch (error) {
-      console.log(JSON.stringify(error), "userContent");
-      throw error;
-      // setState((state) => ({...state, error: error }));
-    }
-  };
-
   const postStripeCustomerId = async () => {
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
       const stripe = initialStripe(process.env.STRIPE_SECRET_KEY);
       const customer = await stripe.customers.create({
-        name: "Charles Brown",
         email: userAuth.email,
-        phone: "+1234567890",
-        address: {
-          line1: "123 Main St",
-          city: "San Francisco",
-          state: "CA",
-          postal_code: "94111",
-          country: "US",
-        },
       });
       console.log(customer);
       const response = await fetch(
-        `${process.env.HOST_URL}/pid-to-stripe-customer-id/`,
+        `${process.env.HOST_URL}/customer-id-to-uid/`,
         {
           method: "post",
           headers: {
@@ -269,7 +231,6 @@ export function UserProvider({ children }) {
         getMaxtapeNftData,
         getOwnershipNft,
         updateSingleNftData,
-        getStripeCustomerId,
         postStripeCustomerId,
         getUserEthAddress,
       }}

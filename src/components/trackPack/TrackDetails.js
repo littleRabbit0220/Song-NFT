@@ -11,14 +11,13 @@ import USDCIcon from "@/icons/USDCIcon";
 import MaticIcon from "@/icons/MaticIcon";
 import { ethers } from "ethers";
 import data from "./data.json";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 import { loadStripe } from "@stripe/stripe-js";
 import Modal from "../utils/elements/Modal";
 
 const TrackDetails = () => {
-  const { getStripeCustomerId, postStripeCustomerId, state } =
-    useContext(UserContext);
+  const { postStripeCustomerId } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const [errors, setErrors] = useState(null);
   const [num, setNumber] = useState(1);
@@ -49,14 +48,10 @@ const TrackDetails = () => {
 
   const buyWithVisaCreditCard = useCallback(async () => {
     try {
-      await getStripeCustomerId();
-    } catch (error) {
-      try {
-        await postStripeCustomerId(customer_id);
-        getStripeCustomerId();
-      } catch (err) {
-        console.log(err);
-      }
+      await postStripeCustomerId();
+      handleCheckout();
+    } catch (err) {
+      console.log(err);
     }
   }, []);
 
@@ -67,32 +62,35 @@ const TrackDetails = () => {
       buyWithVisaCreditCard();
     }
   }, [num, errors]);
-  const handleCheckout = useCallback(async () => {
-    const { sessionId } = await fetch("/api/next_stripe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: 10000 , count: num}),
-    }).then((res) => res.json());
+  const handleCheckout = async () => {
     const stripe = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
-    console.log(stripe);
-    const { error } = await stripe.redirectToCheckout({
-      sessionId,
-    });
+    const response = await fetch(
+      `api/next_stripe`,
 
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: 1000,
+          count: 3,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: data.sessionId,
+    });
     if (error) {
-      console.error(error);
+      console.log(error);
+    } else {
+
     }
-  }, [num]);
-  useEffect(() => {
-    if (state.customer_id !== null) {
-      handleCheckout();
-    }
-  }, [state.customer_id]);
+  };
 
   return (
     <div className="py-10 md:py-16">
+      
       <span className="flex items-center uppercase text-MoshLight-1 font-open-sans">
         <span className="align-middle">SEASON #1</span>
         <VerifiedIcon className="ml-2" />
@@ -168,22 +166,28 @@ const TrackDetails = () => {
         setModalOpen={() => setShowModal(false)}
         isOpen={showModal}
         title={"Input the number of NFTs"}
-        onOk={() => buyWithCreditCard()}
+        onOk={() => {
+          buyWithCreditCard();
+          setShowModal(false);
+        }}
         setNum={(v) => setNumber(v)}
       >
         <div className="p-5 text-white modal-body">
           <label>QUANTITY:</label>
           <input
             type="text"
-            className="border-solid border-gray-500 border-2 ml-5 bg-black"
+            className="border-solid border-gray-500 border-2 ml-5 bg-black pl-2"
             value={num}
             onChange={(e) => {
-              if (e.target.value==='') setNumber(0);
+              if (e.target.value === "") setNumber(0);
               else {
-                if(num === 0) {
-                  const str = e.target.value.substring(1, e.target.value.length);
+                if (num === 0) {
+                  const str = e.target.value.substring(
+                    1,
+                    e.target.value.length
+                  );
                   let x = parseInt(str);
-                  setNumber(x)
+                  setNumber(x);
                 } else setNumber(parseInt(e.target.value));
                 setErrors(null);
               }
