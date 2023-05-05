@@ -4,17 +4,13 @@ import Header from '@/components/header';
 import TrackData from '@/components/trackData';
 import TrackOverview from '@/components/trackOverview';
 import TrackPack from '@/components/trackPack';
-import { UserContext } from '@/context/UserContext';
 import Head from 'next/head';
-import { useContext } from 'react';
 import Alert from '@/components/utils/elements/Alert';
 // import { Inter } from '@next/font/google';
 
 // const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-
-  const {state} = useContext(UserContext);
 
   return (
     <>
@@ -31,7 +27,6 @@ export default function Home() {
         <TrackOverview />
         <CallToAction />
         <Footer />
-        <Alert title="Success" description="You successfully bought the NFT song." hidden={ state.alertHidden}/>
       </main>
     </>
   );

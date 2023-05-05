@@ -11,7 +11,7 @@ export default function Alert(props) {
       <button
         type="button"
         className="ml-auto box-content rounded-none border-none p-1 text-white-400 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-        onClick={() => setAlertHidden()}
+        onClick={() => setAlertHidden(true)}
       >
         <span className="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
           <svg

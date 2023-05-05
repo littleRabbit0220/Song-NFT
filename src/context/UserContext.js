@@ -17,11 +17,12 @@ export function UserProvider({ children }) {
     nftKeyData: {},
     user: true,
     customer_id: null,
-    alertHidden:false,
+    alertHidden:true,
   });
 
-  const setAlertHidden =  () => {
-    setState((state) => ({...state, alertHidden: true}));
+  const setAlertHidden =  (value) => {
+    console.log('va')
+    setState((state) => ({...state, alertHidden: value}));
     
   }
   // get all NftMeta data
@@ -191,7 +192,6 @@ export function UserProvider({ children }) {
       const customer = await stripe.customers.create({
         email: userAuth.email,
       });
-      console.log(customer);
       const response = await fetch(
         `${process.env.HOST_URL}/customer-id-to-uid/`,
         {
@@ -219,7 +219,8 @@ export function UserProvider({ children }) {
         headers: {
           Authorization: `Bearer ${userAuth?.idToken}`,
           "Content-Type": "application/json",
-        },
+        }
+     
       });
       console.log(response);
     } catch (error) {
@@ -227,6 +228,32 @@ export function UserProvider({ children }) {
       // setState((state) => ({...state, error: error }));
     }
   };
+
+  const postNftRecord = async () => {
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/ntf-records/add-nft-record`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify( {
+          uid: 's7UbyoxZ2AehhsOIRhZED7JY4aC322',
+          nft_name: 'mixtape',
+          nft_id: '1',
+          address: 'private',
+        })
+      });
+      if(response.ok) {
+        console.log('ok');
+      } else {
+        throw "error";
+      }
+    } catch {
+      console.log('error');
+    }
+  }
   return (
     <UserContext.Provider
       value={{

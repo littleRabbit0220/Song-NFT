@@ -17,7 +17,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Modal from "../utils/elements/Modal";
 
 const TrackDetails = () => {
-  const { postStripeCustomerId } = useContext(UserContext);
+  const { postStripeCustomerId, setAlertHidden } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const [errors, setErrors] = useState(null);
   const [num, setNumber] = useState(1);
@@ -46,10 +46,10 @@ const TrackDetails = () => {
     }
   }
 
-  const buyWithVisaCreditCard = useCallback(async () => {
+  const buyWithVisaCreditCard = useCallback(async (x) => {
     try {
       await postStripeCustomerId();
-      handleCheckout();
+      handleCheckout(x);
     } catch (err) {
       console.log(err);
     }
@@ -59,11 +59,12 @@ const TrackDetails = () => {
     if (num <= 0) {
       setErrors("exist");
     } else {
-      buyWithVisaCreditCard();
+      buyWithVisaCreditCard(num);
     }
   }, [num, errors]);
-  const handleCheckout = async () => {
+  const handleCheckout = async (x) => {
     const stripe = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+    console.log(num, 'num')
     const response = await fetch(
       `api/next_stripe`,
 
@@ -72,19 +73,21 @@ const TrackDetails = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: 1000,
-          count: 3,
+          count: x,
         }),
       }
     );
     const data = await response.json();
-    console.log(data);
+    console.log('session')
     const { error } = await stripe.redirectToCheckout({
       sessionId: data.sessionId,
     });
+    console.log('session2', error)
     if (error) {
       console.log(error);
     } else {
-
+      setAlertHidden(false);
+      // setTimeout(() => setAlertHidden(true), 5000);
     }
   };
 
@@ -166,11 +169,11 @@ const TrackDetails = () => {
         setModalOpen={() => setShowModal(false)}
         isOpen={showModal}
         title={"Input the number of NFTs"}
-        onOk={() => {
-          buyWithCreditCard();
-          setShowModal(false);
-        }}
         setNum={(v) => setNumber(v)}
+        onOk={() => {   
+          setShowModal(false);
+          buyWithCreditCard();
+        }}
       >
         <div className="p-5 text-white modal-body">
           <label>QUANTITY:</label>
@@ -188,7 +191,9 @@ const TrackDetails = () => {
                   );
                   let x = parseInt(str);
                   setNumber(x);
-                } else setNumber(parseInt(e.target.value));
+                } else{
+                  setNumber(parseInt(e.target.value));
+                } 
                 setErrors(null);
               }
             }}
