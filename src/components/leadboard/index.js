@@ -2,6 +2,7 @@ import React from 'react';
 import LeadBoardHead from './LeadBoardHead';
 import LeadBoardList from './LeadBoardList';
 import NeverMissCTA from '../NeverMissCTA';
+import Alert from '../utils/elements/Alert';
 
 export default function LeadBoard() {
   return (

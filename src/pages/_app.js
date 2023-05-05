@@ -13,6 +13,7 @@ export default function App({ Component, pageProps }) {
     <Elements stripe = {stripePromise}>
       <AppContext>
       <Component {...pageProps} />
+      
     </AppContext>
     </Elements>
   );

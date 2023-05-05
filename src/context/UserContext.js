@@ -17,8 +17,13 @@ export function UserProvider({ children }) {
     nftKeyData: {},
     user: true,
     customer_id: null,
+    alertHidden:false,
   });
 
+  const setAlertHidden =  () => {
+    setState((state) => ({...state, alertHidden: true}));
+    
+  }
   // get all NftMeta data
   const getNftData = async (pageNo) => {
     setState((state) => ({ ...state, songLoading: true }));
@@ -233,6 +238,7 @@ export function UserProvider({ children }) {
         updateSingleNftData,
         postStripeCustomerId,
         getUserEthAddress,
+        setAlertHidden,
       }}
     >
       {children}
