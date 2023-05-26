@@ -9,7 +9,7 @@ const SongOverview = () => {
           <div className='relative inline-block'>
             <Image
               height={127}
-              width={216}
+              width="auto"
               className='w-[216px] max-w-full'
               src='/assets/img/tracks/vol2-flow-futurama.png'
               alt=''

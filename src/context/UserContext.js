@@ -17,13 +17,14 @@ export function UserProvider({ children }) {
     nftKeyData: {},
     user: true,
     customer_id: null,
-    alertHidden:true,
+    alertHidden: true,
+    leaderboard_list: []
   });
 
-  const setAlertHidden =  (value) => {
+  const setAlertHidden = (value) => {
     console.log('va')
-    setState((state) => ({...state, alertHidden: value}));
-    
+    setState((state) => ({ ...state, alertHidden: value }));
+
   }
   // get all NftMeta data
   const getNftData = async (pageNo) => {
@@ -157,7 +158,7 @@ export function UserProvider({ children }) {
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
       const response = await fetch(
-        `${process.env.HOST_URL}/nft-records/get-nft-ownership-data?uid=${userAuth?.localId}`,
+        `${process.env.HOST_URL}/nft-records/get-nft-ownership-data/`,
         {
           method: "GET",
           headers: {
@@ -192,6 +193,7 @@ export function UserProvider({ children }) {
       const customer = await stripe.customers.create({
         email: userAuth.email,
       });
+      setState((state) => ({ ...state, customer_id: customer }))
       const response = await fetch(
         `${process.env.HOST_URL}/customer-id-to-uid/`,
         {
@@ -211,6 +213,31 @@ export function UserProvider({ children }) {
       // setState((state) => ({...state, error: error }));
     }
   };
+  const getStripeCustomerId = () => {
+    return new Promise(async (resolve, reject) => {
+      const userAuth = JSON.parse(localStorage.getItem("userInfo"));
+      try {
+
+        const response = await fetch(
+          `${process.env.HOST_URL}/customer-id-to-uid/`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${userAuth?.idToken}`,
+              "Content-Type": "application/json",
+            },
+
+          }
+        );
+        if (response.ok === false) reject('error');
+        const customer_id = await response.json();
+        resolve(customer_id);
+      } catch (err) {
+        reject(err);
+        // setState((state) => ({...state, error: error }));
+      }
+    })
+  };
   const getUserEthAddress = async () => {
     const userAuth = JSON.parse(localStorage.getItem("userInfo"));
     try {
@@ -220,7 +247,7 @@ export function UserProvider({ children }) {
           Authorization: `Bearer ${userAuth?.idToken}`,
           "Content-Type": "application/json",
         }
-     
+
       });
       console.log(response);
     } catch (error) {
@@ -229,29 +256,99 @@ export function UserProvider({ children }) {
     }
   };
 
-  const postNftRecord = async () => {
+  const addToNftRecord = async (nft_id, address) => {
     const userAuth = JSON.parse(localStorage.getItem('userInfo'));
     try {
-      const response = await fetch(`${process.env.HOST_URL}/ntf-records/add-nft-record`, {
+      const response = await fetch(`${process.env.HOST_URL}/nft-records/add-nft-record/`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${userAuth?.idToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify( {
-          uid: 's7UbyoxZ2AehhsOIRhZED7JY4aC322',
-          nft_name: 'mixtape',
-          nft_id: '1',
-          address: 'private',
+        body: JSON.stringify({
+          nft_name: 'TrackPackNFT',
+          nft_id: nft_id,
+          address: address,
         })
       });
-      if(response.ok) {
+      if (response.ok) {
         console.log('ok');
       } else {
         throw "error";
       }
     } catch {
       console.log('error');
+    }
+  }
+  const updateNftRecordPrivate = async (song_nft_ids, trackpack_nft_id) => {
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/update-nft-record-private/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          song_nft_ids: song_nft_ids,
+          trackpack_nft_id: trackpack_nft_id
+        })
+      });
+      if (response.ok) {
+        console.log('ok');
+      } else {
+        throw "error";
+      }
+    } catch {
+      console.log('error');
+    }
+  }
+  const getTopUsers = async () => {
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/leaderboard/`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json"
+        }
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        setState((state) => {
+          return {
+            ...state,
+            leaderboard_list: responseData
+          }
+        })
+      } else {
+        console.log('error');
+      }
+    } catch {
+      throw 'error';
+    }
+  }
+  const openNft = async () => {
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/open-nft/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          number_of_nft: 1
+        })
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData)
+      } else {
+        console.log('error');
+      }
+    } catch {
+      throw 'error';
     }
   }
   return (
@@ -264,8 +361,13 @@ export function UserProvider({ children }) {
         getOwnershipNft,
         updateSingleNftData,
         postStripeCustomerId,
+        getStripeCustomerId,
         getUserEthAddress,
         setAlertHidden,
+        getTopUsers,
+        addToNftRecord,
+        openNft,
+        updateNftRecordPrivate
       }}
     >
       {children}

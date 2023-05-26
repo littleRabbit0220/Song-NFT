@@ -3,7 +3,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { amount, count } = req.body;
+    const { amount, count, customer } = req.body;
 
     // Create a new Checkout Session using the Stripe SDK
     const session = await stripe.checkout.sessions.create({
@@ -21,6 +21,7 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'payment',
+      customer: customer,
       success_url: `${req.headers.origin}/`,
       cancel_url: `${req.headers.origin}/`,
     });

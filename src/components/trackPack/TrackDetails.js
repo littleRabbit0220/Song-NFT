@@ -3,24 +3,33 @@ import ArtistTag from "./ArtistTag";
 import Button from "../utils/elements/Button";
 import MasterCardIcon from "@/icons/MasterCardIcon";
 import VisaCardIcon from "@/icons/VisaCardIcon";
-import GooglePlayIcon from "@/icons/GooglePlayIcon";
-import ApplePayIcon from "@/icons/ApplePayIcon";
 import AmericanPayIcon from "@/icons/AmericanPayIcon";
 import VerifiedIcon from "@/icons/VerifiedIcon";
 import USDCIcon from "@/icons/USDCIcon";
 import MaticIcon from "@/icons/MaticIcon";
 import { ethers } from "ethers";
-import data from "./data.json";
-import { useCallback, useContext, useState } from "react";
+import track_pack from "./TrackPackNFT.json";
+import mock_token from './MockToken.json';
+import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 import { loadStripe } from "@stripe/stripe-js";
 import Modal from "../utils/elements/Modal";
+import Loading from "../utils/elements/Loading";
+import Alert from "../utils/elements/Alert";
+import WithdrawModal from "../utils/elements/WithdrawModal";
+import Radio from "../utils/elements/Radio";
 
 const TrackDetails = () => {
-  const { postStripeCustomerId, setAlertHidden } = useContext(UserContext);
+  const { postStripeCustomerId, addToNftRecord, updateNftRecordPrivate, state, getOwnershipNft } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
+  const [withdrawModal, setWithdrawModal] = useState(false);
   const [errors, setErrors] = useState(null);
   const [num, setNumber] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [cryptoModal, setCryptoModal] = useState(true);
   async function handleBuyWithCypto() {
     if (typeof window.ethereum !== "undefined") {
       const accounts = await window.ethereum.request({
@@ -30,26 +39,60 @@ const TrackDetails = () => {
       const signer = provider.getSigner();
       try {
         const TrackPackNFTContract = new ethers.Contract(
-          data.address,
-          data.abi,
+          track_pack.address,
+          track_pack.abi,
           signer
         );
-        let nftCount = 1;
-        const buyNFT = await TrackPackNFTContract.mintTrackPackNFT(nftCount);
-        await buyNFT.wait();
-        alert("NFT buy successfully");
+        const MockTokenContract = new ethers.Contract(
+          mock_token.address,
+          mock_token.abi,
+          signer
+        );
+
+        TrackPackNFTContract.on('trackPackNFTMinted', async (to, id) => {
+          const mintedTokenId = parseInt(id._hex, 16);
+          console.log(mintedTokenId)
+          setLoadingText('Saving into ntf_record database...');
+          await addToNftRecord(mintedTokenId, 'private');
+          setLoadingText('Opening...');
+          await TrackPackNFTContract.openTrackPackNFT(mintedTokenId);
+        });
+        TrackPackNFTContract.on('TrackPackOpened', async (from, tokenId, requestId, mintedIDs) => {
+          console.log("from" + from, "tokenId" + tokenId, "requestId" + requestId, "mintedIDs" + mintedIDs);
+          setLoadingText('Saving into ntf_record database...');
+          await updateNftRecordPrivate(mintedIDs, tokenId);
+          setLoading(false)
+          setAlertMessage('You bought successfully!');
+          setAlertVisible(true);
+          setTimeout(() => setAlertVisible(false), 5000);
+        });
+
+        setLoadingText('Approving...');
+        setLoading(true);
+        await MockTokenContract.approve(track_pack.address, 1000);
+        setLoadingText('Minting...');
+        setTimeout(async () => {
+          await TrackPackNFTContract.mintTrackPackNFT(num);
+          setNumber(1);
+        }, 2000);
+
       } catch (error) {
-        alert(error);
+        setAlertMessage('Somthing is wrong! Try again.' + error);
+        setAlertVisible(true);
+        setLoading(false)
       }
     } else {
-      alert("install wallet");
+      setAlertMessage('Install your wallet!');
+      setAlertVisible(true);
+      setTimeout(() => setAlertVisible(false), 5000);
     }
   }
 
   const buyWithVisaCreditCard = useCallback(async (x) => {
     try {
+      setLoadingText('Connecting to Stripe...');
+      setLoading(true);
       await postStripeCustomerId();
-      handleCheckout(x);
     } catch (err) {
       console.log(err);
     }
@@ -59,41 +102,56 @@ const TrackDetails = () => {
     if (num <= 0) {
       setErrors("exist");
     } else {
-      buyWithVisaCreditCard(num);
+      buyWithVisaCreditCard();
     }
   }, [num, errors]);
-  const handleCheckout = async (x) => {
-    const stripe = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
-    console.log(num, 'num')
-    const response = await fetch(
-      `api/next_stripe`,
 
-      {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: 1000,
-          count: x,
-        }),
+  useEffect(() => {
+    async function connectStripe() {
+      if (state.customer_id !== null) {
+        console.log(state.customer_id)
+        const stripe = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+        const response = await fetch(
+          `api/next_stripe`,
+  
+          {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              amount: 1000,
+              count: num,
+              customer: state.customer_id.id
+            }),
+          }
+        );
+        const data = await response.json();
+        setLoading(false);
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: data.sessionId,
+        });
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('success');
+          setNumber(1);
+        }
       }
-    );
-    const data = await response.json();
-    console.log('session')
-    const { error } = await stripe.redirectToCheckout({
-      sessionId: data.sessionId,
-    });
-    console.log('session2', error)
-    if (error) {
-      console.log(error);
-    } else {
-      setAlertHidden(false);
-      // setTimeout(() => setAlertHidden(true), 5000);
     }
-  };
+    connectStripe();
+  }, [state.customer_id, num])
+
+  useEffect(() => {
+    getOwnershipNft();
+  },[]);
+
+  useEffect(() => {
+    if(Object.keys(state.nftKeyData).length!==0) {
+      console.log(state.nftKeyData);
+    }
+  },[state.nftKeyData]);
 
   return (
     <div className="py-10 md:py-16">
-      
       <span className="flex items-center uppercase text-MoshLight-1 font-open-sans">
         <span className="align-middle">SEASON #1</span>
         <VerifiedIcon className="ml-2" />
@@ -146,7 +204,7 @@ const TrackDetails = () => {
       <div className="flex flex-col flex-wrap my-6 sm:flex-row">
         <Button
           className="justify-center px-4 py-3 bg-primary font-suisse-intl sm:justify-start"
-          onClick={() => handleBuyWithCypto()}
+          onClick={() => setWithdrawModal(true)}
         >
           <span className="flex items-center">
             <MaticIcon className="mr-3" /> <USDCIcon className="mr-3" />
@@ -170,9 +228,13 @@ const TrackDetails = () => {
         isOpen={showModal}
         title={"Input the number of NFTs"}
         setNum={(v) => setNumber(v)}
-        onOk={() => {   
+        onOk={() => {
           setShowModal(false);
-          buyWithCreditCard();
+          if(cryptoModal===false) {
+            buyWithCreditCard();
+          } else {
+            handleBuyWithCypto()
+          }
         }}
       >
         <div className="p-5 text-white modal-body">
@@ -191,9 +253,9 @@ const TrackDetails = () => {
                   );
                   let x = parseInt(str);
                   setNumber(x);
-                } else{
+                } else {
                   setNumber(parseInt(e.target.value));
-                } 
+                }
                 setErrors(null);
               }
             }}
@@ -207,6 +269,46 @@ const TrackDetails = () => {
           )}
         </div>
       </Modal>
+      <WithdrawModal
+        isOpen={withdrawModal}
+        setModalOpen={(v) => setWithdrawModal(v)}
+        onOk={() => {console.log('withdraw')}}
+        title="Withdraw From Custodial Wallet"
+        >
+          <div className="pl-5 pr-5 pb-5">
+            <div>
+              <div className="flex flex-row justify-between text-white">
+                <h4>TrackPackNFT:</h4><h4>15</h4>
+              </div>
+              <div className="flex flex-row justify-between text-white">
+                <h4>SongNFT:</h4><h4>15</h4>
+              </div>
+            </div>
+            <hr className="mt-3 mb-3 border-orange-400"/>
+            <div>
+              <h4>NFT Type:</h4>
+              <div className="flex flex-row justify-between">
+                <div className="flex items-center">
+                  <Radio name="nft_type" value="trackpack"/>
+                  <label className="ml-2">TrackPackNFT</label>
+                </div>
+                <div className="flex items-center">
+                  <Radio name="nft_type" value="song"/>
+                  <label className="ml-2">SongNFT</label>
+                </div>
+              </div>
+              <hr className="mt-3 mb-3 border-orange-400"/>
+              <label>The Number Of NFTs</label>
+              <input type="number" min="1" className="w-full mb-2 bg-black p-1"></input>
+            </div>
+            <hr className="mt-3 mb-3 border-orange-400"/>
+            <div>
+              <button type="button" className="w-full border border-solid border-blue-500 bg-blue-500 hover:bg-blue-700 rounded p-2">Withdraw</button>
+            </div>
+          </div>
+      </WithdrawModal>
+      {loading && (<Loading message={loadingText} />)}
+      {alertVisible && (<Alert hidden={!alertVisible} message={alertMessage} setAlertHidden={(v) => setAlertVisible(!v)} />)}
     </div>
   );
 };

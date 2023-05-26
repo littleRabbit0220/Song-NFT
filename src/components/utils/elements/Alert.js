@@ -1,17 +1,16 @@
-import React, {useContext} from "react";
+import React from "react";
 import classnames from "classnames";
-import { UserContext } from "@/context/UserContext";
 
 export default function Alert(props) {
-  const {setAlertHidden} = useContext(UserContext);
+
   return (
-    <div className={classnames("mb-3  items-center rounded-lg bg-orange-400 px-6 py-2 text-base text-warning-800  fixed top-5 right-5 z-50 flex justify-center opacity-90 ",{"hidden":props.hidden})}>
+    <div className={classnames("mb-3  items-center rounded-lg bg-orange-400 px-6 py-2 text-base text-warning-800  fixed top-5 right-5 z-50 flex justify-center shadow-2xl",{"hidden":props.hidden})}>
       
-      <strong className="mr-1">{props.title}! </strong> {props.description}
+      {props.message}
       <button
         type="button"
         className="ml-auto box-content rounded-none border-none p-1 text-white-400 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-        onClick={() => setAlertHidden(true)}
+        onClick={() => props.setAlertHidden(true)}
       >
         <span className="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
           <svg

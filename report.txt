@@ -1,0 +1,3 @@
+1. API integration to retrieve the top 5 users. This is for the Leader Board page and I have implemented it using the leaderboard API. 1h
+2. Recording the contract information when a user buy Nft. Any user can use two ways to buy NFTs. There are buying with crypto and buying with credit card.
+  Recording the information when a user buy with credit card is performed by backend. I have implemented api integration between backend and frontend using add_nft_record. 2h. 

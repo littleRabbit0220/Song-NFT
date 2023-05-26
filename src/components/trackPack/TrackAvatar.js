@@ -10,7 +10,7 @@ const TrackAvatar = () => {
           width={438}
           className='md:w-96 lg:w-auto'
           src='/assets/img/tracks/vol2-flow-futurama.png'
-          alt=''
+          alt='trackpack avatar'
         />
         <button className='hover:bg-MoshLight-1 absolute right-6 top-10 font-suisse-intl text-[#030205] font-bold bg-white flex items-center rounded-full py-1.5 px-3.5 '>
           <svg

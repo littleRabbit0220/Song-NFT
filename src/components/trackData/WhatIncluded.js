@@ -67,20 +67,6 @@ const WhatIncluded = () => {
             Coming Soon
           </span>
         </li>
-
-        {/* <li className='flex items-center justify-between mb-7'>
-          <span className='flex items-center'>
-            <span className='bg-MoshLight-1  h-[27px] w-[30px] flex justify-center items-center'>
-              <HeadSetIcon />
-            </span>
-            <span className='text-[15px] sm:text-base font-medium text-MoshDark-7 pl-2.5'>
-              IRL experiences
-            </span>
-          </span>
-          <span className='text-sm opacity-50 text-MoshDark-7 sm:text-base'>
-            Coming Soon
-          </span>
-        </li> */}
       </ul>
     </div>
   );

@@ -1,4 +1,5 @@
-const LeadBoardList = () => {
+const LeadBoardList = ({data}) => {
+  console.log(data, 'data')
   return (
     <div className='overflow-auto custom-scrollbar pb-2.5'>
       <div className='min-w-[720px] lead-board-list mt-11 md:px-4'>
@@ -13,7 +14,7 @@ const LeadBoardList = () => {
           </div>
           <div className='flex-grow md:basis-[20%]'>Mixtapes owned</div>
         </div>
-        {[...'aaaaaaaa'].map((ar, index) => (
+        {data &&  data.map((ar, index) => (
           <div
             key={index}
             className={`${
@@ -21,7 +22,7 @@ const LeadBoardList = () => {
             } flex py-2.5 leading-normal text-sm md:text-base font-open-sans px-4 md:px-5 mt-1 rounded text-[#E7E7E8]`}
           >
             <div className='basis-[20%] md:basis-[22%]'>
-              <span className='text-primary'>@DevelopWithJon</span>
+              <span className='text-primary'>{ar.username}</span>
             </div>
             <div className='basis-[25%] md:basis-[22%]'>$1,342.03</div>
             <div className='basis-[15%] md:basis-[15%]'>5</div>
