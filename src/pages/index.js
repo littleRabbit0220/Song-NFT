@@ -30,7 +30,7 @@ export default function Home() {
         <CallToAction />
         <Footer />
         {state.loading && (<Loading/>)}      
-        <Modal modalVisible={(state.error !== null) && (typeof state.error === 'string')&&(state.error.indexOf('Token expired') ===-1)} modalTitle={"error"} modalContent={state.error}/>    
+        <Modal modalVisible={(state.error !== null)} modalTitle={"error"} modalContent={state.error}/>    
         <Modal modalVisible={state.modal} modalTitle={state.modalTitle} modalContent={state.modalContent}/>  
       </main>
     </React.Fragment>

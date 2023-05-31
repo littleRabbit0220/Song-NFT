@@ -14,6 +14,7 @@ import Radio from "../utils/elements/Radio";
 import Button from "../utils/elements/Button";
 import track_pack from "./TrackPackNFT.json";
 import mock_token from './MockToken.json';
+import { router } from "next/router";
 
 const TrackDetails = () => {
   
@@ -21,17 +22,13 @@ const TrackDetails = () => {
   const [ withdrawModal, setWithdrawModal] = useState(false);
   const [ quentity, setQuentity] = useState(1);
   const [ buying, setBuying ] = useState(false);
+  const [ byCrypto, setByCrypto] = useState(true);
 
   useEffect(() => {
     if(buying === true) {
       displayQuentityModal();
     }
   },[quentity, buying])
-
-  const buyWithCrypto = () => {
-    displayQuentityModal();   
-    setBuying(true);
-  }
 
   const displayQuentityModal = () => {
     setModalStatus(
@@ -53,7 +50,11 @@ const TrackDetails = () => {
                 type="button" 
                 className="text-white bg-red-500  hover:bg-red-800 rounded px-3 py-1 w-full "
                 onClick={() => {
-                  handleBuyWithCrypto();
+                  if(byCrypto){
+                    handleBuyWithCrypto();
+                  } else {
+                    handleBuyWithCreditCard();
+                  }
                   setModalStatus(false, "", <></>);
                   setBuying(false);
                 }}
@@ -68,6 +69,7 @@ const TrackDetails = () => {
                 onClick={() => {
                   setModalStatus(false, "", <></>);
                   setBuying(false);
+                  setQuentity(1);
                 }}
               >
                 Cancel
@@ -151,6 +153,10 @@ const TrackDetails = () => {
     }
   }
 
+  const handleBuyWithCreditCard = () => {
+    router.push('/checkout?quentity='+quentity);
+  }
+
   return (
     <div className="py-10 md:py-16">
       <span className="flex items-center uppercase text-MoshLight-1 font-open-sans">
@@ -205,7 +211,11 @@ const TrackDetails = () => {
       <div className="flex flex-col flex-wrap my-6 sm:flex-row">
         <Button
           className="justify-center px-4 py-3 bg-primary font-suisse-intl sm:justify-start"
-          onClick={() => buyWithCrypto()}
+          onClick={() => {
+            displayQuentityModal();  
+            setByCrypto(true); 
+            setBuying(true);
+          }}
         >
           <span className="flex items-center">
             <MaticIcon className="mr-3" /> <USDCIcon className="mr-3" />
@@ -214,7 +224,11 @@ const TrackDetails = () => {
         </Button>
         <Button
           className="bg-white text-sweetDark py-3 px-4 sm:ml-2.5 mt-3 sm:mt-0  sm:justify-start justify-center"
-          onClick={() => {}}
+          onClick={() => {
+            displayQuentityModal();   
+            setByCrypto(false);
+            setBuying(true);
+          }}
         >
           <span className="flex items-center">
             <MasterCardIcon className="mr-[7px]" />

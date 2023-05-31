@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { UserContext } from "@/context/UserContext";
 
 export default function Modal({ modalVisible, modalTitle, modalContent}) {
+
   const {state, setErrorStatus, setModalStatus} = useContext(UserContext);
   return (
     <>
@@ -30,7 +31,7 @@ export default function Modal({ modalVisible, modalTitle, modalContent}) {
                 </span>
               </button> 
             </div>
-              {modalContent}
+            <div className="text-black p-3">{modalContent}</div>
           </div>
         </div>
       </div>

@@ -29,6 +29,9 @@ export function UserProvider({ children }) {
   const setModalStatus = (_modal, _modalTitle, _modalContent) => {
     setState((state) => ({...state, modal: _modal, modalTitle: _modalTitle, modalContent: _modalContent}));
   }
+  const setPaymentStatus = (_clientSecret) => {
+    setState((state) => ({...state, clientSecret: _clientSecret}))
+  }
   // get all NftMeta data
   const getNftData = async (pageNo) => {
     setState((state) => ({ ...state, loading: true }));
@@ -53,11 +56,11 @@ export function UserProvider({ children }) {
             nftMetaData: responseData,
           }));
         } else {
-          throw responseData;
+          throw '';
         }
       }
     } catch (error) {
-      setState((state) => ({ ...state, loading: false, error: error }));
+      setState((state) => ({ ...state, loading: false }));
     }
   };
 
@@ -86,11 +89,11 @@ export function UserProvider({ children }) {
             singleNftData: responseData,
           }));
         } else {
-          throw responseData;
+          throw 'log in';
         }
       }
     } catch (error) {
-      setState((state) => ({ ...state, loading: false, error: error }));
+      setState((state) => ({ ...state, loading: false }));
     }
   };
   //update single nft data
@@ -122,11 +125,11 @@ export function UserProvider({ children }) {
             mixtapeOwnData: responseData,
           }));
         } else {
-          throw responseData;
+          throw "log in.";
         }
       }
     } catch (error) {
-      setState((state) => ({ ...state, loading: false, error: error }));
+      setState((state) => ({ ...state, loading: false, }));
     }
   };
 
@@ -249,7 +252,6 @@ export function UserProvider({ children }) {
         })
       });
       if (!response.ok) {
-        setState((state) => ({...state, loading: true}));
         throw "Faile to open TrackPackNFT.";   
       }
     } catch(error) {
@@ -270,14 +272,15 @@ export function UserProvider({ children }) {
         body: JSON.stringify({
           paymentMethodType: 'card',
           currency: 'usd',
-          amount: quentity * 1000
+          number_of_nfts: quentity 
         })
       });
       if(response.ok) {
         const secret = await response.json();
+        console.log(secret, 'secret')
         setState((state) => ({...state, clientSecret: secret, loading: false}));
       } else {
-        throw "Failed to create poayment intent.";
+        throw "Failed to create payment intent.";
       }
     } catch (error) {
       setState((state) => ({...state, error: error, loading: false}));
@@ -290,6 +293,7 @@ export function UserProvider({ children }) {
         setLoadingStatus,
         setErrorStatus,
         setModalStatus,
+        setPaymentStatus,
         getNftData,
         getSingleNftData,
         updateSingleNftData,
