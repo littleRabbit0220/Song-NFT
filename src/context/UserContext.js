@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import initialStripe from "stripe";
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
@@ -16,9 +15,9 @@ export function UserProvider({ children }) {
     mixtapeOwnData: [],
     nftKeyData: {},
     user: true,
-    customer_id: null,
     alertHidden: true,
-    leaderboard_list: []
+    leaderboard_list: [],
+    clientSecret: null,
   });
 
   const setAlertHidden = (value) => {
@@ -186,33 +185,7 @@ export function UserProvider({ children }) {
     }
   };
 
-  const postStripeCustomerId = async () => {
-    const userAuth = JSON.parse(localStorage.getItem("userInfo"));
-    try {
-      const stripe = initialStripe(process.env.STRIPE_SECRET_KEY);
-      const customer = await stripe.customers.create({
-        email: userAuth.email,
-      });
-      setState((state) => ({ ...state, customer_id: customer }))
-      const response = await fetch(
-        `${process.env.HOST_URL}/customer-id-to-uid/`,
-        {
-          method: "post",
-          headers: {
-            Authorization: `Bearer ${userAuth?.idToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            customer_id: customer.id,
-          }),
-        }
-      );
-      if (response.ok === false) throw ('error')
-    } catch (err) {
-      throw err;
-      // setState((state) => ({...state, error: error }));
-    }
-  };
+
   const getStripeCustomerId = () => {
     return new Promise(async (resolve, reject) => {
       const userAuth = JSON.parse(localStorage.getItem("userInfo"));
@@ -351,6 +324,33 @@ export function UserProvider({ children }) {
       throw 'error';
     }
   }
+
+  const createPaymentIntent = async (quentity) => {
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response  = await fetch(`${process.env.HOST_URL}/create-payment-intent/`, {
+        method:'POST',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          paymentMethodType: 'card',
+          currency: 'usd',
+          amount: quentity * 1000
+        })
+      });
+      if(response.ok) {
+        const secret = await response.json();
+        setState({
+          ...state,
+          clientSecret: secret
+        })
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
   return (
     <UserContext.Provider
       value={{
@@ -360,14 +360,14 @@ export function UserProvider({ children }) {
         getMaxtapeNftData,
         getOwnershipNft,
         updateSingleNftData,
-        postStripeCustomerId,
         getStripeCustomerId,
         getUserEthAddress,
         setAlertHidden,
         getTopUsers,
         addToNftRecord,
         openNft,
-        updateNftRecordPrivate
+        updateNftRecordPrivate,
+        createPaymentIntent
       }}
     >
       {children}

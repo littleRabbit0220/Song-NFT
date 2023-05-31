@@ -11,8 +11,8 @@ import { ethers } from "ethers";
 import track_pack from "./TrackPackNFT.json";
 import mock_token from './MockToken.json';
 import { useCallback, useContext, useEffect, useState } from "react";
+import {useRouter} from 'next/router';
 import { UserContext } from "@/context/UserContext";
-import { loadStripe } from "@stripe/stripe-js";
 import Modal from "../utils/elements/Modal";
 import Loading from "../utils/elements/Loading";
 import Alert from "../utils/elements/Alert";
@@ -20,7 +20,8 @@ import WithdrawModal from "../utils/elements/WithdrawModal";
 import Radio from "../utils/elements/Radio";
 
 const TrackDetails = () => {
-  const { postStripeCustomerId, addToNftRecord, updateNftRecordPrivate, state, getOwnershipNft } = useContext(UserContext);
+  const router = useRouter();
+  const { addToNftRecord, updateNftRecordPrivate, state, getOwnershipNft } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const [withdrawModal, setWithdrawModal] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -29,7 +30,7 @@ const TrackDetails = () => {
   const [loadingText, setLoadingText] = useState('');
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [cryptoModal, setCryptoModal] = useState(true);
+  const [cryptoModal, setCryptoModal] = useState(false);
   async function handleBuyWithCypto() {
     if (typeof window.ethereum !== "undefined") {
       const accounts = await window.ethereum.request({
@@ -88,67 +89,18 @@ const TrackDetails = () => {
     }
   }
 
-  const buyWithVisaCreditCard = useCallback(async (x) => {
-    try {
-      setLoadingText('Connecting to Stripe...');
-      setLoading(true);
-      await postStripeCustomerId();
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
   const buyWithCreditCard = useCallback(() => {
     if (num <= 0) {
       setErrors("exist");
     } else {
-      buyWithVisaCreditCard();
+      router.push('/checkout?quentity='+ num);
     }
   }, [num, errors]);
-
-  useEffect(() => {
-    async function connectStripe() {
-      if (state.customer_id !== null) {
-        console.log(state.customer_id)
-        const stripe = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
-        const response = await fetch(
-          `api/next_stripe`,
-  
-          {
-            method: "post",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              amount: 1000,
-              count: num,
-              customer: state.customer_id.id
-            }),
-          }
-        );
-        const data = await response.json();
-        setLoading(false);
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: data.sessionId,
-        });
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('success');
-          setNumber(1);
-        }
-      }
-    }
-    connectStripe();
-  }, [state.customer_id, num])
 
   useEffect(() => {
     getOwnershipNft();
   },[]);
 
-  useEffect(() => {
-    if(Object.keys(state.nftKeyData).length!==0) {
-      console.log(state.nftKeyData);
-    }
-  },[state.nftKeyData]);
 
   return (
     <div className="py-10 md:py-16">
