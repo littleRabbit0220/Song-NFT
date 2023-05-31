@@ -1,6 +1,6 @@
+import React, { useContext, useEffect, useState } from "react";
 import ShareIcon from "@/icons/ShareIcon";
 import ArtistTag from "./ArtistTag";
-import Button from "../utils/elements/Button";
 import MasterCardIcon from "@/icons/MasterCardIcon";
 import VisaCardIcon from "@/icons/VisaCardIcon";
 import AmericanPayIcon from "@/icons/AmericanPayIcon";
@@ -8,42 +8,94 @@ import VerifiedIcon from "@/icons/VerifiedIcon";
 import USDCIcon from "@/icons/USDCIcon";
 import MaticIcon from "@/icons/MaticIcon";
 import { ethers } from "ethers";
-import track_pack from "./TrackPackNFT.json";
-import mock_token from './MockToken.json';
-import { useCallback, useContext, useEffect, useState } from "react";
-import {useRouter} from 'next/router';
 import { UserContext } from "@/context/UserContext";
-import Modal from "../utils/elements/Modal";
-import Loading from "../utils/elements/Loading";
-import Alert from "../utils/elements/Alert";
 import WithdrawModal from "../utils/elements/WithdrawModal";
 import Radio from "../utils/elements/Radio";
+import Button from "../utils/elements/Button";
+import track_pack from "./TrackPackNFT.json";
+import mock_token from './MockToken.json';
 
 const TrackDetails = () => {
-  const router = useRouter();
-  const { addToNftRecord, updateNftRecordPrivate, state, getOwnershipNft } = useContext(UserContext);
-  const [showModal, setShowModal] = useState(false);
-  const [withdrawModal, setWithdrawModal] = useState(false);
-  const [errors, setErrors] = useState(null);
-  const [num, setNumber] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('');
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [cryptoModal, setCryptoModal] = useState(false);
-  async function handleBuyWithCypto() {
+  
+  const { setLoadingStatus, setErrorStatus, setModalStatus, addToNftRecord, updateNftRecordPrivate } = useContext(UserContext);
+  const [ withdrawModal, setWithdrawModal] = useState(false);
+  const [ quentity, setQuentity] = useState(1);
+  const [ buying, setBuying ] = useState(false);
+
+  useEffect(() => {
+    if(buying === true) {
+      displayQuentityModal();
+    }
+  },[quentity, buying])
+
+  const buyWithCrypto = () => {
+    displayQuentityModal();   
+    setBuying(true);
+  }
+
+  const displayQuentityModal = () => {
+    setModalStatus(
+      true,
+      'Input Modal',
+      (
+        <div className="p-5 pt-2 flex flex-col">
+          <label htmlFor="quentity-input" className="text-slate-600 mb-2">Quentity:</label>
+          <input 
+            id="quentity-input"
+            value={quentity}
+            onChange={(e) => setQuentity(e.target.value)}
+            type="number" min={1}  
+            placeholder="Quentity" 
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "/>
+          <div className="grid grid-cols-2 mt-4">
+            <div className="pr-2 grid-span-1">
+              <button 
+                type="button" 
+                className="text-white bg-red-500  hover:bg-red-800 rounded px-3 py-1 w-full "
+                onClick={() => {
+                  handleBuyWithCrypto();
+                  setModalStatus(false, "", <></>);
+                  setBuying(false);
+                }}
+              >
+                Ok
+              </button>
+            </div>
+            <div className="pl-2 grid-span-1">
+              <button 
+                type="button" 
+                className="text-slate-500 bg-white rounded px-3 py-1 w-full hover:bg-slate-300"
+                onClick={() => {
+                  setModalStatus(false, "", <></>);
+                  setBuying(false);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    )
+  }
+
+  const handleBuyWithCrypto = async() => {
     if (typeof window.ethereum !== "undefined") {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+
       try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+
         const TrackPackNFTContract = new ethers.Contract(
           track_pack.address,
           track_pack.abi,
           signer
         );
+
         const MockTokenContract = new ethers.Contract(
           mock_token.address,
           mock_token.abi,
@@ -52,55 +104,52 @@ const TrackDetails = () => {
 
         TrackPackNFTContract.on('trackPackNFTMinted', async (to, id) => {
           const mintedTokenId = parseInt(id._hex, 16);
-          console.log(mintedTokenId)
-          setLoadingText('Saving into ntf_record database...');
           await addToNftRecord(mintedTokenId, 'private');
-          setLoadingText('Opening...');
-          await TrackPackNFTContract.openTrackPackNFT(mintedTokenId);
-        });
-        TrackPackNFTContract.on('TrackPackOpened', async (from, tokenId, requestId, mintedIDs) => {
-          console.log("from" + from, "tokenId" + tokenId, "requestId" + requestId, "mintedIDs" + mintedIDs);
-          setLoadingText('Saving into ntf_record database...');
-          await updateNftRecordPrivate(mintedIDs, tokenId);
-          setLoading(false)
-          setAlertMessage('You bought successfully!');
-          setAlertVisible(true);
-          setTimeout(() => setAlertVisible(false), 5000);
+          await setLoadingStatus(true);
+          await TrackPackNFTContract.openTrackPackNFT(mintedTokenId);         
         });
 
-        setLoadingText('Approving...');
-        setLoading(true);
+        TrackPackNFTContract.on('TrackPackOpened', async (from, tokenId, requestId, mintedIDs) => {
+          await updateNftRecordPrivate(mintedIDs, tokenId);
+          setLoadingStatus(false);
+          setModalStatus(
+            true,
+            "Success!",
+            (
+              <div className="p-5 pt-2">
+                <p className="text-slate-500"><strong>Congratulation!</strong>You bought the TrackPackNFT successfully.</p>
+                <div className="mt-4 flex justify-center items-center">
+                  <button 
+                    type="button" 
+                    className="text-white bg-red-500 rounded px-3 py-1 hover:bg-red-800"
+                    onClick={() => {
+                      setModalStatus(false, "", <></>);
+                      setBuying(false);
+                    }}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            )
+          )
+        });
+        
         await MockTokenContract.approve(track_pack.address, 1000);
-        setLoadingText('Minting...');
+        await setLoadingStatus(true);
         setTimeout(async () => {
-          await TrackPackNFTContract.mintTrackPackNFT(num);
-          setNumber(1);
+          await TrackPackNFTContract.mintTrackPackNFT(quentity);
+          setQuentity(1);
         }, 2000);
 
       } catch (error) {
-        setAlertMessage('Somthing is wrong! Try again.' + error);
-        setAlertVisible(true);
-        setLoading(false)
+        setLoadingStatus(false);
+        setErrorStatus(error);
       }
     } else {
-      setAlertMessage('Install your wallet!');
-      setAlertVisible(true);
-      setTimeout(() => setAlertVisible(false), 5000);
+
     }
   }
-
-  const buyWithCreditCard = useCallback(() => {
-    if (num <= 0) {
-      setErrors("exist");
-    } else {
-      router.push('/checkout?quentity='+ num);
-    }
-  }, [num, errors]);
-
-  useEffect(() => {
-    getOwnershipNft();
-  },[]);
-
 
   return (
     <div className="py-10 md:py-16">
@@ -156,7 +205,7 @@ const TrackDetails = () => {
       <div className="flex flex-col flex-wrap my-6 sm:flex-row">
         <Button
           className="justify-center px-4 py-3 bg-primary font-suisse-intl sm:justify-start"
-          onClick={() => setWithdrawModal(true)}
+          onClick={() => buyWithCrypto()}
         >
           <span className="flex items-center">
             <MaticIcon className="mr-3" /> <USDCIcon className="mr-3" />
@@ -165,7 +214,7 @@ const TrackDetails = () => {
         </Button>
         <Button
           className="bg-white text-sweetDark py-3 px-4 sm:ml-2.5 mt-3 sm:mt-0  sm:justify-start justify-center"
-          onClick={() => setShowModal(true)}
+          onClick={() => {}}
         >
           <span className="flex items-center">
             <MasterCardIcon className="mr-[7px]" />
@@ -175,52 +224,7 @@ const TrackDetails = () => {
           <span className="pl-2.5">Buy with Credit Card</span>
         </Button>
       </div>
-      <Modal
-        setModalOpen={() => setShowModal(false)}
-        isOpen={showModal}
-        title={"Input the number of NFTs"}
-        setNum={(v) => setNumber(v)}
-        onOk={() => {
-          setShowModal(false);
-          if(cryptoModal===false) {
-            buyWithCreditCard();
-          } else {
-            handleBuyWithCypto()
-          }
-        }}
-      >
-        <div className="p-5 text-white modal-body">
-          <label>QUANTITY:</label>
-          <input
-            type="text"
-            className="border-solid border-gray-500 border-2 ml-5 bg-black pl-2"
-            value={num}
-            onChange={(e) => {
-              if (e.target.value === "") setNumber(0);
-              else {
-                if (num === 0) {
-                  const str = e.target.value.substring(
-                    1,
-                    e.target.value.length
-                  );
-                  let x = parseInt(str);
-                  setNumber(x);
-                } else {
-                  setNumber(parseInt(e.target.value));
-                }
-                setErrors(null);
-              }
-            }}
-          />
-          {errors ? (
-            <div className="text-red-500">
-              The number of NFts must be not empty.
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
-      </Modal>
+      
       <WithdrawModal
         isOpen={withdrawModal}
         setModalOpen={(v) => setWithdrawModal(v)}
@@ -259,8 +263,6 @@ const TrackDetails = () => {
             </div>
           </div>
       </WithdrawModal>
-      {loading && (<Loading message={loadingText} />)}
-      {alertVisible && (<Alert hidden={!alertVisible} message={alertMessage} setAlertHidden={(v) => setAlertVisible(!v)} />)}
     </div>
   );
 };

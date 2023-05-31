@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CallToAction from '@/components/callToAction';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
@@ -6,9 +6,13 @@ import TrackData from '@/components/trackData';
 import TrackOverview from '@/components/trackOverview';
 import TrackPack from '@/components/trackPack';
 import Head from 'next/head';
+import Loading from '@/components/utils/elements/Loading';
+import Modal from '@/components/utils/elements/Modal';
+import { UserContext } from '@/context/UserContext';
 
 export default function Home() {
 
+  const { state } = useContext(UserContext);
   return (
     <React.Fragment>
       <Head>
@@ -25,6 +29,9 @@ export default function Home() {
         <TrackOverview />
         <CallToAction />
         <Footer />
+        {state.loading && (<Loading/>)}      
+        <Modal modalVisible={(state.error !== null) && (typeof state.error === 'string')&&(state.error.indexOf('Token expired') ===-1)} modalTitle={"error"} modalContent={state.error}/>    
+        <Modal modalVisible={state.modal} modalTitle={state.modalTitle} modalContent={state.modalContent}/>  
       </main>
     </React.Fragment>
   );

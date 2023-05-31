@@ -8,9 +8,7 @@ const Artists = () => {
   const { state, getNftData } = useContext(UserContext);
   const [songs, setSongs] = useState([]);
   useEffect(() => {
-    if (getNftData) {
-      getNftData(1);
-    }
+    getNftData(1);
   },[]);
   useEffect(() => {
     if(state && state.nftMetaData) {
