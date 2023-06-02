@@ -27,7 +27,7 @@ export default function CheckoutPage() {
         <link rel='icon' href='/favicon.svg'/>
       </Head>
       <Header/>
-      <div className=' ml-[20%] mr-[20%] bg-white p-10 mt-[200px] mb-[300px] rounded-3xl'>
+      <div className='md:ml-[30%] md:mr-[30%] sm:ml-[20%] sm:mr-[20%] bg-white p-10 mt-[200px] mb-[300px] rounded-3xl mr-[10%] ml-[10%]'>
         <Elements stripe={stripePromise}>
             <CheckoutForm  quentity={quentity}/>
         </Elements>
