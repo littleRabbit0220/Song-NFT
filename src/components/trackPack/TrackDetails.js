@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import ShareIcon from "@/icons/ShareIcon";
 import ArtistTag from "./ArtistTag";
 import MasterCardIcon from "@/icons/MasterCardIcon";
@@ -9,8 +9,6 @@ import USDCIcon from "@/icons/USDCIcon";
 import MaticIcon from "@/icons/MaticIcon";
 import { ethers } from "ethers";
 import { UserContext } from "@/context/UserContext";
-import WithdrawModal from "../utils/elements/WithdrawModal";
-import Radio from "../utils/elements/Radio";
 import Button from "../utils/elements/Button";
 import track_pack from "./TrackPackNFT.json";
 import mock_token from './MockToken.json';
@@ -19,7 +17,6 @@ import { router } from "next/router";
 const TrackDetails = () => {
   
   const { setLoadingStatus, setErrorStatus, setModalStatus, addToNftRecord, updateNftRecordPrivate } = useContext(UserContext);
-  const [ withdrawModal, setWithdrawModal] = useState(false);
   const [ quentity, setQuentity] = useState(1);
   const [ buying, setBuying ] = useState(false);
   const [ byCrypto, setByCrypto] = useState(true);
@@ -28,7 +25,8 @@ const TrackDetails = () => {
     if(buying === true) {
       displayQuentityModal();
     }
-  },[quentity, buying])
+  },[quentity, buying]);
+
 
   const displayQuentityModal = () => {
     setModalStatus(
@@ -239,44 +237,6 @@ const TrackDetails = () => {
         </Button>
       </div>
       
-      <WithdrawModal
-        isOpen={withdrawModal}
-        setModalOpen={(v) => setWithdrawModal(v)}
-        onOk={() => {console.log('withdraw')}}
-        title="Withdraw From Custodial Wallet"
-        >
-          <div className="pl-5 pr-5 pb-5">
-            <div>
-              <div className="flex flex-row justify-between text-white">
-                <h4>TrackPackNFT:</h4><h4>15</h4>
-              </div>
-              <div className="flex flex-row justify-between text-white">
-                <h4>SongNFT:</h4><h4>15</h4>
-              </div>
-            </div>
-            <hr className="mt-3 mb-3 border-orange-400"/>
-            <div>
-              <h4>NFT Type:</h4>
-              <div className="flex flex-row justify-between">
-                <div className="flex items-center">
-                  <Radio name="nft_type" value="trackpack"/>
-                  <label className="ml-2">TrackPackNFT</label>
-                </div>
-                <div className="flex items-center">
-                  <Radio name="nft_type" value="song"/>
-                  <label className="ml-2">SongNFT</label>
-                </div>
-              </div>
-              <hr className="mt-3 mb-3 border-orange-400"/>
-              <label>The Number Of NFTs</label>
-              <input type="number" min="1" className="w-full mb-2 bg-black p-1"></input>
-            </div>
-            <hr className="mt-3 mb-3 border-orange-400"/>
-            <div>
-              <button type="button" className="w-full border border-solid border-blue-500 bg-blue-500 hover:bg-blue-700 rounded p-2">Withdraw</button>
-            </div>
-          </div>
-      </WithdrawModal>
     </div>
   );
 };

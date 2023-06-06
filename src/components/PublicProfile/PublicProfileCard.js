@@ -28,7 +28,7 @@ const PublicProfileCard = ({ profile }) => {
   }
 
   return (
-    <div className="mosh-container-normal relative z-[1] my-10 ">
+    <div className="mosh-container-normal relative  my-10 ">
       <div className="bg-MoshDark-7 px-[20px] py-[25px] md:px-[30px] md:py-[35px] rounded-xl flex lg:flex-row flex-col">
         <div className="flex flex-wrap sm:flex-nowrap">
           <Image

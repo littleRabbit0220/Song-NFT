@@ -17,6 +17,8 @@ export function UserProvider({ children }) {
     user: true,
     leaderboard_list: [],
     clientSecret: null,
+    userEthAddress:null,
+    openedIds:[],
   });
 
   const setLoadingStatus = (loadingStatus) => {
@@ -200,7 +202,9 @@ export function UserProvider({ children }) {
         }
       );
       const responseData = await response.json();
-      if (typeof responseData == "object") {
+      console.log(responseData);
+      if (typeof responseData == "object" && response.ok) {
+        console.log(responseData, 'res');
         setState((state) => ({
           ...state,
           loading: false,
@@ -237,7 +241,7 @@ export function UserProvider({ children }) {
     }
   }
   // open nft by user.
-  const openNft = async () => {
+  const openNft = async (number_of_nft) => {
     setState((state) => ({...state, loading: true}));
     const userAuth = JSON.parse(localStorage.getItem('userInfo'));
     try {
@@ -248,11 +252,89 @@ export function UserProvider({ children }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          number_of_nft: 1
+          number_of_nft: number_of_nft
         })
       });
       if (!response.ok) {
         throw "Faile to open TrackPackNFT.";   
+      } else {
+        const responseData = await response.json();
+        console.log(responseData, 'openedids')
+      }
+    } catch(error) {
+      setState((state) => ({...state, error: error, loading: false}))
+    }
+  }
+
+   // withdraw nft by user.
+   const withdrawNft = async (number_of_nft, type_of_nft, ) => {
+    setState((state) => ({...state, loading: true}));
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/withdraw/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nft_id: number_of_nft,
+          nft_name: type_of_nft,
+          nft_category: type_of_nft
+        })
+      });
+      if (!response.ok) {
+        throw "Faile to open TrackPackNFT.";   
+      } else {
+        setModalStatus(true, "success!", 'You withdrawed successfully!')
+      }
+    } catch(error) {
+      setState((state) => ({...state, error: error, loading: false}))
+    }
+  }
+  // withdraw nft by user.
+  const userEthAddr = async (addr) => {
+  setState((state) => ({...state, loading: true}));
+  const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+  try {
+    const response = await fetch(`${process.env.HOST_URL}/userEthAddr/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${userAuth?.idToken}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        eth_addr: addr
+      })
+    });
+    if (!response.ok) {
+      throw "Faile to open TrackPackNFT.";   
+    } else {
+
+    }
+  } catch(error) {
+    setState((state) => ({...state, error: error, loading: false}))
+  }
+}
+  // withdraw nft by user.
+  const getUserEthAddr = async () => {
+    setState((state) => ({...state, loading: true}));
+    const userAuth = JSON.parse(localStorage.getItem('userInfo'));
+    try {
+      const response = await fetch(`${process.env.HOST_URL}/userEthAddr/`, {
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${userAuth?.idToken}`,
+          "Content-Type": "application/json"
+        },
+
+      });
+      if (!response.ok) {
+        throw "User Eth does not exist.";   
+      } else {
+        const responseData = await response.json();
+        console.log(responseData, 'address');
+        setState((state) => ({...state, userEthAddress: responseData.eth_addr}));
       }
     } catch(error) {
       setState((state) => ({...state, error: error, loading: false}))
@@ -302,6 +384,9 @@ export function UserProvider({ children }) {
         getTopUsers,
         addToNftRecord,
         openNft,
+        withdrawNft,
+        getUserEthAddr,
+        userEthAddr,
         updateNftRecordPrivate,
         createPaymentIntent
       }}

@@ -8,7 +8,7 @@ export default function Modal({ modalVisible, modalTitle, modalContent}) {
   return (
     <>
       <div
-        className={classnames("justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0  outline-none focus:outline-none backdrop-blur-sm ", { '-z-10 opacity-0 ': !modalVisible, 'fade-in': modalVisible })}
+        className={classnames("justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0  outline-none focus:outline-none backdrop-blur-sm ", { '-z-10 opacity-0 ': !modalVisible, 'fade-in z-20': modalVisible })}
       >
         <div className={classnames("relative w-auto my-6 mx-auto max-w-3xl ", { "z-10 fade-in": modalVisible })}>
           <div className="border-0 rounded-lg  relative flex flex-col w-full  outline-none focus:outline-none modal-shadow border-solid border-black border-2 bg-white ">

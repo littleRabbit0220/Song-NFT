@@ -23,11 +23,11 @@ const SongsListHeader = () => {
     setViewByUser(!viewByUser);
   };
   return (
-    <div className='mosh-container-normal z-[5] relative'>
+    <div className='mosh-container-normal z-[1]'>
       <div className='flex mb-2 md:mb-0'>
         <h2 className='text-[22px]'>Songs</h2>
       </div>
-      <div className='relative flex flex-wrap items-center justify-between -ml-3 lg:flex-nowrap'>
+      <div className=' flex flex-wrap items-center justify-between -ml-3 lg:flex-nowrap'>
         <div className='pl-3 py-2 md:py-3 select-none basis-full md:basis-[30%] lg:basis-auto xl:basis-[30%]'>
           <div className='flex font-open-sans border rounded-[10px] h-[44px] lg:h-[48px] px-[15px] border-white border-opacity-25 items-center '>
             <button type='submit'>
@@ -60,7 +60,7 @@ const SongsListHeader = () => {
               <Switch
                 checked={viewByTrackPad}
                 onChange={setViewByTrackPad}
-                className={`bg-white bg-opacity-10 relative inline-flex h-6 w-11 items-center rounded-full`}
+                className={`bg-white bg-opacity-10  inline-flex h-6 w-11 items-center rounded-full`}
               >
                 <span className='sr-only'>Trackpad</span>
                 <span
@@ -90,7 +90,7 @@ const SongsListHeader = () => {
               <Switch
                 checked={viewByUser}
                 onChange={setViewByUser}
-                className={`bg-white bg-opacity-10 relative inline-flex h-6 w-11 items-center rounded-full`}
+                className={`bg-white bg-opacity-10  inline-flex h-6 w-11 items-center rounded-full`}
               >
                 <span className='sr-only'>Song</span>
                 <span
@@ -105,10 +105,10 @@ const SongsListHeader = () => {
           </div>
 
           <div className='flex-grow max-w-xs py-2 pl-3 select-none md:py-3'>
-            <div className='relative w-full flex font-open-sans border rounded-[10px] h-[44px] lg:h-[48px] border-white border-opacity-25 items-center'>
+            <div className=' w-full flex font-open-sans border rounded-[10px] h-[44px] lg:h-[48px] border-white border-opacity-25 items-center'>
               <Listbox value={selectedOrder} onChange={setSelectedOrder}>
-                <div className='relative w-full h-full'>
-                  <Listbox.Button className='relative flex items-center min-w-[175px] w-full px-[15px] h-full'>
+                <div className=' w-full h-full'>
+                  <Listbox.Button className=' flex items-center min-w-[175px] w-full px-[15px] h-full'>
                     <span className='block pr-5 truncate'>
                       {selectedOrder.name}
                     </span>
@@ -130,7 +130,7 @@ const SongsListHeader = () => {
                         <Listbox.Option
                           key={personIdx}
                           className={({ active }) =>
-                            `relative cursor-pointer pl-3 pr-2 text-white select-none py-2 ${
+                            ` cursor-pointer pl-3 pr-2 text-white select-none py-2 ${
                               active ? 'bg-white/10 ' : 'text-gray-900'
                             }`
                           }

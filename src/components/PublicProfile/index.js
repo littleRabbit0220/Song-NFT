@@ -8,6 +8,7 @@ import SongsListHeader from "./SongsListHeader";
 import { useRouter } from "next/router";
 import ClipLoader from "react-spinners/SyncLoader";
 import VerifyJWTExpire from "@/components/utils/functions/VerifyJWTExpire";
+import OpenAndWithdraw from "./OpenAndWithdraw";
 
 const PublicProfile = () => {
   const router = useRouter();
@@ -48,6 +49,7 @@ const PublicProfile = () => {
       const docId = Object.keys(state?.nftKeyData).join(" ");
       // const docId2 = 
       getSingleNftData({ docID: "new_wine_necesito_un_encuentro" });
+      console.log(docId, 'docId');
       getMaxtapeNftData({ docID: docId });
     }
   }, [state?.nftKeyData]);
@@ -79,22 +81,9 @@ const PublicProfile = () => {
     }
   }, [state]);
 
+
   return (
-    <div className="relative z-[1]">
-      {/* <div>
-        {state.error && (
-          <span
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              color: "red",
-              marginTop: 30,
-            }}
-          >
-            {state.error}
-          </span>
-        )}
-      </div> */}
+    <div className="relative ">
       <div>
         {state.profileLoading || state.loading  ? (
           <div
@@ -112,6 +101,7 @@ const PublicProfile = () => {
         )}
       </div>
 
+      <OpenAndWithdraw/>
       <SongsListHeader />
       <div>
         {state.songLoading ? (
