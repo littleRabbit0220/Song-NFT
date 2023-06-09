@@ -20,6 +20,7 @@ const Form = () => {
     }
   };
   useEffect(() => {
+    console.log(state.error)
     state?.user?.kind
       ? setErrMsg('Successfully user created')
       : setErrMsg(state?.user || state?.error);

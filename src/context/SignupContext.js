@@ -22,6 +22,7 @@ export function SignupProvider({ children }) {
 
       if (!response.ok) {
         const errorData = await response.json();
+        console.log(errorData);
         setState({
           status: false,
           loading: false,
@@ -30,6 +31,7 @@ export function SignupProvider({ children }) {
         });
       } else {
         const userData = await response.json();
+        
         setState({
           status: true,
           loading: false,
@@ -38,6 +40,7 @@ export function SignupProvider({ children }) {
         });
       }
     } catch (error) {
+      console.log(error);
       setState({
         status: false,
         loading: false,

@@ -43,7 +43,9 @@ export function LoginProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
       if (!response.ok) {
+        
         const errorData = await response.json();
+        console.log(errorData);
         setState({
           status: false,
           loading: false,
@@ -52,6 +54,7 @@ export function LoginProvider({ children }) {
         });
       } else {
         const userData = await response.json();
+        console.log(userData)
         setState({
           status: true,
           loading: false,
@@ -61,6 +64,7 @@ export function LoginProvider({ children }) {
         localStorage.setItem("userInfo", JSON.stringify(userData));
       }
     } catch (error) {
+      console.log(error);
       setState({
         status: false,
         loading: false,
