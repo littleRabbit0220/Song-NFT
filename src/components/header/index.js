@@ -8,7 +8,7 @@ import { useContext, useState, useEffect, useMemo } from 'react';
 import { LoginContext } from '@/context/LoginContext';
 
 const navigation = [
-  { name: 'Current Drop', href: '#' },
+  { name: 'Current Drop', href: '/artist' },
   { name: 'Drop Schedule', href: '/drop-schedule' },
   { name: 'Leader Board', href: '/leadboard' },
   { name: 'Explore', href: '/explore' },

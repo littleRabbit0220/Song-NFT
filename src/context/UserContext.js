@@ -51,6 +51,7 @@ export function UserProvider({ children }) {
           }
         );
         const responseData = await response.json();
+        console.log(responseData);
         if (typeof responseData == "object") {
           setState((state) => ({
             ...state,
@@ -172,7 +173,7 @@ export function UserProvider({ children }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          song_nft_ids: song_nft_ids,
+          song_nft_ids: (song_nft_ids),
           trackpack_nft_id: trackpack_nft_id
         })
       });

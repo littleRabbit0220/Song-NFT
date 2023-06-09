@@ -78,6 +78,7 @@ export function LoginProvider({ children }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU0NWUyNDZjNTEwNmExMGQ2MzFiMTA0M2E3MWJiNTllNWJhMGM5NGQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbW9zaC1tYXJrZXRwbGFjZS03ZWNhNSIsImF1ZCI6Im1vc2gtbWFya2V0cGxhY2UtN2VjYTUiLCJhdXRoX3RpbWUiOjE2ODYwNDM4NTYsInVzZXJfaWQiOiJzN1VieW94WjJBZWhoc09JUmhaRUQ3Slk0YUMzIiwic3ViIjoiczdVYnlveFoyQWVoaHNPSVJoWkVEN0pZNGFDMyIsImlhdCI6MTY4NjA0Mzg1NiwiZXhwIjoxNjg2MDQ3NDU2LCJlbWFpbCI6InRhdm9sby50cmVudGlub0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0YXZvbG8udHJlbnRpbm9AZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.vO83BYGKoilnEMKjNNye6p1-B79yo4g30LxfXwX6xakrFNqzS-b2sp9Qe1hAW4SB-VOsqsQTt_OZ3V7flJgHM3rkRrofSiWruVonQF7OLBZKcOK3fbu0VuI5aFxk0ZVFyW1jUyuA6uKHVSuLL0QOmhTDavyePPn-QG1RpuvuKem7CVbBOkKGBUIS_9O5AOtOZOzk6dm9GdujJjLULc7PRNKPPIVPKCZkJ6IKw5RZXqQbW3KBU9rozS867JNoFuFdDzxuNFIqW_fKSIqrXujsJAnX91MlHalY64cF0hNirxts_USrV81MndGcDMH59OieCGZvJaUsuHFXXx28c4LXng"
         },
         body: JSON.stringify({ email }),
       });

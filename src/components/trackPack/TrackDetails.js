@@ -12,6 +12,7 @@ import { UserContext } from "@/context/UserContext";
 import Button from "../utils/elements/Button";
 import track_pack from "./TrackPackNFT.json";
 import mock_token from './MockToken.json';
+import song_nft from './SongNFT.json';
 import { router } from "next/router";
 
 const TrackDetails = () => {
@@ -27,26 +28,27 @@ const TrackDetails = () => {
     }
   },[quentity, buying]);
 
-
   const displayQuentityModal = () => {
     setModalStatus(
       true,
-      'Input Modal',
+      'Quentity',
       (
-        <div className="p-5 pt-2 flex flex-col">
-          <label htmlFor="quentity-input" className="text-slate-600 mb-2">Quentity:</label>
-          <input 
-            id="quentity-input"
-            value={quentity}
-            onChange={(e) => setQuentity(e.target.value)}
-            type="number" min={1}  
-            placeholder="Quentity" 
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "/>
-          <div className="grid grid-cols-2 mt-4">
+        <div className="flex flex-col">
+          <div className="bg-slate-800 p-3 m-4 rounded-2xl">
+            <input 
+              id="quentity-input"
+              value={quentity}
+              onChange={(e) => setQuentity(e.target.value)}
+              type="number" min={1}  
+              placeholder="Quentity" 
+              className="text-slate-300 display-3 text-sm rounded-lg focus:ring-blue-500 shadow-inner focus:border-blue-500 block w-full p-2.5 bg-slate-700 border-none"
+            />
+          </div>
+          <div className="grid grid-cols-2 m-4 p-3 bg-slate-800 rounded-2xl">
             <div className="pr-2 grid-span-1">
               <button 
                 type="button" 
-                className="text-white bg-red-500  hover:bg-red-800 rounded px-3 py-1 w-full "
+                className="text-white bg-blue-500  hover:bg-blue-800 rounded px-3 py-1 w-full "
                 onClick={() => {
                   if(byCrypto){
                     handleBuyWithCrypto();
@@ -86,6 +88,10 @@ const TrackDetails = () => {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
+        window.ethereum.on('disconnect', (error) => {
+          console.log(error);
+          return;
+        })
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
@@ -104,13 +110,18 @@ const TrackDetails = () => {
 
         TrackPackNFTContract.on('trackPackNFTMinted', async (to, id) => {
           const mintedTokenId = parseInt(id._hex, 16);
-          await addToNftRecord(mintedTokenId, 'private');
+          await addToNftRecord(mintedTokenId+'', 'private');
           await setLoadingStatus(true);
           await TrackPackNFTContract.openTrackPackNFT(mintedTokenId);         
         });
 
         TrackPackNFTContract.on('TrackPackOpened', async (from, tokenId, requestId, mintedIDs) => {
-          await updateNftRecordPrivate(mintedIDs, tokenId);
+          const ids = [];
+          console.log(tokenId, mintedIDs);
+          for(let i = 0; i < mintedIDs.length; i ++) 
+            ids.push(parseInt(mintedIDs[i]._hex)+'');
+          const merged = ids.join(',');
+          await updateNftRecordPrivate(merged, parseInt(tokenId._hex, 16)+'');
           setLoadingStatus(false);
           setModalStatus(
             true,
@@ -133,9 +144,9 @@ const TrackDetails = () => {
               </div>
             )
           )
-        });
-        
+        });  
         await MockTokenContract.approve(track_pack.address, 1000);
+
         await setLoadingStatus(true);
         setTimeout(async () => {
           await TrackPackNFTContract.mintTrackPackNFT(quentity);
@@ -144,10 +155,10 @@ const TrackDetails = () => {
 
       } catch (error) {
         setLoadingStatus(false);
-        setErrorStatus(error);
+        setErrorStatus('Failed! An error on Metamask was discovered.');
       }
     } else {
-
+      setErrorStatus('Failed! Install the your wallet on browser.');
     }
   }
 

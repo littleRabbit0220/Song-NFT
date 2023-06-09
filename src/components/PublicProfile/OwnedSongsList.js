@@ -2,7 +2,7 @@ import ExploreSong from "../ExploreCollection/ExploreSong";
 
 const OwnedSongsList = ({ songs }) => {
   return (
-    <div className="pt-4 mosh-container-normal z-[1]">
+    <div className="pt-4 mosh-container-normal z-[1] relative">
       <div className="flex flex-wrap -mx-2 -mt-2 sm:-mx-4 sm:-mt-5">
         {songs &&
           songs?.map((val, index) => {

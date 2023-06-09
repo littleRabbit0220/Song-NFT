@@ -69,11 +69,7 @@ const ExploreSong = ({ song ,type}) => {
       <div className="relative">
         <Image
           src={
-            song?.image
-              ? song?.image
-              : `/assets/img/tracks/${
-                  song?.type === "Tape" ? "vol2-flow-futurama.png" : "song.png"
-                }`
+            "/assets/img/artists/new-wine.png"
           } // specify the image path
           alt="Alternative text" // add alternative text for accessibility
           width={400} // set the width of the image
