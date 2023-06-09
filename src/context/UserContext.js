@@ -5,9 +5,12 @@ export function UserProvider({ children }) {
   const [state, setState] = useState({
     status: false,
     loading: false,
-    error: null,
+    error: false,
+    errorMessage: null,
     modal: false,
     modalTitle: "",
+    info: false,
+    inofMessage: null,
     modalContent: (<></>),
     nftMetaData: [],
     message: null,
@@ -25,12 +28,18 @@ export function UserProvider({ children }) {
     setState((state) => ({...state, loading: loadingStatus}));
   }
 
-  const setErrorStatus = (error) => {
-    setState((state) => ({...state, error: error}));
+  const setInfoStatus = (info, message) => {
+    setState((state) => ({...state, info: info, infoMessage: message}));
   }
+
+  const setErrorStatus = (error, message) => {
+    setState((state) => ({...state, error: error, errorMessage: message}));
+  }
+
   const setModalStatus = (_modal, _modalTitle, _modalContent) => {
     setState((state) => ({...state, modal: _modal, modalTitle: _modalTitle, modalContent: _modalContent}));
   }
+
   const setPaymentStatus = (_clientSecret) => {
     setState((state) => ({...state, clientSecret: _clientSecret}))
   }
@@ -59,10 +68,12 @@ export function UserProvider({ children }) {
             nftMetaData: responseData,
           }));
         } else {
-          throw '';
+          setInfoStatus(true, responseData);
+          setState((state) => ({ ...state, loading: false }));
         }
       }
     } catch (error) {
+      setErrorStatus(true, error);
       setState((state) => ({ ...state, loading: false }));
     }
   };
@@ -173,7 +184,7 @@ export function UserProvider({ children }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          song_nft_ids: (song_nft_ids),
+          song_nft_ids: song_nft_ids,
           trackpack_nft_id: trackpack_nft_id
         })
       });
@@ -375,6 +386,7 @@ export function UserProvider({ children }) {
         state,
         setLoadingStatus,
         setErrorStatus,
+        setInfoStatus,
         setModalStatus,
         setPaymentStatus,
         getNftData,

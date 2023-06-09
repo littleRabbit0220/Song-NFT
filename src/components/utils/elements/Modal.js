@@ -4,7 +4,7 @@ import { UserContext } from "@/context/UserContext";
 
 export default function Modal({ modalVisible, modalTitle, modalContent}) {
 
-  const {state, setErrorStatus, setModalStatus} = useContext(UserContext);
+  const { setModalStatus } = useContext(UserContext);
   return (
     <>
       <div
@@ -19,11 +19,7 @@ export default function Modal({ modalVisible, modalTitle, modalContent}) {
               <button
                 className=" -mt-4 -mr-3 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 onClick={() => {
-                  if(modalTitle === 'error'){
-                    setErrorStatus(null);
-                  } else {
-                    setModalStatus(false, "", <></>);
-                  }
+                  setModalStatus(false, "", <></>);
                 }}
               >
                 <span className="bg-transparent text-slate-500  h-6 w-6 text-2xl block outline-none hover:text-green-900 hover:bg-slate-300 flex justify-center items-center rounded">

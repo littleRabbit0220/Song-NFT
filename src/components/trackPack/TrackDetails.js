@@ -83,7 +83,6 @@ const TrackDetails = () => {
 
   const handleBuyWithCrypto = async() => {
     if (typeof window.ethereum !== "undefined") {
-
       try {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
@@ -155,10 +154,10 @@ const TrackDetails = () => {
 
       } catch (error) {
         setLoadingStatus(false);
-        setErrorStatus('Failed! An error on Metamask was discovered.');
+        setErrorStatus(true, error.message);
       }
     } else {
-      setErrorStatus('Failed! Install the your wallet on browser.');
+      setErrorStatus(true, 'Failed! Install the your wallet on browser.');
     }
   }
 

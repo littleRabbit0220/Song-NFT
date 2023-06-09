@@ -9,6 +9,8 @@ import Head from 'next/head';
 import Loading from '@/components/utils/elements/Loading';
 import Modal from '@/components/utils/elements/Modal';
 import { UserContext } from '@/context/UserContext';
+import ErrorAlert from '@/components/utils/elements/ErrorAlert';
+import InfoAlert from '@/components/utils/elements/InfoAlert';
 
 export default function Home() {
 
@@ -30,7 +32,8 @@ export default function Home() {
         <CallToAction />
         <Footer />
         {state.loading && (<Loading/>)}      
-        <Modal modalVisible={(state.error !== null)} modalTitle={"error"} modalContent={state.error}/>    
+        <ErrorAlert errorAlertVisible={state.error} message={state.errorMessage}/>  
+        <InfoAlert infoAlertVisible={state.info} message={state.infoMessage} />
         <Modal modalVisible={state.modal} modalTitle={state.modalTitle} modalContent={state.modalContent}/>  
       </main>
     </React.Fragment>
