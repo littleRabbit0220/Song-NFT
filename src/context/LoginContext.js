@@ -42,10 +42,8 @@ export function LoginProvider({ children }) {
         },
         body: JSON.stringify({ email, password }),
       });
-      if (!response.ok) {
-        
+      if (!response.ok) {    
         const errorData = await response.json();
-        console.log(errorData);
         setState({
           status: false,
           loading: false,
@@ -54,14 +52,26 @@ export function LoginProvider({ children }) {
         });
       } else {
         const userData = await response.json();
-        console.log(userData)
-        setState({
+        if(typeof userData === 'string') {
+          const error = await JSON.parse(userData).error;
+          setState({
+            status: true,
+            loading: false,
+            user: error.message,
+            error: null,
+          });
+   
+        } else {
+          console.log(userData)
+          setState({
           status: true,
           loading: false,
           user: userData,
           error: null,
         });
         localStorage.setItem("userInfo", JSON.stringify(userData));
+        }
+        
       }
     } catch (error) {
       console.log(error);

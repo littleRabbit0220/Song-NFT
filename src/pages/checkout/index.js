@@ -8,6 +8,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { UserContext } from '@/context/UserContext';
 import CheckoutForm from "../../components/Checkout/CheckoutForm";
 import Modal from '@/components/utils/elements/Modal';
+import ErrorAlert from '@/components/utils/elements/ErrorAlert';
 import Loading from '@/components/utils/elements/Loading';
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
@@ -33,7 +34,7 @@ export default function CheckoutPage() {
         </Elements>
       </div>
       <Footer/>
-      <Modal modalVisible={(state.error !== null)} modalTitle={"error"} modalContent={state.error}/> 
+      <ErrorAlert errorAlertVisible={state.error} message={state.errorMessage}/>  
       <Modal modalVisible={state.modal} modalTitle={state.modalTitle} modalContent={state.modalContent}/>   
       {state.loading && (<Loading/>)}   
     </>

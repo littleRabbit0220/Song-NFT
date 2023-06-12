@@ -50,7 +50,7 @@ export function UserProvider({ children }) {
     try {
       if (pageNo) {
         const response = await fetch(
-          `${process.env.HOST_URL}/nft-metadata/many-NFT-metadata/?page=${pageNo}`,
+          `${process.env.HOST_URL}nft-metadata/many-NFT-metadata/?page=${pageNo}`,
           {
             method: "GET",
             headers: {
@@ -68,7 +68,6 @@ export function UserProvider({ children }) {
             nftMetaData: responseData,
           }));
         } else {
-          setInfoStatus(true, responseData);
           setState((state) => ({ ...state, loading: false }));
         }
       }
