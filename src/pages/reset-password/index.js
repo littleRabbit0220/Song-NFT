@@ -1,5 +1,5 @@
 import Header from '@/components/header';
-import ResetPwdForm from '@/components/resetPassword ';
+import ResetPwdForm from '@/components/resetPassword';
 import Head from 'next/head';
 import React from 'react';
 
